@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -84,8 +83,6 @@ public class MainView extends View {
             lightUpRectangle = resources.getDrawable(R.drawable.light_up_rectangle);
             fadeRectangle = resources.getDrawable(R.drawable.fade_rectangle);
             this.setBackgroundColor(resources.getColor(R.color.background));
-            Typeface font = Typeface.createFromAsset(resources.getAssets(), "ClearSans-Bold.ttf");
-            paint.setTypeface(font);
             paint.setAntiAlias(true);
         } catch (Exception e) {
             Log.e(TAG, "Error getting assets?", e);

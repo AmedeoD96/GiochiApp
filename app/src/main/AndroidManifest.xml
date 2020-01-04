@@ -11,7 +11,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Game2048.MainActivity2048"></activity>
         <activity android:name=".EndlessRun.MainActivityrun" />
-        <activity android:name=".Helicopter.Game" />
+        <activity android:name=".Helicopter.Game"
+            android:screenOrientation="landscape"/>
         <activity android:name=".Tetris.Tetris" />
         <activity android:name=".MainActivity">
             <intent-filter>
