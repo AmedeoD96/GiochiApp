@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "341961635486",
+    "firebase_url": "https://giochiapp-17017.firebaseio.com",
+    "project_id": "giochiapp-17017",
+    "storage_bucket": "giochiapp-17017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341961635486:android:ff4a60e54df9362dd8ed8f",
+        "android_client_info": {
+          "package_name": "it.uniba.di.sms1920.giochiapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341961635486-vljdjreiasfbp82p8763l7et0i7nnb41.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "it.uniba.di.sms1920.giochiapp",
+            "certificate_hash": "46030f5a4cb1958b463d146b9f89e2b9028cb047"
+          }
+        },
+        {
+          "client_id": "341961635486-ip1284tj2our3k6i92jnerqfpfvkv4a1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADfiLZXTDK7GEvglWRKNAPNbAQJsmwDng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341961635486-ip1284tj2our3k6i92jnerqfpfvkv4a1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
