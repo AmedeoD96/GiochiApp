@@ -1,6 +1,7 @@
 package it.uniba.di.sms1920.giochiapp.Helicopter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -43,11 +44,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private boolean started;
     private int best;
 
+    BitmapFactory.Options o = new BitmapFactory.Options();
+
     //increase to slow down difficulty progression,decrease to slow up difficulty progression
     private int progressDenom=20;
 
     public GamePanel(Context context){
         super(context);
+        o.inScaled = false;
+
         //Add the callback to the surfaceviewholder to intercept the event
         getHolder().addCallback(this);
         setFocusable(true);
@@ -74,19 +79,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
     @Override
     public void surfaceCreated(SurfaceHolder holder){
-        bg=new Background(BitmapFactory.decodeResource(getResources(),R.drawable.grassbg1));
-        player=new Player(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter),65,25,3);
-        smoke=new ArrayList<Smokepuff>();
-        missiles=new ArrayList<Missile>();
-        topBorders=new ArrayList<TopBorder>();
-        bottomBorders=new ArrayList<BottomBorder>();
-        missileStartTime= System.nanoTime();
-        SmokeStartTime= System.nanoTime();
-        thread=new MainThread(getHolder(),this);
+        bg = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.grassbg1, o));
+        player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter, o),65,25,3);
+        smoke = new ArrayList<Smokepuff>();
+        missiles = new ArrayList<Missile>();
+        topBorders = new ArrayList<TopBorder>();
+        bottomBorders = new ArrayList<BottomBorder>();
+        missileStartTime = System.nanoTime();
+        SmokeStartTime = System.nanoTime();
+        thread = new MainThread(getHolder(),this);
         //we can safely start the game loop
         thread.setRunning(true);
         thread.start();
-
     }
 
     @Override
@@ -152,10 +156,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 //first missile always be on middle
                 if(missiles.size()==0){
                     missiles.add(new Missile(BitmapFactory.decodeResource(getResources(),R.drawable.
-                            missile),WIDTH+10,HEIGHT/2,45,15,player.getScore(),13));
+                            missile, o),WIDTH+10,HEIGHT/2,45,15,player.getScore(),13));
                 }
                 else {
-                    missiles.add(new Missile(BitmapFactory.decodeResource(getResources(),R.drawable.missile),
+                    missiles.add(new Missile(BitmapFactory.decodeResource(getResources(),R.drawable.missile, o),
                             WIDTH+10,(int)(rand.nextDouble()*(HEIGHT-(maxBorderHeight*2)+maxBorderHeight)),45,15,player.getScore(),13));
                 }
                 //reset Timer
@@ -194,11 +198,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         else {
             player.resetDY();
             if(!reset){
-                newGamecreated=false;
-                startReset= System.nanoTime();
-                reset=true;
-                disappear=true;
-                explosion=new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion),player.getX(),player.getY()-30,100,100,25);
+                newGamecreated =false;
+                startReset = System.nanoTime();
+                reset = true;
+                disappear = true;
+
+                explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion, o),player.getX(),player.getY()-30,100,100,25);
             }
             explosion.update();
             long resetElapsed=(System.nanoTime()-startReset)/1000000;
@@ -211,7 +216,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void updateBottomborder() {
         //every 40 points, insert randomly places bottom blocks that break pattern
         if(player.getScore()%40==0){
-            bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick),
+            bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),
                     bottomBorders.get(bottomBorders.size()-1).getX()+20,(int)((rand.nextDouble()*(maxBorderHeight))+(HEIGHT-maxBorderHeight))));
         }
         //update bottom border
@@ -231,17 +236,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             botDown=true;
         }
         if(botDown){
-            bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(), R.drawable.brick),bottomBorders.get(bottomBorders.size()-1).getX()+20,bottomBorders.get(bottomBorders.size()-1).getY()+1));
+            bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(), R.drawable.brick, o),bottomBorders.get(bottomBorders.size()-1).getX()+20,bottomBorders.get(bottomBorders.size()-1).getY()+1));
         }
         else {
-            bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(), R.drawable.brick), bottomBorders.get(bottomBorders.size() - 1).getX() + 20, bottomBorders.get(bottomBorders.size() - 1).getY() - 1));
+            bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(), R.drawable.brick, o), bottomBorders.get(bottomBorders.size() - 1).getX() + 20, bottomBorders.get(bottomBorders.size() - 1).getY() - 1));
         }
     }
 
     public void updateTopborder() {
         //every 50 points, insert randomly places top blocks that break pattern
         if(player.getScore()%50==0){
-            topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick),
+            topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),
                     topBorders.get(topBorders.size()-1).getX()+20,0,(int)((rand.nextDouble()*(maxBorderHeight))+1)));
         }
         for(int i=0;i<topBorders.size();i++){
@@ -258,12 +263,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 }
                 //new border added will have larger height
                 if(topDown){
-                    topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick),
+                    topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),
                             topBorders.get(topBorders.size()-1).getX()+20,0,topBorders.get(topBorders.size()-1).getHeight()+1));
                 }
                 //new Border added will have smaller height
                 else {
-                    topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick),
+                    topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),
                             topBorders.get(topBorders.size()-1).getX()+20,0,topBorders.get(topBorders.size()-1).getHeight()-1));
                 }
             }
@@ -357,26 +362,28 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
         player.resetScore();
 
+
+
         //create initial border
         //initial top border
         for (int i=0;i*20<WIDTH+40;i++){
             //first top border create
             if(i==0){
-                topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick),i*20,0,10));
+                topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,0,10));
             }
             else {
-                topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick),i*20,0,topBorders.get(i-1).getHeight()+1));
+                topBorders.add(new TopBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,0,topBorders.get(i-1).getHeight()+1));
             }
         }
         //initial bottom border
         for (int i=0;i*20<WIDTH+40;i++){
             //first border ever crated
             if(i==0){
-                bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick),i*20,HEIGHT-minBorderHeight));
+                bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,HEIGHT-minBorderHeight));
             }
             //adding borders until the initial screen is filled
             else {
-                bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick),i*20,bottomBorders.get(i-1).getY()-1));
+                bottomBorders.add(new BottomBorder(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,bottomBorders.get(i-1).getY()-1));
             }
         }
         newGamecreated=true;
