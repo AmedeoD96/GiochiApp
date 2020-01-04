@@ -47,5 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
         game = new Game("Endless", Integer.parseInt(String.valueOf(47)), R.drawable.endless);
         gameList.add(game);
+
+        game = new Game("Pinball", Integer.parseInt(String.valueOf(3231)), R.drawable.pinball);
+        gameList.add(game);
+
+        game = new Game("Flappy", Integer.parseInt(String.valueOf(31)), R.drawable.flappy);
+        gameList.add(game);
     }
 }
