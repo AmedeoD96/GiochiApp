@@ -73,6 +73,30 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                     }
                 });
                 break;
+                /*
+            case 3:
+                holder.button.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Helicopter.Game.class);
+                        context.startActivity(intent);
+                    }
+                });
+                break;
+
+                 */
+
+            case 4:
+                holder.button.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Helicopter.Game.class);
+                        context.startActivity(intent);
+                    }
+                });
+                break;
         }
 
     }
