@@ -5,26 +5,30 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+
 public class Animation {
     private Bitmap[] frames;
     private int frameIndex;
 
     private boolean isPlaying = false;
+
+    private float frameTime;
+    private long lastFrame;
+
     public boolean isPlaying() {
         return isPlaying;
     }
+
     public void play() {
         isPlaying = true;
         frameIndex = 0;
         lastFrame = System.currentTimeMillis();
     }
+
     public void stop() {
         isPlaying = false;
     }
 
-    private float frameTime;
-
-    private long lastFrame;
 
     public Animation(Bitmap[] frames, float animTime) {
         this.frames = frames;
@@ -41,7 +45,6 @@ public class Animation {
         }
 
         scaleRect(destination);
-
         canvas.drawBitmap(frames[frameIndex], null, destination, new Paint());
     }
 

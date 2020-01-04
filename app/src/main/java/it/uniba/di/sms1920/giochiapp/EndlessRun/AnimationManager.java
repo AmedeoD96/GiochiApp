@@ -3,6 +3,7 @@ package it.uniba.di.sms1920.giochiapp.EndlessRun;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
+
 public class AnimationManager {
     private Animation[] animations;
     private int animationIndex = 0;
@@ -14,7 +15,7 @@ public class AnimationManager {
     public void playAnim(int index) {
         for(int i = 0; i<animations.length; i++) {
             if (i == index) {
-                if (animations[index].isPlaying()) {
+                if (!animations[index].isPlaying()) {
                     animations[i].play();
                 }
             } else {
@@ -29,7 +30,6 @@ public class AnimationManager {
         if (animations[animationIndex].isPlaying()) {
             animations[animationIndex].draw(canvas, rect);
         }
-
     }
 
     public void update() {
