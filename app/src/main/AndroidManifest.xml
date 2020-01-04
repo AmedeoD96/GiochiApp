@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EndlessRun.MainActivityrun"></activity>
+        <activity android:name=".Game2048.MainActivity2048"></activity>
+        <activity android:name=".EndlessRun.MainActivityrun" />
         <activity android:name=".Tetris.Tetris" />
         <activity android:name=".MainActivity">
             <intent-filter>
