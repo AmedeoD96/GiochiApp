@@ -29,7 +29,7 @@ public class Obstacle implements GameObject {
     }
 
     public boolean playerCollide(RectPlayer player) {
-        return Rect.intersects(rectangle,player.getRectangle()) || Rect.intersects(rectangle,player.getRectangle());
+        return Rect.intersects(rectangle,player.getRectangle()) || Rect.intersects(rectangle2,player.getRectangle());
     }
 
     @Override
