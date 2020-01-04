@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
 import it.uniba.di.sms1920.giochiapp.Tetris.Tetris;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
@@ -52,6 +53,16 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 });
                 break;
             case 1:
+                break;
+            case 2:
+                holder.button.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, MainActivityrun.class);
+                        context.startActivity(intent);
+                    }
+                });
                 break;
         }
 
