@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Game2048.MainActivity2048"></activity>
+        <activity android:name=".Frogger.MainActivity"></activity>
         <activity android:name=".EndlessRun.MainActivityrun"
            android:screenOrientation="portrait" />
         <activity android:name=".Helicopter.Game"

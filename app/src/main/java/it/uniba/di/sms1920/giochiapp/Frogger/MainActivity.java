@@ -1,0 +1,49 @@
+package it.uniba.di.sms1920.giochiapp.Frogger;
+
+import android.os.Bundle;
+
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    GameView gv;
+    int score;
+    int lives;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        gv = new GameView(this);
+        super.onCreate(savedInstanceState);
+        setContentView(gv);
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        score = gv.points;
+        lives = gv.heart.getLives();
+        this.gv.thread.setRunning(false);
+        boolean retry = false;
+        while (retry == false) {
+            try {
+                gv.thread.join();
+                retry = true;
+            } catch (InterruptedException e) {
+            }
+        }
+        this.gv = null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (this.gv == null) {
+            gv = new GameView(this);
+            gv.points = score;
+            gv.heart.setLives(lives);
+            setContentView(gv);
+        }
+    }
+}

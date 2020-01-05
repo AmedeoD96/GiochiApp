@@ -42,7 +42,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         holder.highScore.setText("High Score : " + game.getHighScore());
         holder.image.setImageResource(game.getImage());
 
-        switch (position){
+        switch (position) {
             case 0:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
@@ -97,7 +97,22 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                     }
                 });
                 break;
+
+
+                case 5:
+                holder.button.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Frogger.MainActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
+                break;
+
         }
+
+
 
     }
 

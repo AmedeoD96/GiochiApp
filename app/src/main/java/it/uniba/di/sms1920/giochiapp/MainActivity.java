@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
 
         Game flappy = new Game("Flappy", Integer.parseInt(String.valueOf(32)), R.drawable.flappy);
         gameList.add(flappy);
+
+        Game frogger = new Game("Frogger", Integer.parseInt(String.valueOf(56)), R.drawable.frog);
+        gameList.add(frogger);
     }
 
 
