@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import com.google.firebase.database.DataSnapshot;
@@ -15,6 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.uniba.di.sms1920.giochiapp.Database.DBOpenHelper;
 import it.uniba.di.sms1920.giochiapp.Helicopter.Player;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         //Imposto l'adapter
         GameAdapter gameAdapter = new GameAdapter(gameList);
         rvGame.setAdapter(gameAdapter);
+
+        //test database
+        testDatabase();
     }
 
     private void initializeUI(){
@@ -110,5 +115,18 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("DB", "Failed to read value.", error.toException());
             }
         });
+    }
+
+
+    //classe per testare il funzionamento del database
+    private void testDatabase(){
+
+        DBOpenHelper mDBHelper = new DBOpenHelper(this);
+        SQLiteDatabase mDBDatabase = mDBHelper.getWritableDatabase();
+
+        mDBHelper.saveScores(mDBDatabase, "ciccio", 1, 456, 567, 23, 98);
+
+        mDBHelper.loadScores(mDBDatabase);
+
     }
 }
