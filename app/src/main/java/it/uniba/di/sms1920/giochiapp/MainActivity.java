@@ -51,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Game game2048 = new Game("2048", get2048HighScore(), R.drawable.game2048);
         gameList.add(game2048);
 
-        //Aggiusta questo
-        Game endless = new Game("Endless", Integer.parseInt(String.valueOf(47)), R.drawable.endless);
+        Game endless = new Game("Endless", getScoreEndless(), R.drawable.endless);
         gameList.add(endless);
 
         Game elicottero = new Game("Elicottero", getHelicopterHighScore(), R.drawable.flappy);
@@ -82,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
     private int getHelicopterHighScore(){
         SharedPreferences tetrisPref = getSharedPreferences("info", MODE_PRIVATE);
         int highScore = tetrisPref.getInt("TopScoreHelicopter", 0);
+        return highScore;
+    }
+
+    private int getScoreEndless(){
+        SharedPreferences endless = getSharedPreferences("info", MODE_PRIVATE);
+        int highScore = endless.getInt("TopScoreEndless", 0);
         return highScore;
     }
 

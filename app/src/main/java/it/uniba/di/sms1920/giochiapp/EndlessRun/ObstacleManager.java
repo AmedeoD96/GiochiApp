@@ -1,10 +1,14 @@
 package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
+
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 
 public class ObstacleManager {
     private ArrayList<Obstacle> obstacles;
@@ -49,6 +53,11 @@ public class ObstacleManager {
         }
     }
 
+
+    Context context = GlobalApplicationContext.getAppContext();
+    SharedPreferences pref = context.getSharedPreferences("info", Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = pref.edit();
+
     public void update() {
         if (startTime < Constants.INIT_TIME) {
             startTime = Constants.INIT_TIME;
@@ -64,7 +73,15 @@ public class ObstacleManager {
             obstacles.add(0, new Obstacle(obstacleHeight, color, xstart, obstacles.get(0).getRectangle().top-obstacleHeight-obstacleGap,playerGap));
             obstacles.remove(obstacles.size()-1);
             score++;
+
+            int highScore = pref.getInt("TopScore", 0);
+
+            if(highScore<score) {
+                editor.putInt("TopScoreEndless", score);
+                editor.apply();
+            }
         }
+
     }
 
     public void draw(Canvas canvas) {
