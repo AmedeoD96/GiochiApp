@@ -18,6 +18,7 @@ import java.util.List;
 import it.uniba.di.sms1920.giochiapp.Helicopter.Player;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String HIGH_SCORE = "high score temp 2048";
 
     private RecyclerView rvGame;
     private List<Game> gameList = new ArrayList<>();
@@ -50,18 +51,21 @@ public class MainActivity extends AppCompatActivity {
         Game tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.tetris_launch_app);
         gameList.add(tetris);
 
-        Game game2048 = new Game("2048", Integer.parseInt(String.valueOf(4096)), R.drawable.game2048);
+        Game game2048 = new Game("2048", get2048HighScore(), R.drawable.game2048);
         gameList.add(game2048);
 
+        //Aggiustare il punteggio a questi
         Game endless = new Game("Endless", Integer.parseInt(String.valueOf(47)), R.drawable.endless);
         gameList.add(endless);
 
         Game pinball = new Game("Pinball", Integer.parseInt(String.valueOf(3231)), R.drawable.pinball);
         gameList.add(pinball);
 
-        Game flappy = new Game("Flappy", getFlappyScore(), R.drawable.flappy);
+        Game flappy = new Game("Flappy", Integer.parseInt(String.valueOf(32)), R.drawable.flappy);
         gameList.add(flappy);
     }
+
+
 
     private int getTetrisHighScore(){
         SharedPreferences tetrisPref = getSharedPreferences("info", MODE_PRIVATE);
@@ -69,10 +73,14 @@ public class MainActivity extends AppCompatActivity {
         return highScore;
     }
 
-    private int getFlappyScore(){
-        Player player = new Player();
-        return player.getScore();
+    private int get2048HighScore(){
+        SharedPreferences game2048Pref = getSharedPreferences("info", MODE_PRIVATE);
+        long highScore = game2048Pref.getLong(HIGH_SCORE, 0);
+        String num = String.valueOf(highScore);
+        int i = Integer.valueOf(num);
+        return i;
     }
+
 
     void writeDB(){
         // Write a message to the database
@@ -102,5 +110,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("DB", "Failed to read value.", error.toException());
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        createElement();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        createElement();
     }
 }
