@@ -11,7 +11,7 @@ public class MainActivity2048 extends AppCompatActivity {
     private static final String WIDTH = "width";
     private static final String HEIGHT = "height";
     private static final String SCORE = "score";
-    private static final String HIGH_SCORE = "high score temp";
+    private static final String HIGH_SCORE = "high score temp 2048";
     private static final String UNDO_SCORE = "undo score";
     private static final String CAN_UNDO = "can undo";
     private static final String UNDO_GRID = "undo";
@@ -24,7 +24,7 @@ public class MainActivity2048 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         view = new MainView(this);
 
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences settings = this.getSharedPreferences("info", MODE_PRIVATE);
         view.hasSaveState = settings.getBoolean("save_state", false);
 
         if (savedInstanceState != null) {
@@ -63,13 +63,10 @@ public class MainActivity2048 extends AppCompatActivity {
         save();
     }
 
-    protected void onPause() {
-        super.onPause();
-        save();
-    }
+
 
     private void save() {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences settings = this.getSharedPreferences("info", MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         Tile[][] field = view.game.grid.field;
         Tile[][] undoField = view.game.grid.undoField;
@@ -108,7 +105,7 @@ public class MainActivity2048 extends AppCompatActivity {
         //Stopping all animations
         view.game.aGrid.cancelAnimations();
 
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences settings = getSharedPreferences("info", MODE_PRIVATE);
         for (int xx = 0; xx < view.game.grid.field.length; xx++) {
             for (int yy = 0; yy < view.game.grid.field[0].length; yy++) {
                 int value = settings.getInt(xx + " " + yy, -1);
@@ -133,5 +130,23 @@ public class MainActivity2048 extends AppCompatActivity {
         view.game.canUndo = settings.getBoolean(CAN_UNDO, view.game.canUndo);
         view.game.gameState = settings.getInt(GAME_STATE, view.game.gameState);
         view.game.lastGameState = settings.getInt(UNDO_GAME_STATE, view.game.lastGameState);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        save();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        save();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        save();
     }
 }
