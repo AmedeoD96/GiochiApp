@@ -52,10 +52,27 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                         context.startActivity(intent);
                     }
                 });
+
+                holder.image.setOnClickListener(new ImageView.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, Tetris.class);
+                        context.startActivity(intent);
+                    }
+                });
                 break;
                 //2048
             case 1:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, MainActivity2048.class);
+                        context.startActivity(intent);
+                    }
+                });
+                holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Context context = v.getContext();
@@ -74,6 +91,14 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                         context.startActivity(intent);
                     }
                 });
+                holder.image.setOnClickListener(new ImageView.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, MainActivityrun.class);
+                        context.startActivity(intent);
+                    }
+                });
                 break;
                 //Elicottero
             case 3:
@@ -85,10 +110,26 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                         context.startActivity(intent);
                     }
                 });
+                holder.image.setOnClickListener(new ImageView.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Helicopter.Game.class);
+                        context.startActivity(intent);
+                    }
+                });
                 break;
                 //Frogger
             case 4:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Frogger.MainActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
+                holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Context context = v.getContext();
