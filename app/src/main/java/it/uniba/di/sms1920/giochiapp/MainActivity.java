@@ -38,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
         //Imposto l'adapter
         GameAdapter gameAdapter = new GameAdapter(gameList);
         rvGame.setAdapter(gameAdapter);
-
-        //test database
-        testDatabase();
     }
 
     private void initializeUI(){
