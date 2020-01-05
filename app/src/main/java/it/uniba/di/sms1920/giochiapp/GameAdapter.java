@@ -21,7 +21,6 @@ import it.uniba.di.sms1920.giochiapp.Tetris.Tetris;
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
 
     private List<Game> gameList;
-
     public GameAdapter(List<Game> gameList){
         this.gameList = gameList;
     }
@@ -43,6 +42,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         holder.image.setImageResource(game.getImage());
 
         switch (position) {
+            //Tetris
             case 0:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
@@ -53,6 +53,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                     }
                 });
                 break;
+                //2048
             case 1:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
@@ -63,6 +64,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                     }
                 });
                 break;
+                //Endless
             case 2:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
@@ -73,7 +75,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                     }
                 });
                 break;
-                /*
+                //Elicottero
             case 3:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
@@ -84,22 +86,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                     }
                 });
                 break;
-
-                 */
-
+                //Frogger
             case 4:
-                holder.button.setOnClickListener(new Button.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Helicopter.Game.class);
-                        context.startActivity(intent);
-                    }
-                });
-                break;
-
-
-                case 5:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {

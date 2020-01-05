@@ -46,6 +46,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private boolean started;
     private int best;
 
+
+    Context context = getContext();
+    SharedPreferences pref = context.getSharedPreferences("info", Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = pref.edit();
+
     BitmapFactory.Options o = new BitmapFactory.Options();
 
     //increase to slow down difficulty progression,decrease to slow up difficulty progression
@@ -325,6 +330,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void drawText(Canvas canvas) {
+        best = pref.getInt("TopScoreHelicopter", 0);
+
         Paint paint=new Paint();
         paint.setColor(Color.BLACK);
         paint.setTextSize(30);
@@ -361,10 +368,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         if(player.getScore()>best){
             best=player.getScore();
+
+            //Saving best score in shared preferences
+            editor.putInt("TopScoreHelicopter", best);
+            editor.apply();
         }
-
-        //Saving best score in shared preferences
-
         player.resetScore();
 
 

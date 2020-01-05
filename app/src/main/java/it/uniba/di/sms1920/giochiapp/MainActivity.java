@@ -51,16 +51,14 @@ public class MainActivity extends AppCompatActivity {
         Game game2048 = new Game("2048", get2048HighScore(), R.drawable.game2048);
         gameList.add(game2048);
 
-        //Aggiustare il punteggio di questi
+        //Aggiusta questo
         Game endless = new Game("Endless", Integer.parseInt(String.valueOf(47)), R.drawable.endless);
         gameList.add(endless);
 
-        Game pinball = new Game("Pinball", Integer.parseInt(String.valueOf(3231)), R.drawable.pinball);
-        gameList.add(pinball);
+        Game elicottero = new Game("Elicottero", getHelicopterHighScore(), R.drawable.flappy);
+        gameList.add(elicottero);
 
-        Game flappy = new Game("Flappy", Integer.parseInt(String.valueOf(32)), R.drawable.flappy);
-        gameList.add(flappy);
-
+        //Aggiusta questo
         Game frogger = new Game("Frogger", Integer.parseInt(String.valueOf(56)), R.drawable.frog);
         gameList.add(frogger);
     }
@@ -79,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
         String num = String.valueOf(highScore);
         int i = Integer.valueOf(num);
         return i;
+    }
+
+    private int getHelicopterHighScore(){
+        SharedPreferences tetrisPref = getSharedPreferences("info", MODE_PRIVATE);
+        int highScore = tetrisPref.getInt("TopScoreHelicopter", 0);
+        return highScore;
     }
 
 }
