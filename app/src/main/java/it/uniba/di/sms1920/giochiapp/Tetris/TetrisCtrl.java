@@ -60,7 +60,7 @@ public class TetrisCtrl extends View {
         super(context);
         this.context = context;
         mPref = context.getSharedPreferences("info",MODE_PRIVATE);
-        mTopScore = mPref.getInt("TopScore", 0);
+        mTopScore = mPref.getInt("TopScoreTetris", 0);
     }
 
     void initVariables(Canvas canvas) {

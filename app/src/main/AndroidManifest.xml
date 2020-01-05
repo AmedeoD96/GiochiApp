@@ -23,7 +23,8 @@
         </receiver>
 
         <activity android:name=".Game2048.MainActivity2048"></activity>
-        <activity android:name=".EndlessRun.MainActivityrun" />
+        <activity android:name=".EndlessRun.MainActivityrun"
+           android:screenOrientation="portrait" />
         <activity android:name=".Helicopter.Game"
             android:screenOrientation="landscape"/>
         <activity android:name=".Tetris.Tetris" />
