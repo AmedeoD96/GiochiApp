@@ -1,6 +1,5 @@
 package it.uniba.di.sms1920.giochiapp;
 
-import android.content.SharedPreferences;
 
 public class Game {
     private String name;
