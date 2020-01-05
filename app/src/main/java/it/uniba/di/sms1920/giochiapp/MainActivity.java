@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         Game game2048 = new Game("2048", get2048HighScore(), R.drawable.game2048);
         gameList.add(game2048);
 
-        //Aggiustare il punteggio a questi
+        //Aggiustare il punteggio di questi
         Game endless = new Game("Endless", Integer.parseInt(String.valueOf(47)), R.drawable.endless);
         gameList.add(endless);
 
@@ -110,17 +110,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.w("DB", "Failed to read value.", error.toException());
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        createElement();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        createElement();
     }
 }
