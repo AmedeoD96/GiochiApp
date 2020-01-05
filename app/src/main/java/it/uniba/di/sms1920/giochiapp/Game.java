@@ -1,5 +1,7 @@
 package it.uniba.di.sms1920.giochiapp;
 
+import android.content.SharedPreferences;
+
 public class Game {
     private String name;
     private int highScore;
@@ -21,5 +23,9 @@ public class Game {
 
     public int getImage() {
         return image;
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
     }
 }

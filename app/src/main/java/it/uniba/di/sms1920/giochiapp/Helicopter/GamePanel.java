@@ -1,6 +1,7 @@
 package it.uniba.di.sms1920.giochiapp.Helicopter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -11,6 +12,7 @@ import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -360,6 +362,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         if(player.getScore()>best){
             best=player.getScore();
         }
+
+        //Saving best score in shared preferences
+
         player.resetScore();
 
 

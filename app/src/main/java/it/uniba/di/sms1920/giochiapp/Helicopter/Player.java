@@ -62,6 +62,9 @@ public class Player extends GameObject {
         canvas.drawBitmap(animation.getImage(),x,y,null);
     }
 
+    public Player(){
+    }
+
 
     public int getScore(){return score;}
 

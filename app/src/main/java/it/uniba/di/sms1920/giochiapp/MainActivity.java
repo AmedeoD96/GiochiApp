@@ -4,17 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import it.uniba.di.sms1920.giochiapp.Helicopter.Player;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,20 +47,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createElement(){
-        Game game = new Game("Tetris", Integer.parseInt(String.valueOf(10)), R.drawable.tetris_launch_app);
-        gameList.add(game);
+        Game tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.tetris_launch_app);
+        gameList.add(tetris);
 
-        game = new Game("2048", Integer.parseInt(String.valueOf(4096)), R.drawable.game2048);
-        gameList.add(game);
+        Game game2048 = new Game("2048", Integer.parseInt(String.valueOf(4096)), R.drawable.game2048);
+        gameList.add(game2048);
 
-        game = new Game("Endless", Integer.parseInt(String.valueOf(47)), R.drawable.endless);
-        gameList.add(game);
+        Game endless = new Game("Endless", Integer.parseInt(String.valueOf(47)), R.drawable.endless);
+        gameList.add(endless);
 
-        game = new Game("Pinball", Integer.parseInt(String.valueOf(3231)), R.drawable.pinball);
-        gameList.add(game);
+        Game pinball = new Game("Pinball", Integer.parseInt(String.valueOf(3231)), R.drawable.pinball);
+        gameList.add(pinball);
 
-        game = new Game("Flappy", Integer.parseInt(String.valueOf(31)), R.drawable.flappy);
-        gameList.add(game);
+        Game flappy = new Game("Flappy", getFlappyScore(), R.drawable.flappy);
+        gameList.add(flappy);
+    }
+
+    private int getTetrisHighScore(){
+        SharedPreferences tetrisPref = getSharedPreferences("info", MODE_PRIVATE);
+        int highScore = tetrisPref.getInt("TopScore", 0);
+        return highScore;
+    }
+
+    private int getFlappyScore(){
+        Player player = new Player();
+        return player.getScore();
     }
 
     void writeDB(){
