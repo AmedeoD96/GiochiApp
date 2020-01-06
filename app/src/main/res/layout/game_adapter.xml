@@ -60,7 +60,7 @@
                         android:layout_width="144dp"
                         android:layout_height="67dp"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_play_arrow_black_24dp"
+                        android:drawableLeft="@mipmap/ic_play_3"
                         android:text="Play " />
 
                     <Button
