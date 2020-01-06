@@ -1,6 +1,5 @@
 package it.uniba.di.sms1920.giochiapp;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +12,7 @@ public class UsersManager {
 
 
     public static final String DEFAULT_ID = "-";
-    public static final String DEFAULT_NAME = "ghost";
+    public static final String DEFAULT_NAME = "guest";
 
 
     private static final String USER_KEY = "currentUserId";
@@ -27,7 +26,9 @@ public class UsersManager {
 
 
 
-    private UsersManager() { }
+    private UsersManager() {
+        populateIfEmpty();
+    }
 
     public static UsersManager getInstance() {
         if(instance == null) {
@@ -38,17 +39,20 @@ public class UsersManager {
 
 
 
+    public void populateIfEmpty() {
+        if(allUsers.isEmpty()) {
+            populateUsers();
+        }
+    }
 
 
     public Map<String, User> getAllUsers() {
-        populateIfEmptyMap();
+        populateIfEmpty();
 
         return allUsers;
     }
 
     public User getCurrentUser() {
-        populateIfEmptyMap();
-
         User resultUser;
         if(allUsers.containsKey(idCurrentUser)) {
 
@@ -77,7 +81,7 @@ public class UsersManager {
     }
     
     public String getUserID(User user) {
-        populateIfEmptyMap();
+        populateIfEmpty();
         
         if(allUsers.containsValue(user)) {
             for (Map.Entry<String, User> entry : allUsers.entrySet()) {
@@ -99,13 +103,6 @@ public class UsersManager {
 
     private void loadCurrentUserID() {
         idCurrentUser = DatabaseManager.getInstance().loadString(USER_KEY, DEFAULT_ID);
-    }
-
-    
-    private void populateIfEmptyMap() {
-        if(allUsers.isEmpty()) {
-            populateUsers();
-        }
     }
 
     private void populateUsers() {

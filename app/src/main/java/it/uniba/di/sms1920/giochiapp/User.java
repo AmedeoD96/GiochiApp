@@ -1,12 +1,8 @@
 package it.uniba.di.sms1920.giochiapp;
 
-import android.telecom.Call;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import it.uniba.di.sms1920.giochiapp.Database.DatabaseManager;
 
 
 public class User {
@@ -14,7 +10,7 @@ public class User {
     public String name;
 
     public int scoreTetris = 0;
-    public int scorePimball = 0;
+    public int scoreFrogger = 0;
     public int scoreHelicopter = 0;
     public int scoreAlienrun = 0;
     public int score2048 = 0;
@@ -44,8 +40,8 @@ public class User {
         CallOnValueChange();
     }
 
-    public void setScorePimball(int scorePimball) {
-        this.scorePimball = scorePimball;
+    public void setScoreFrogger(int scoreFrogger) {
+        this.scoreFrogger = scoreFrogger;
         CallOnValueChange();
     }
 
@@ -78,7 +74,7 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return scoreTetris == user.scoreTetris &&
-                scorePimball == user.scorePimball &&
+                scoreFrogger == user.scoreFrogger &&
                 scoreHelicopter == user.scoreHelicopter &&
                 scoreAlienrun == user.scoreAlienrun &&
                 score2048 == user.score2048 &&
@@ -87,7 +83,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, scoreTetris, scorePimball, scoreHelicopter, scoreAlienrun, score2048);
+        return Objects.hash(name, scoreTetris, scoreFrogger, scoreHelicopter, scoreAlienrun, score2048);
     }
 
     @Override
@@ -95,7 +91,7 @@ public class User {
         return "User{" +
                 ", name='" + name + '\'' +
                 ", scoreTetris=" + scoreTetris +
-                ", scorePimball=" + scorePimball +
+                ", scoreFrogger=" + scoreFrogger +
                 ", scoreHelicopter=" + scoreHelicopter +
                 ", scoreAlienrun=" + scoreAlienrun +
                 ", score2048=" + score2048 +

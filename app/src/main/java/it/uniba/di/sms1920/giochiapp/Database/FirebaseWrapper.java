@@ -22,6 +22,8 @@ public class FirebaseWrapper implements IGameDatabase {
 
     @Override
     public String saveUser(String id, User user) {
+        Log.i("FirebaseTest", "id: " +id+ " User: " + user.toString());
+
         if(id.equals(UsersManager.DEFAULT_ID)) {
             id = myRef.push().getKey();
         }
@@ -30,26 +32,6 @@ public class FirebaseWrapper implements IGameDatabase {
         myRef.setValue(user);
 
         return id;
-    }
-
-    @Override
-    public void loadUser(String id, final OnUserLoadedListener onUserLoadedListener) {
-        myRef = database.getReference().child(id);
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                User user = dataSnapshot.getValue(User.class);
-                onUserLoadedListener.onUserLoaded(dataSnapshot.getKey(), user);
-                onUserLoadedListener.onLoadCompleted();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                //Log.i("FirebaseTest", "failed to reed database");
-            }
-        });
     }
 
     @Override

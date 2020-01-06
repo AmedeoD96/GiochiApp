@@ -2,7 +2,7 @@ package it.uniba.di.sms1920.giochiapp.Database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.UserManager;
+import android.util.Log;
 
 import java.util.Map;
 
@@ -50,16 +50,9 @@ public class DatabaseManager {
         }
     }
 
-    public void loadUser(String id, IGameDatabase.OnUserLoadedListener userLoadedListener) {
-        if(useLocalVsRemote) {
-            localDatabase.loadUser(id, userLoadedListener);
-        } else {
-            remoteDatabase.loadUser(id, userLoadedListener);
-        }
-    }
-
 
     public void loadAllUsers(IGameDatabase.OnUserLoadedListener userLoadedListener) {
+        Log.i("DatabaseDEBUG", "localVsRemote: " + useLocalVsRemote);
         if(useLocalVsRemote) {
             localDatabase.loadAllUsers(userLoadedListener);
         } else {
@@ -69,11 +62,18 @@ public class DatabaseManager {
 
 
     public void setUseLocalVsRemote(boolean useLocalVsRemote) {
-        if(!this.useLocalVsRemote && useLocalVsRemote) {
+        Log.i("DatabaseDEBUG", "use local: " + useLocalVsRemote);
+        UsersManager.getInstance().populateIfEmpty();
+
+        boolean precValue = this.useLocalVsRemote;
+        this.useLocalVsRemote = useLocalVsRemote;
+
+        if(!precValue && useLocalVsRemote) {
             cloneRemoteDBIntoLocalDB();
+        } else if(precValue && !useLocalVsRemote) {
+
         }
 
-        this.useLocalVsRemote = useLocalVsRemote;
     }
 
 
