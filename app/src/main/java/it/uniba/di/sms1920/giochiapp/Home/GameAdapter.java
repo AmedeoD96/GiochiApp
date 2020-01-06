@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -157,7 +158,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         TextView highScore;
         ImageView image;
 
-        Button button;
+        ImageButton button;
 
         public MyViewHolder(View itemView){
             super(itemView);

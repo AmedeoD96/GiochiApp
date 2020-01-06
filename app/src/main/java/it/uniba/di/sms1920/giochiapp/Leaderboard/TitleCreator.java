@@ -13,13 +13,12 @@ public class TitleCreator {
         _titleParents = new ArrayList<>();
         for(int i=1;i<=100;i++)
         {
-            TitleParent title = new TitleParent(String.format("Caller #%d",i));
+            TitleParent title = new TitleParent(String.format("User name preso dal database #%d",i));
             _titleParents.add(title);
         }
     }
 
-    public static TitleCreator get(Context context)
-    {
+    public static TitleCreator get(Context context) {
         if(_titleCreator == null)
             _titleCreator = new TitleCreator(context);
         return _titleCreator;

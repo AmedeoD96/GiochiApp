@@ -43,8 +43,11 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
     @Override
     public void onBindChildViewHolder(TitleChildViewHolder titleChildViewHolder, int i, Object o) {
         TitleChild title = (TitleChild)o;
-        titleChildViewHolder.option1.setText(title.getOption1());
-        titleChildViewHolder.option2.setText(title.getOption2());
+        titleChildViewHolder.tetris.setText(title.getOption1());
+        titleChildViewHolder.game2048.setText(title.getOption2());
+        titleChildViewHolder.alienRun.setText(title.getAlienRun());
+        titleChildViewHolder.rocket.setText(title.getRocket());
+        titleChildViewHolder.frogger.setText(title.getFrogger());
 
     }
 }

@@ -8,10 +8,14 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import it.uniba.di.sms1920.giochiapp.R;
 
 public class TitleChildViewHolder extends ChildViewHolder {
-    public TextView option1,option2;
+    public TextView tetris, game2048, alienRun, rocket, frogger;
+
     public TitleChildViewHolder(View itemView) {
         super(itemView);
-        option1 = (TextView)itemView.findViewById(R.id.option1);
-        option2 = (TextView)itemView.findViewById(R.id.option2);
+        tetris = itemView.findViewById(R.id.tetris);
+        game2048 = itemView.findViewById(R.id.game2048);
+        alienRun = itemView.findViewById(R.id.alienRun);
+        rocket = itemView.findViewById(R.id.rocket);
+        frogger = itemView.findViewById(R.id.frogger);
     }
 }
