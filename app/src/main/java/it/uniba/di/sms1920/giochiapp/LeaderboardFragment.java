@@ -23,7 +23,7 @@ public class LeaderboardFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         countTv = view.findViewById(R.id.count_tv);
-        countTv.setText("QUA CI VA LA LEADERBOARD");
+        countTv.setText("Global Leaderboard");
         return view;
     }
 }
