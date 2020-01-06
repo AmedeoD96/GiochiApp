@@ -63,7 +63,7 @@ public class GameFragment extends Fragment {
         gameList.add(elicottero);
 
         //Aggiusta questo
-        Game frogger = new Game("Frogger", Integer.parseInt(String.valueOf(56)), R.drawable.frog);
+        Game frogger = new Game("Frogger", getScoreFrogger(), R.drawable.frog);
         gameList.add(frogger);
     }
 
@@ -90,6 +90,12 @@ public class GameFragment extends Fragment {
     private int getScoreEndless(){
         SharedPreferences endless = context.getSharedPreferences("info", MODE_PRIVATE);
         int highScore = endless.getInt("TopScoreEndless", 0);
+        return highScore;
+    }
+
+    private int getScoreFrogger() {
+        SharedPreferences frogger = context.getSharedPreferences("info", MODE_PRIVATE);
+        int highScore = frogger.getInt("TopScoreFrogger", 0);
         return highScore;
     }
 }
