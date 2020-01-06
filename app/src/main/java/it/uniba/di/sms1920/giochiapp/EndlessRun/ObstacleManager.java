@@ -2,13 +2,17 @@ package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
+import it.uniba.di.sms1920.giochiapp.R;
 
 public class ObstacleManager {
     private ArrayList<Obstacle> obstacles;
@@ -22,6 +26,10 @@ public class ObstacleManager {
 
     private int score = 0;
 
+    private Animation greenObstacle;
+    private Animation orangeObstacle;
+    private AnimationManager animManager;
+
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
@@ -31,6 +39,9 @@ public class ObstacleManager {
         startTime = initTime = System.currentTimeMillis();
 
         obstacles = new ArrayList<>();
+
+
+        animManager = new AnimationManager(new Animation[]{ greenObstacle, orangeObstacle });
 
         populateObstacles();
     }
