@@ -36,6 +36,7 @@ public class GameplayScene implements Scene {
 
         obstacleManager = new ObstacleManager(300,550 ,125, Color.BLACK);
 
+
         orientationData = new OrientationData();
         orientationData.register();
         frameTime = System.currentTimeMillis();

@@ -7,6 +7,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 
 import it.uniba.di.sms1920.giochiapp.R;
 
@@ -18,6 +19,13 @@ public class Obstacle implements GameObject {
 
     Bitmap obstacleGreenImg;
     Bitmap obstacleOrangeImg;
+    Bitmap obstacleGreenFlipped;
+    Bitmap obstacleOrangeFlipped;
+
+    Animation orangeMovement;
+    Animation greenMovement;
+    AnimationManager animationManagerGreen;
+    AnimationManager animationManagerOrange;
 
     public Obstacle(int rectHeight, int color, int startX,int startY, int playerGap) {
         this.color = color;
@@ -27,11 +35,26 @@ public class Obstacle implements GameObject {
         obstacleGreenImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.snakeslime);
         obstacleOrangeImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.snakelava);
 
-        Matrix m = new Matrix();
-        m.preScale(-1, 1);
-        obstacleGreenImg = Bitmap.createBitmap(obstacleGreenImg, 0, 0, obstacleGreenImg.getWidth(), obstacleGreenImg.getHeight(), m, false);
-        obstacleOrangeImg = Bitmap.createBitmap(obstacleOrangeImg, 0, 0, obstacleOrangeImg.getWidth(), obstacleOrangeImg.getHeight(), m, false);
+        obstacleGreenFlipped = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.greenflipped);
+        obstacleOrangeFlipped = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.orangeflipped);
 
+        Matrix m = new Matrix();
+        Matrix m2 = new Matrix();
+        m.preScale(-1, 1);
+        m2.preScale(-1,1);
+        obstacleGreenImg = Bitmap.createBitmap(obstacleGreenImg, 0, 0, obstacleGreenImg.getWidth(), obstacleGreenImg.getHeight(), m, false);
+        obstacleOrangeImg = Bitmap.createBitmap(obstacleOrangeImg, 0, 0, obstacleOrangeImg.getWidth(), obstacleOrangeImg.getHeight(), m2, false);
+
+        obstacleGreenFlipped = Bitmap.createBitmap(obstacleGreenFlipped, 0, 0, obstacleGreenFlipped.getWidth(), obstacleGreenFlipped.getHeight(), m, false);
+        obstacleOrangeFlipped = Bitmap.createBitmap(obstacleOrangeFlipped, 0, 0, obstacleOrangeFlipped.getWidth(), obstacleOrangeFlipped.getHeight(), m2, false);
+
+        Log.i("1","1");
+        greenMovement = new Animation(new Bitmap[]{ obstacleGreenImg, obstacleGreenFlipped },0.5f, false);
+        orangeMovement = new Animation(new Bitmap[] {obstacleOrangeImg, obstacleOrangeFlipped}, 0.5f, false);
+
+        Log.i("2","2");
+        animationManagerGreen = new AnimationManager(new Animation[] {greenMovement});
+        animationManagerOrange = new AnimationManager(new Animation[] {orangeMovement});
     }
 
     public Rect getRectangle() {
@@ -53,12 +76,18 @@ public class Obstacle implements GameObject {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(color);
-        canvas.drawBitmap(obstacleGreenImg,null,rectangle, new Paint());
-        canvas.drawBitmap(obstacleOrangeImg,null, rectangle2, new Paint());
+        animationManagerGreen.draw(canvas,rectangle);
+        animationManagerOrange.draw(canvas,rectangle2);
     }
 
     @Override
     public void update() {
+        animationManagerOrange.update();
+        animationManagerGreen.update();
 
+        animationManagerOrange.playAnim(0);
+        animationManagerGreen.playAnim(0);
+        animationManagerGreen.update();
+        animationManagerOrange.update();
     }
 }
