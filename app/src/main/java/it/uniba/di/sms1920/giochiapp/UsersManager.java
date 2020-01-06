@@ -1,40 +1,140 @@
 package it.uniba.di.sms1920.giochiapp;
 
-import android.content.Context;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import it.uniba.di.sms1920.giochiapp.Database.DatabaseManager;
 import it.uniba.di.sms1920.giochiapp.Database.IGameDatabase;
 
+
 public class UsersManager {
 
-    public static final Map<String, User> allUsers = new HashMap<>();
-    static String idCurrentUser;
-    static boolean userFind;
 
-    public static void populateUsers(Context context, final String currentUserId) {
-        allUsers.clear();
-        userFind = false;
 
-        DatabaseManager.getInstance().loadAllUsers(context, new IGameDatabase.OnUserLoadedListener() {
-                @Override
-                public void onUserLoaded(String id, User user) {
-                    allUsers.put(id, user);
+    public static final String DEFAULT_ID = "-";
+    public static final String DEFAULT_NAME = "guest";
 
-                    if(currentUserId.equals(id)) {
-                        idCurrentUser = id;
-                        userFind = true;
-                    }
+
+    private static final String USER_KEY = "currentUserId";
+
+    private final Map<String, User> allUsers = new HashMap<>();
+    private String idCurrentUser;
+
+    private static UsersManager instance;
+
+
+
+
+
+    private UsersManager() {
+        populateIfEmpty();
+    }
+
+    public static UsersManager getInstance() {
+        if(instance == null) {
+            instance = new UsersManager();
+        }
+        return instance;
+    }
+
+
+
+    public void populateIfEmpty() {
+        if(allUsers.isEmpty()) {
+            populateUsers();
+        }
+    }
+
+
+    public Map<String, User> getAllUsers() {
+        populateIfEmpty();
+
+        return allUsers;
+    }
+
+    public User getCurrentUser() {
+        User resultUser;
+        if(allUsers.containsKey(idCurrentUser)) {
+
+            resultUser = allUsers.get(idCurrentUser);
+        } else {
+
+            resultUser = new User();
+            resultUser.name = DEFAULT_NAME;
+            allUsers.put(idCurrentUser, resultUser);
+        }
+        return resultUser;
+    }
+
+    public void setIdCurrentUser(String idCurrentUser) {
+        if(this.idCurrentUser.equals(DEFAULT_ID) && allUsers.containsValue(this.idCurrentUser)) {
+
+            // Remove the user with the default key to put the user with the correct key
+            User currentUser = allUsers.get(this.idCurrentUser);
+            allUsers.remove(this.idCurrentUser);
+
+            allUsers.put(idCurrentUser, currentUser);
+        }
+
+        this.idCurrentUser = idCurrentUser;
+        saveCurrentUserID();
+    }
+    
+    public String getUserID(User user) {
+        populateIfEmpty();
+        
+        if(allUsers.containsValue(user)) {
+            for (Map.Entry<String, User> entry : allUsers.entrySet()) {
+                if(entry.getValue().equals(user)) {
+                    return entry.getKey();
                 }
+            }
+        }
+        return DEFAULT_ID;
+    }
 
-                @Override
-                public void onLoadCompleted() { }
+
+
+
+
+    private void saveCurrentUserID() {
+        DatabaseManager.getInstance().saveString(USER_KEY, idCurrentUser);
+    }
+
+    private void loadCurrentUserID() {
+        idCurrentUser = DatabaseManager.getInstance().loadString(USER_KEY, DEFAULT_ID);
+    }
+
+    private void populateUsers() {
+        allUsers.clear();
+
+        loadCurrentUserID();
+
+        DatabaseManager.getInstance().loadAllUsers(new IGameDatabase.OnUserLoadedListener() {
+            @Override
+            public void onUserLoaded(String id, User user) {
+                allUsers.put(id, user);
+            }
+
+            @Override
+            public void onLoadCompleted() {
+                final User user = getCurrentUser();
+
+                user.registerCallback(new User.UserListener() {
+                    @Override
+                    public void OnValueChange() {
+                        SaveCurrentUser();
+                    }
+                });
+            }
         });
     }
 
-    public static User GetCurrentUser() {
-        return allUsers.get(idCurrentUser);
+
+    private void SaveCurrentUser() {
+        User user = getCurrentUser();
+        DatabaseManager.getInstance().saveUser(idCurrentUser, user);
     }
+
+
 }

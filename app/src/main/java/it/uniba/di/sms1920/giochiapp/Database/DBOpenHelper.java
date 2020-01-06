@@ -5,7 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
+import it.uniba.di.sms1920.giochiapp.User;
 
 public class DBOpenHelper extends SQLiteOpenHelper {
 
@@ -18,6 +19,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String SCORE_HELICOPTER = "score_helicopter";
     public static final String SCORE_ALIENRUN = "score_alienrun";
     public static final String SCORE_TETRIS = "score_tetris";
+    public static final String SCORE_FROGGER = "score_frogger";
 
 
     final public static String NOME_DB = "giochiapp_db";
@@ -28,9 +30,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     final public static String CREATE_CMD =
             "CREATE TABLE " + TABLE_NAME_USERSCORES + "("
-                    + _ID + " INTEGER PRIMARY KEY, "
+                    + _ID + " TEXT PRIMARY KEY, "
                     + NICKNAME + " TEXT , " + SCORE_2048 + " TEXT , " + SCORE_ALIENRUN + " TEXT , "
-                    + SCORE_HELICOPTER + " TEXT , " + SCORE_TETRIS + " TEXT );";
+                    + SCORE_HELICOPTER + " TEXT , " + SCORE_TETRIS + " TEXT , " + SCORE_FROGGER + " TEXT);";
 
 
     public DBOpenHelper(Context context) {
@@ -48,41 +50,45 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     }
 
-    public void saveScores(SQLiteDatabase db, String nickname, Integer id, Integer score_2048, Integer score_helicopter, Integer score_alienrun, Integer score_tetris) {
+    public void saveScores(SQLiteDatabase db, String id, User user) {
 
         ContentValues values = new ContentValues();
 
         values.put(_ID, id);
-        values.put(NICKNAME, nickname);
-        values.put(SCORE_2048, score_2048.toString());
-        values.put(SCORE_HELICOPTER, score_helicopter.toString());
-        values.put(SCORE_ALIENRUN, score_alienrun.toString());
-        values.put(SCORE_TETRIS, score_tetris.toString());
+        values.put(NICKNAME, user.name);
+        values.put(SCORE_2048, String.valueOf(user.score2048));
+        values.put(SCORE_HELICOPTER, String.valueOf(user.scoreHelicopter));
+        values.put(SCORE_ALIENRUN, String.valueOf(user.scoreAlienrun));
+        values.put(SCORE_TETRIS, String.valueOf(user.scoreTetris));
+        values.put(SCORE_FROGGER, String.valueOf(user.scoreFrogger));
 
         db.insert(DBOpenHelper.TABLE_NAME_USERSCORES, null, values);
         values.clear();
-
-
     }
 
 
-    public void loadScores(SQLiteDatabase db) {
+    public void loadScores(SQLiteDatabase db, IGameDatabase.OnUserLoadedListener userLoadedListener) {
 
         Cursor cursor_userscores = db.query(DBOpenHelper.TABLE_NAME_USERSCORES, DBOpenHelper.columns, null, new String[]{}, null, null, null);
-
         cursor_userscores.moveToFirst();
 
         for (int i = 0; i < cursor_userscores.getCount(); i++) {
 
+            User user = new User();
 
             String id = cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(_ID));
-            String nickname = cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(NICKNAME));
-            String score_2048 = cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_2048));
-            String score_helicopter = cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_HELICOPTER));
-            String score_alienrun = cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_ALIENRUN));
-            String score_tetris = cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_TETRIS));
+            user.name = cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(NICKNAME));
+
+            user.score2048 = Integer.parseInt(cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_2048)));
+            user.scoreHelicopter =Integer.parseInt(cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_HELICOPTER)));
+            user.scoreAlienrun = Integer.parseInt(cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_ALIENRUN)));
+            user.scoreTetris = Integer.parseInt(cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_TETRIS)));
+            user.scoreFrogger = Integer.parseInt(cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_FROGGER)));
+
             cursor_userscores.moveToNext();
-            Log.i("info", "id "+id+ " nickname "+nickname+ " score 2048 "+ score_2048+ " score helicopter "+ score_helicopter+ " score alienrun "+ score_alienrun+ " score tetris "+ score_tetris);
+
+            userLoadedListener.onUserLoaded(id, user);
         }
+        userLoadedListener.onLoadCompleted();
     }
 }

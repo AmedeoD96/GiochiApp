@@ -15,8 +15,8 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent intent) {
 
-        int status = NetworkUtil.getConnectivityStatusString(context);
-        Log.e("NetworkDebug", "Connection status: " + status);
+        final int status = NetworkUtil.getConnectivityStatusString(context);
+        Log.i("NetworkDebug", "Connection status: " + status);
 
         if (CONNECTIVITY_CHANGE.equals(intent.getAction())) {
             boolean useLocalVsRemoteDB = status == NetworkUtil.NETWORK_STATUS_NOT_CONNECTED;
