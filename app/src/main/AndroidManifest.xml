@@ -13,29 +13,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SplashScreen"
+            android:theme="@style/SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <receiver
-            android:name="NetworkChangeReceiver"
-            android:label="NetworkChangeReceiver" >
+            android:name=".NetworkChangeReceiver"
+            android:label="NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
 
-        <activity android:name=".Game2048.MainActivity2048"></activity>
-        <activity android:name=".Frogger.MainActivity"></activity>
-        <activity android:name=".EndlessRun.MainActivityrun"
-           android:screenOrientation="portrait" />
-        <activity android:name=".Helicopter.Game"
-            android:screenOrientation="landscape"/>
+        <activity android:name=".Game2048.MainActivity2048" />
+        <activity android:name=".Frogger.MainActivity" />
+        <activity
+            android:name=".EndlessRun.MainActivityrun"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Helicopter.Game"
+            android:screenOrientation="landscape" />
         <activity android:name=".Tetris.Tetris" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

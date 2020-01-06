@@ -9,5 +9,6 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar"/>
 
 </resources>
