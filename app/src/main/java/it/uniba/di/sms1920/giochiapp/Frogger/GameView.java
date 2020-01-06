@@ -67,8 +67,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         thread.setRunning(true);
 
 
-        LOGSTRIP = (int)Math.ceil(getHeight()/logBitmap.getHeight());
-        logRows = new ArrayList[LOGSTRIP-4];
+        LOGSTRIP = (int)Math.ceil(getHeight()/logBitmap.getHeight()); //LOGSTRIP=15 perchè 15 sono le "caselle" da dove si trova la rana fino all fine dello scenario
+        logRows = new ArrayList[LOGSTRIP-4]; //4 sono le caselle dove i log non devono essere generati
         remove = new ArrayList[LOGSTRIP-4];
         for (int i = 0; i < remove.length; i++){
             remove[i]=new ArrayList<Integer>();
@@ -76,7 +76,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         for (int i = 0; i < logRows.length; i++){
             logRows[i]=new ArrayList<LogObj>();
         }
-        waterBox = new Rect (0, logBitmap.getHeight()*2, getWidth(), ((LOGSTRIP-2)*logBitmap.getHeight()));
+        waterBox = new Rect (0, logBitmap.getHeight()*2, getWidth(), ((LOGSTRIP-2)*logBitmap.getHeight())); //getWidth() dà 1080
+     //   se cambio left da 0 a getWidth() la rana mi cammina sull'acqua
         frog.setY((LOGSTRIP-1)*logBitmap.getHeight());
         frog.setStart(frog.getX(), frog.getY());
         speeds = new int[logRows.length];
