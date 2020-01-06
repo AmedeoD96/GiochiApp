@@ -1,19 +1,30 @@
 package it.uniba.di.sms1920.giochiapp.Database;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.UserManager;
 
+import java.util.Map;
+
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.User;
+import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 
 public class DatabaseManager {
 
-    public static String BASIC_ID = "-";
+
+    private static final String LOCAL_PREF = "LocalPref";
+
+
     private static DatabaseManager ourInstance;
 
     private IGameDatabase localDatabase;
     private IGameDatabase remoteDatabase;
 
     private boolean useLocalVsRemote = true;
+
+
 
     private DatabaseManager() {
         localDatabase = new SQLliteWrapper();
@@ -28,16 +39,18 @@ public class DatabaseManager {
     }
 
 
-    public void saveUser(Context context, String id, User user) {
+
+    public void saveUser(String id, User user) {
         if(useLocalVsRemote) {
             localDatabase.saveUser(id, user);
         } else {
-            localDatabase.saveUser(id, user);
-            remoteDatabase.saveUser(id, user);
+            String realID = remoteDatabase.saveUser(id, user);
+            UsersManager.getInstance().setIdCurrentUser(realID);
+            localDatabase.saveUser(realID, user);
         }
     }
 
-    public void loadUser(Context context, String id, IGameDatabase.OnUserLoadedListener userLoadedListener) {
+    public void loadUser(String id, IGameDatabase.OnUserLoadedListener userLoadedListener) {
         if(useLocalVsRemote) {
             localDatabase.loadUser(id, userLoadedListener);
         } else {
@@ -46,7 +59,7 @@ public class DatabaseManager {
     }
 
 
-    public void loadAllUsers(Context context, IGameDatabase.OnUserLoadedListener userLoadedListener) {
+    public void loadAllUsers(IGameDatabase.OnUserLoadedListener userLoadedListener) {
         if(useLocalVsRemote) {
             localDatabase.loadAllUsers(userLoadedListener);
         } else {
@@ -56,6 +69,43 @@ public class DatabaseManager {
 
 
     public void setUseLocalVsRemote(boolean useLocalVsRemote) {
+        if(!this.useLocalVsRemote && useLocalVsRemote) {
+            cloneRemoteDBIntoLocalDB();
+        }
+
         this.useLocalVsRemote = useLocalVsRemote;
     }
+
+
+    public void saveString(String key, String value) {
+        Context context = GlobalApplicationContext.getAppContext();
+
+        SharedPreferences pref = context.getSharedPreferences(LOCAL_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putString(key, value);
+        editor.apply();
+    }
+
+    public String loadString(String key, String defalultValue) {
+        Context context = GlobalApplicationContext.getAppContext();
+
+        SharedPreferences pref = context.getSharedPreferences(LOCAL_PREF, Context.MODE_PRIVATE);
+        return pref.getString(key, defalultValue);
+    }
+
+
+
+
+
+    private void cloneRemoteDBIntoLocalDB() {
+        Map<String, User> users = UsersManager.getInstance().getAllUsers();
+
+        for (Map.Entry<String, User> user : users.entrySet()) {
+            localDatabase.saveUser(user.getKey(), user.getValue());
+        }
+    }
+
+
+
 }

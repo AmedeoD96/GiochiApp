@@ -9,6 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import it.uniba.di.sms1920.giochiapp.User;
+import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 
 public class FirebaseWrapper implements IGameDatabase {
@@ -21,7 +22,7 @@ public class FirebaseWrapper implements IGameDatabase {
 
     @Override
     public String saveUser(String id, User user) {
-        if(id.equals(DatabaseManager.BASIC_ID)) {
+        if(id.equals(UsersManager.DEFAULT_ID)) {
             id = myRef.push().getKey();
         }
 
