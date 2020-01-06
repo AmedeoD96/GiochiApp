@@ -1,4 +1,4 @@
-package it.uniba.di.sms1920.giochiapp;
+package it.uniba.di.sms1920.giochiapp.Home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,7 @@ import java.util.List;
 
 import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
 import it.uniba.di.sms1920.giochiapp.Game2048.MainActivity2048;
+import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.Tetris.Tetris;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {

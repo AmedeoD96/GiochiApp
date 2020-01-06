@@ -1,9 +1,8 @@
-package it.uniba.di.sms1920.giochiapp;
+package it.uniba.di.sms1920.giochiapp.Home;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
+import it.uniba.di.sms1920.giochiapp.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

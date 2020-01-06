@@ -7,7 +7,7 @@
     android:orientation="vertical"
 
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".GameAdapter">
+    tools:context=".Home.GameAdapter">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
