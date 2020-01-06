@@ -2,27 +2,46 @@ package it.uniba.di.sms1920.giochiapp.Leaderboard;
 
 public class TitleChild {
 
-    public String option1;
-    public String option2;
+    private String tetris;
+    private String game2084;
+    private String alienRun;
+    private String rocket;
+    private String frogger;
 
-    public TitleChild(String option1, String option2) {
-        this.option1 = option1;
-        this.option2 = option2;
+    public TitleChild(String tetris, String game2084, String alienRun, String rocket, String frogger) {
+        this.tetris = tetris;
+        this.game2084 = game2084;
+        this.alienRun = alienRun;
+        this.rocket = rocket;
+        this.frogger = frogger;
     }
 
     public String getOption1() {
-        return option1;
+        return tetris;
     }
 
-    public void setOption1(String option1) {
-        this.option1 = option1;
-    }
 
     public String getOption2() {
-        return option2;
+        return game2084;
     }
 
-    public void setOption2(String option2) {
-        this.option2 = option2;
+    public String getTetris() {
+        return tetris;
+    }
+
+    public String getGame2084() {
+        return game2084;
+    }
+
+    public String getAlienRun() {
+        return alienRun;
+    }
+
+    public String getRocket() {
+        return rocket;
+    }
+
+    public String getFrogger() {
+        return frogger;
     }
 }
