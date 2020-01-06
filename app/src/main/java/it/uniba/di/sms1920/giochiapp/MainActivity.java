@@ -1,24 +1,28 @@
 package it.uniba.di.sms1920.giochiapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import it.uniba.di.sms1920.giochiapp.Database.DBOpenHelper;
-import it.uniba.di.sms1920.giochiapp.Helicopter.Player;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import it.uniba.di.sms1920.giochiapp.Home.GameFragment;
+import it.uniba.di.sms1920.giochiapp.Leaderboard.LeaderboardFragment;
+
 
 public class MainActivity extends AppCompatActivity {
-    private static final String HIGH_SCORE = "high score temp 2048";
 
-    private RecyclerView rvGame;
-    private List<Game> gameList = new ArrayList<>();
+    final Fragment fragment1 = new GameFragment();
+    final Fragment fragment2 = new LeaderboardFragment();
+    final FragmentManager fragmentManager = getSupportFragmentManager();
+    Fragment active = fragment1;
 
 
     @Override
@@ -26,59 +30,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initializeUI();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        //Crea la lista dei giochi
-        createElement();
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        //Imposto il layout
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        rvGame.setLayoutManager(layoutManager);
-
-        //Imposto l'adapter
-        GameAdapter gameAdapter = new GameAdapter(gameList);
-        rvGame.setAdapter(gameAdapter);
+        fragmentManager.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
+        fragmentManager.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
     }
 
-    private void initializeUI(){
-        rvGame = findViewById(R.id.rvGame);
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+            switch (menuItem.getItemId()){
+                case R.id.navigation_home:
+                    fragmentManager.beginTransaction().hide(active).show(fragment1).commit();
+                    active = fragment1;
+                    return  true;
+                case R.id.navigation_leaderboard:
+                    fragmentManager.beginTransaction().hide(active).show(fragment2).commit();
+                    active = fragment2;
+                    return true;
+            }
+            return false;
+        }
+    };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
-    private void createElement(){
-        Game tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.tetris_launch_app);
-        gameList.add(tetris);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-        Game game2048 = new Game("2048", get2048HighScore(), R.drawable.game2048);
-        gameList.add(game2048);
+        User userTemp = UsersManager.getInstance().getCurrentUser();
+        Log.i("USER_DEBUG", userTemp.toString());
 
-        //Aggiustare il punteggio di questi
-        Game endless = new Game("Endless", Integer.parseInt(String.valueOf(47)), R.drawable.endless);
-        gameList.add(endless);
-
-        Game pinball = new Game("Pinball", Integer.parseInt(String.valueOf(3231)), R.drawable.pinball);
-        gameList.add(pinball);
-
-        Game flappy = new Game("Flappy", Integer.parseInt(String.valueOf(32)), R.drawable.flappy);
-        gameList.add(flappy);
-
-        Game frogger = new Game("Frogger", Integer.parseInt(String.valueOf(56)), R.drawable.frog);
-        gameList.add(frogger);
+        return super.onOptionsItemSelected(item);
     }
-
-
-
-    private int getTetrisHighScore(){
-        SharedPreferences tetrisPref = getSharedPreferences("info", MODE_PRIVATE);
-        int highScore = tetrisPref.getInt("TopScore", 0);
-        return highScore;
-    }
-
-    private int get2048HighScore(){
-        SharedPreferences game2048Pref = getSharedPreferences("info", MODE_PRIVATE);
-        long highScore = game2048Pref.getLong(HIGH_SCORE, 0);
-        String num = String.valueOf(highScore);
-        int i = Integer.valueOf(num);
-        return i;
-    }
-
 }

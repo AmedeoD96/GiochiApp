@@ -1,6 +1,7 @@
 package it.uniba.di.sms1920.giochiapp.Frogger;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -19,6 +20,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
@@ -47,6 +49,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     boolean wasRunning;
+
+    Context context = GlobalApplicationContext.getAppContext();
+    SharedPreferences pref = context.getSharedPreferences("info", Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = pref.edit();
 
     public GameView(Context context) {
         super(context);
@@ -87,6 +93,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             l = System.currentTimeMillis();
         }
 
+        //Made by Lillo: la velocità dei pezzi di legno è generata randomicamente.
+        //Quindi può capitare che il primo "rigo" sia quello più veloce (nello scorrimento)
         for (int i = 0; i < speeds.length; i++){
             Random ran = new Random();
             speeds[i]=ran.nextInt(10)+3;
@@ -164,6 +172,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         frog.setY(frog.getyStart());
         frog.setX(frog.getxStart());
         inWater = false;
+
+        int highScore = pref.getInt("TopScore", 0);
+
+        if(highScore<points) {
+            editor.putInt("TopScoreFrogger", points);
+            editor.apply();
+        }
     }
 
     public void score(){
@@ -351,6 +366,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             canvas.drawRect(0,0,canvas.getWidth(),canvas.getHeight(),paint);
             paint.setARGB(225,99, 65, 65);
             canvas.drawText("score", canvas.getWidth()-logBitmap.getWidth(),0, paint);
+
+            int highScore = pref.getInt("TopScore", 0);
+
+            if(highScore<points) {
+                editor.putInt("TopScoreFrogger", points);
+                editor.apply();
+            }
         }
 
         collision();

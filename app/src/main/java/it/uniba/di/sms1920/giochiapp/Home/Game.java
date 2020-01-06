@@ -1,4 +1,4 @@
-package it.uniba.di.sms1920.giochiapp;
+package it.uniba.di.sms1920.giochiapp.Home;
 
 
 public class Game {
@@ -10,6 +10,12 @@ public class Game {
         this.name = name;
         this.highScore = highScore;
         this.image = image;
+    }
+
+    //Costruttore da usare per la leaderboard
+    public Game (String name, int highScore){
+        this.name = name;
+        this.highScore = highScore;
     }
 
     public String getName() {

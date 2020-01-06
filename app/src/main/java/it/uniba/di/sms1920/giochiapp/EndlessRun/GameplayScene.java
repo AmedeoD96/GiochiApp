@@ -1,11 +1,17 @@
 package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
+
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class GameplayScene implements Scene {
 
@@ -21,13 +27,15 @@ public class GameplayScene implements Scene {
 
     private OrientationData orientationData;
     private long frameTime;
+    Context context = GlobalApplicationContext.getAppContext();
 
     public GameplayScene() {
         player = new RectPlayer(new Rect(100,100,200,200), Color.rgb(255,0,0));
         playerPoint = new Point(Constants.SCREEN_WIDTH/2,3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
 
-        obstacleManager = new ObstacleManager(300,550 ,75, Color.BLACK);
+        obstacleManager = new ObstacleManager(300,550 ,125, Color.BLACK);
+
 
         orientationData = new OrientationData();
         orientationData.register();
@@ -79,10 +87,19 @@ public class GameplayScene implements Scene {
         obstacleManager.draw(canvas);
 
         if(gameOver) {
+
+            SharedPreferences endless = context.getSharedPreferences("info", MODE_PRIVATE);
+            int highScore = endless.getInt("TopScoreEndless", 0);
             Paint paint = new Paint();
             paint.setTextSize(100);
             paint.setColor(Color.GREEN);
-            drawCenterText(canvas, paint, "Game Over");
+            //drawCenterText(canvas, paint, "Game Over\nHigh score: " + highScore); Il \n non funziona quando si disegna un canvas.
+            paint.setTextAlign(Paint.Align.CENTER);
+            int xPos = (canvas.getWidth() / 2);
+            int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) ;
+            canvas.drawText("Game Over", xPos, yPos, paint);
+            canvas.drawText("High score: " + highScore, xPos, 100+ yPos, paint);
+
         }
     }
 
@@ -125,6 +142,7 @@ public class GameplayScene implements Scene {
         }
     }
 
+    /*
     private void drawCenterText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(r);
@@ -135,4 +153,6 @@ public class GameplayScene implements Scene {
         float y = cHeight / 2f + r.height() / 2f - r.bottom;
         canvas.drawText(text, x, y, paint);
     }
+
+     */
 }
