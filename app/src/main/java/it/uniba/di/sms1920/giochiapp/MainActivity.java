@@ -1,4 +1,4 @@
-package it.uniba.di.sms1920.giochiapp.Home;
+package it.uniba.di.sms1920.giochiapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.widget.Toolbar;
 
+import it.uniba.di.sms1920.giochiapp.Home.GameFragment;
 import it.uniba.di.sms1920.giochiapp.Leaderboard.LeaderboardFragment;
 import it.uniba.di.sms1920.giochiapp.R;
 
