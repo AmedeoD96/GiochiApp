@@ -41,7 +41,7 @@ public class LeaderboardFragment extends Fragment {
 
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        countTv = view.findViewById(R.id.count_tv);
+        countTv = view.findViewById(R.id.gameName);
         countTv.setText("Global Leaderboard");
         return view;
     }

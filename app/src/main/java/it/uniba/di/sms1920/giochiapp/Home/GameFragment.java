@@ -71,7 +71,7 @@ public class GameFragment extends Fragment {
 
     private int getTetrisHighScore(){
         SharedPreferences tetrisPref = context.getSharedPreferences("info", MODE_PRIVATE);
-        int highScore = tetrisPref.getInt("TopScore", 0);
+        int highScore = tetrisPref.getInt("TopScoreTetris", 0);
         return highScore;
     }
 
