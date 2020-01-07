@@ -356,9 +356,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         TextPaint textPaint = new TextPaint();
         textPaint.setColor(Color.BLACK);
-        textPaint.setTextSize(200);
+        textPaint.setTextSize(150);
 
-        canvas.drawText(points + "", canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight(), textPaint);
+        canvas.drawText(points + "", canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight()+50, textPaint);
 
 
         if(heart.getdead()==true){
@@ -367,7 +367,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             paint.setARGB(225,99, 65, 65);
             canvas.drawText("score", canvas.getWidth()-logBitmap.getWidth(),0, paint);
 
-            int highScore = pref.getInt("TopScore", 0);
+            int highScore = pref.getInt("TopScoreFrogger", 0);
 
             if(highScore<points) {
                 editor.putInt("TopScoreFrogger", points);

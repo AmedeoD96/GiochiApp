@@ -29,13 +29,13 @@ public class Heart {
     private boolean dead = false;
 
     public Heart(float logHeight, Bitmap bitmap3, Bitmap bitmap2, Bitmap bitmap1){
-        X = 0;
+        X = 15;
         lives = 3;
         this.bitmap = bitmap3;
         this.bitmap3 = bitmap3;
         this.bitmap2 = bitmap2;
         this.bitmap1 = bitmap1;
-        Y = logHeight - bitmap.getHeight();
+        Y = logHeight - bitmap.getHeight()+50;
     }
 
     public void lifeChange(int i){
