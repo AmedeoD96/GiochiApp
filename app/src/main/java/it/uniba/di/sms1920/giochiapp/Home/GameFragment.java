@@ -1,9 +1,7 @@
 package it.uniba.di.sms1920.giochiapp.Home;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +18,7 @@ import java.util.List;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
-
-import static android.content.Context.MODE_PRIVATE;
+import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class GameFragment extends Fragment {
     private static final String HIGH_SCORE = "high score temp 2048";
@@ -84,35 +81,45 @@ public class GameFragment extends Fragment {
     }
 
     private int getTetrisHighScore(){
-        SharedPreferences tetrisPref = context.getSharedPreferences("info", MODE_PRIVATE);
-        int highScore = tetrisPref.getInt("TopScoreTetris", 0);
-        return highScore;
+        // SharedPreferences tetrisPref = context.getSharedPreferences("info", MODE_PRIVATE);
+        // int highScore = tetrisPref.getInt("TopScoreTetris", 0);
+        // return highScore;
+
+        return UsersManager.getInstance().getCurrentUser().scoreTetris;
     }
 
     private int get2048HighScore(){
-        SharedPreferences game2048Pref = context.getSharedPreferences("info", MODE_PRIVATE);
-        long highScore = game2048Pref.getLong(HIGH_SCORE, 0);
-        String num = String.valueOf(highScore);
-        int i = Integer.valueOf(num);
-        return i;
+        // SharedPreferences game2048Pref = context.getSharedPreferences("info", MODE_PRIVATE);
+        //  long highScore = game2048Pref.getLong(HIGH_SCORE, 0);
+        //  String num = String.valueOf(highScore);
+        //  int i = Integer.valueOf(num);
+        // return i;
+
+        return UsersManager.getInstance().getCurrentUser().score2048;
     }
 
     private int getHelicopterHighScore(){
-        SharedPreferences tetrisPref = context.getSharedPreferences("info", MODE_PRIVATE);
-        int highScore = tetrisPref.getInt("TopScoreHelicopter", 0);
-        return highScore;
+        // SharedPreferences tetrisPref = context.getSharedPreferences("info", MODE_PRIVATE);
+        // int highScore = tetrisPref.getInt("TopScoreHelicopter", 0);
+        // return highScore;
+
+        return UsersManager.getInstance().getCurrentUser().scoreHelicopter;
     }
 
     private int getScoreEndless(){
-        SharedPreferences endless = context.getSharedPreferences("info", MODE_PRIVATE);
-        int highScore = endless.getInt("TopScoreEndless", 0);
-        return highScore;
+        // SharedPreferences endless = context.getSharedPreferences("info", MODE_PRIVATE);
+        // int highScore = endless.getInt("TopScoreEndless", 0);
+        // return highScore;
+
+        return UsersManager.getInstance().getCurrentUser().scoreHelicopter;
     }
 
     private int getScoreFrogger() {
-        SharedPreferences frogger = context.getSharedPreferences("info", MODE_PRIVATE);
-        int highScore = frogger.getInt("TopScoreFrogger", 0);
-        return highScore;
+        // SharedPreferences frogger = context.getSharedPreferences("info", MODE_PRIVATE);
+        // int highScore = frogger.getInt("TopScoreFrogger", 0);
+        // return highScore;
+
+        return UsersManager.getInstance().getCurrentUser().scoreFrogger;
     }
 
     @Override

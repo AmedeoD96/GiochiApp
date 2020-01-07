@@ -3,7 +3,6 @@ package it.uniba.di.sms1920.giochiapp.Tetris;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,7 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 
-import static android.content.Context.MODE_PRIVATE;
+import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class TetrisCtrl extends View {
     Context context;
@@ -38,9 +37,9 @@ public class TetrisCtrl extends View {
     Point mNewBlockPos = new Point(0, 0);
     Bitmap[] mArBmpCell = new Bitmap[8];
     AlertDialog mDlgMsg = null;
-    SharedPreferences mPref = null;
+    // SharedPreferences mPref = null;
     int mScore = 0;
-    int mTopScore = 0;
+    // int mTopScore = 0;
 
     Rect getBlockArea(int x, int y) {
         Rect rtBlock = new Rect();
@@ -59,8 +58,8 @@ public class TetrisCtrl extends View {
     public TetrisCtrl(Context context) {
         super(context);
         this.context = context;
-        mPref = context.getSharedPreferences("info",MODE_PRIVATE);
-        mTopScore = mPref.getInt("TopScoreTetris", 0);
+        // mPref = context.getSharedPreferences("info",MODE_PRIVATE);
+        // mTopScore = mPref.getInt("TopScoreTetris", 0);
     }
 
     void initVariables(Canvas canvas) {
@@ -248,11 +247,17 @@ public class TetrisCtrl extends View {
 
 
         mScore += filledCount * filledCount;
-        if( mTopScore < mScore ) {
+        /*if(mTopScore < mScore ) {
             mTopScore = mScore;
             SharedPreferences.Editor edit = mPref.edit();
             edit.putInt("TopScoreTetris", mTopScore);
             edit.commit();
+        }*/
+        if(UsersManager.getInstance().getCurrentUser().scoreTetris < mScore) {
+            UsersManager.getInstance().getCurrentUser().setScoreTetris(mScore);
+            // SharedPreferences.Editor edit = mPref.edit();
+            // edit.putInt("TopScoreTetris", mTopScore);
+            // edit.commit();
         }
         return filledCount;
     }
@@ -293,7 +298,7 @@ public class TetrisCtrl extends View {
         canvas.drawText("Score : " + mScore, posX, poxY, pnt);
 
         poxY += (int)(fontSize * 1.5);
-        canvas.drawText("Top Score : " + mTopScore, posX, poxY, pnt);
+        canvas.drawText("Top Score : " + UsersManager.getInstance().getCurrentUser().scoreTetris, posX, poxY, pnt);
     }
 
     void showMatrix(Canvas canvas, int[][] arMatrix, boolean drawEmpth) {

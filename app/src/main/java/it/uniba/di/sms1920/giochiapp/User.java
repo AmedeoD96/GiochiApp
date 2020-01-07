@@ -14,6 +14,7 @@ public class User {
     public int scoreHelicopter = 0;
     public int scoreAlienrun = 0;
     public int score2048 = 0;
+    public int totalScore = 0;
 
     private List<UserListener> callbacks = new ArrayList<>();
 
@@ -29,6 +30,10 @@ public class User {
         callbacks.remove(userListener);
     }
 
+    public int getTotalScore() {
+        totalScore = scoreTetris + scoreFrogger + scoreHelicopter + scoreAlienrun + score2048;
+        return totalScore;
+    }
 
     public void setName(String name) {
         this.name = name;

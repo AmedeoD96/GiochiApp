@@ -5,7 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.User;
 
-public class SQLliteWrapper implements IGameDatabase {
+
+public class SQLiteWrapper implements IGameDatabase {
 
 
     DBOpenHelper mDBHelper;

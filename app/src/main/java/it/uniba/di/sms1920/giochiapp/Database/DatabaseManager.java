@@ -27,7 +27,7 @@ public class DatabaseManager {
 
 
     private DatabaseManager() {
-        localDatabase = new SQLliteWrapper();
+        localDatabase = new SQLiteWrapper();
         remoteDatabase = new FirebaseWrapper();
     }
 
@@ -41,10 +41,12 @@ public class DatabaseManager {
 
 
     public void saveUser(String id, User user) {
+        Log.i("DatabaseDebug", "save user id: " +id+ " User: " + user.toString());
         if(useLocalVsRemote) {
             localDatabase.saveUser(id, user);
         } else {
             String realID = remoteDatabase.saveUser(id, user);
+            Log.i("DatabaseDebug", "real user id: " +realID);
             UsersManager.getInstance().setIdCurrentUser(realID);
             localDatabase.saveUser(realID, user);
         }
@@ -63,7 +65,6 @@ public class DatabaseManager {
 
     public void setUseLocalVsRemote(boolean useLocalVsRemote) {
         Log.i("DatabaseDEBUG", "use local: " + useLocalVsRemote);
-        UsersManager.getInstance().populateIfEmpty();
 
         boolean precValue = this.useLocalVsRemote;
         this.useLocalVsRemote = useLocalVsRemote;
@@ -71,6 +72,15 @@ public class DatabaseManager {
         if(!precValue && useLocalVsRemote) {
             cloneRemoteDBIntoLocalDB();
         } else if(precValue && !useLocalVsRemote) {
+
+            //UsersManager.getInstance().saveCurrentUser();
+
+            UsersManager.getInstance().populateUsers(new UsersManager.IUserManagerCallback() {
+                @Override
+                public void OnLoadingComplete() {
+                    cloneRemoteDBIntoLocalDB();
+                }
+            });
 
         }
 
@@ -85,13 +95,18 @@ public class DatabaseManager {
 
         editor.putString(key, value);
         editor.apply();
+
+        Log.i("DatabaseDebug", "Id save key: " + key + " value: "+value);
     }
 
     public String loadString(String key, String defalultValue) {
         Context context = GlobalApplicationContext.getAppContext();
 
         SharedPreferences pref = context.getSharedPreferences(LOCAL_PREF, Context.MODE_PRIVATE);
-        return pref.getString(key, defalultValue);
+
+        String result = pref.getString(key, defalultValue);
+        Log.i("DatabaseDebug", "Id loaded: " + result);
+        return result;
     }
 
 

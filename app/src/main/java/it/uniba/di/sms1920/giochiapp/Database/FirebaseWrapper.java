@@ -27,6 +27,7 @@ public class FirebaseWrapper implements IGameDatabase {
         if(id.equals(UsersManager.DEFAULT_ID)) {
             id = myRef.push().getKey();
         }
+        Log.i("FirebaseTest", "id created: " +id);
 
         myRef = database.getReference().child(id);
         myRef.setValue(user);
@@ -44,8 +45,6 @@ public class FirebaseWrapper implements IGameDatabase {
 
                 Log.i("FirebaseTest", "data read: "+dataSnapshot.toString());
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Log.i("FirebaseTest", "single data read: "+data.toString());
-
                     User value = data.getValue(User.class);
                     onUserLoadedListener.onUserLoaded(data.getKey(), value);
                     Log.i("FirebaseTest", "user read: "+value.toString());

@@ -74,4 +74,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        UsersManager.getInstance().saveCurrentUser();
+    }
 }

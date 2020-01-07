@@ -28,12 +28,17 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     final static String[] columns = {_ID, NICKNAME, SCORE_2048, SCORE_HELICOPTER, SCORE_ALIENRUN, SCORE_TETRIS};
 
-    final public static String CREATE_CMD =
+    final static String CREATE_CMD =
             "CREATE TABLE " + TABLE_NAME_USERSCORES + "("
-                    + _ID + " TEXT PRIMARY KEY, "
-                    + NICKNAME + " TEXT , " + SCORE_2048 + " TEXT , " + SCORE_ALIENRUN + " TEXT , "
-                    + SCORE_HELICOPTER + " TEXT , " + SCORE_TETRIS + " TEXT , " + SCORE_FROGGER + " TEXT);";
+                    + _ID + " TEXT PRIMARY KEY, " + NICKNAME + " TEXT , "
+                    + SCORE_2048 + " INTEGER , "
+                    + SCORE_ALIENRUN + " INTEGER , "
+                    + SCORE_HELICOPTER + " INTEGER , "
+                    + SCORE_TETRIS + " INTEGER , "
+                    + SCORE_FROGGER + " INTEGER);";
 
+    final static String CHECK_CONTAINS_CMD = "SELECT * FROM "+DBOpenHelper.TABLE_NAME_USERSCORES+" WHERE "+DBOpenHelper._ID+"='[x]';";
+    final static String CHECK_KEY_ID_REPLACE = "[x]";
 
     public DBOpenHelper(Context context) {
         super(context, NOME_DB, null, VERSION);
@@ -51,19 +56,38 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     public void saveScores(SQLiteDatabase db, String id, User user) {
+        Cursor cursor_userscores = db.rawQuery(CHECK_CONTAINS_CMD.replace(CHECK_KEY_ID_REPLACE, id), null);
 
-        ContentValues values = new ContentValues();
+        if(cursor_userscores.getCount() > 0) {
 
-        values.put(_ID, id);
-        values.put(NICKNAME, user.name);
-        values.put(SCORE_2048, String.valueOf(user.score2048));
-        values.put(SCORE_HELICOPTER, String.valueOf(user.scoreHelicopter));
-        values.put(SCORE_ALIENRUN, String.valueOf(user.scoreAlienrun));
-        values.put(SCORE_TETRIS, String.valueOf(user.scoreTetris));
-        values.put(SCORE_FROGGER, String.valueOf(user.scoreFrogger));
+            ContentValues values = new ContentValues();
 
-        db.insert(DBOpenHelper.TABLE_NAME_USERSCORES, null, values);
-        values.clear();
+            values.put(NICKNAME, user.name);
+            values.put(SCORE_2048, String.valueOf(user.score2048));
+            values.put(SCORE_HELICOPTER, String.valueOf(user.scoreHelicopter));
+            values.put(SCORE_ALIENRUN, String.valueOf(user.scoreAlienrun));
+            values.put(SCORE_TETRIS, String.valueOf(user.scoreTetris));
+            values.put(SCORE_FROGGER, String.valueOf(user.scoreFrogger));
+
+            db.update(DBOpenHelper.TABLE_NAME_USERSCORES, values,
+                    _ID + "='" + id +"'", null);
+
+        } else {
+            ContentValues values = new ContentValues();
+
+            values.put(_ID, id);
+            values.put(NICKNAME, user.name);
+            values.put(SCORE_2048, String.valueOf(user.score2048));
+            values.put(SCORE_HELICOPTER, String.valueOf(user.scoreHelicopter));
+            values.put(SCORE_ALIENRUN, String.valueOf(user.scoreAlienrun));
+            values.put(SCORE_TETRIS, String.valueOf(user.scoreTetris));
+            values.put(SCORE_FROGGER, String.valueOf(user.scoreFrogger));
+
+            db.insert(DBOpenHelper.TABLE_NAME_USERSCORES, null, values);
+            values.clear();
+        }
+
+        cursor_userscores.close();
     }
 
 
@@ -79,16 +103,18 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             String id = cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(_ID));
             user.name = cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(NICKNAME));
 
-            user.score2048 = Integer.parseInt(cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_2048)));
-            user.scoreHelicopter =Integer.parseInt(cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_HELICOPTER)));
-            user.scoreAlienrun = Integer.parseInt(cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_ALIENRUN)));
-            user.scoreTetris = Integer.parseInt(cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_TETRIS)));
-            user.scoreFrogger = Integer.parseInt(cursor_userscores.getString(cursor_userscores.getColumnIndexOrThrow(SCORE_FROGGER)));
+            user.score2048 = cursor_userscores.getInt(cursor_userscores.getColumnIndexOrThrow(SCORE_2048));
+            user.scoreHelicopter = cursor_userscores.getInt(cursor_userscores.getColumnIndexOrThrow(SCORE_HELICOPTER));
+            user.scoreAlienrun = cursor_userscores.getInt(cursor_userscores.getColumnIndexOrThrow(SCORE_ALIENRUN));
+            user.scoreTetris = cursor_userscores.getInt(cursor_userscores.getColumnIndexOrThrow(SCORE_TETRIS));
+            user.scoreFrogger = cursor_userscores.getInt(cursor_userscores.getColumnIndexOrThrow(SCORE_FROGGER));
 
             cursor_userscores.moveToNext();
 
             userLoadedListener.onUserLoaded(id, user);
         }
         userLoadedListener.onLoadCompleted();
+
+        cursor_userscores.close();
     }
 }
