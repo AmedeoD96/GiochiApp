@@ -48,4 +48,14 @@ public class MainActivity extends AppCompatActivity {
             setContentView(gv);
         }
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //chiamare il metodo di salvataggio su database
+
+    }
+
+
 }
