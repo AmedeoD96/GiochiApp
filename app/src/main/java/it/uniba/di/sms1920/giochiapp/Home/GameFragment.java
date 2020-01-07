@@ -3,6 +3,7 @@ package it.uniba.di.sms1920.giochiapp.Home;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,13 @@ public class GameFragment extends Fragment {
     private List<Game> gameList;
     private RecyclerView recyclerView;
 
+    private Game tetris;
+    private Game game2048;
+    private Game endless;
+    private Game elicottero;
+    private Game frogger;
+
+
     public GameFragment(){
         //Deve essere vuoto
     }
@@ -44,6 +52,12 @@ public class GameFragment extends Fragment {
         GameAdapter mAdapter = new GameAdapter(gameList);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        tetris.setHighScore(getTetrisHighScore());
+        game2048.setHighScore(get2048HighScore());
+        elicottero.setHighScore(getHelicopterHighScore());
+        endless.setHighScore(getScoreEndless());
+        frogger.setHighScore(getScoreFrogger());
         return view;
     }
 
@@ -52,20 +66,20 @@ public class GameFragment extends Fragment {
     }
 
     private void createElement(){
-        Game tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.tetris_launch_app);
+        tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.tetris_launch_app);
         gameList.add(tetris);
 
-        Game game2048 = new Game("2048", get2048HighScore(), R.drawable.game2048);
+        game2048 = new Game("2048", get2048HighScore(), R.drawable.game2048);
         gameList.add(game2048);
 
-        Game endless = new Game("Endless", getScoreEndless(), R.drawable.endless);
+        endless = new Game("Endless", getScoreEndless(), R.drawable.endless);
         gameList.add(endless);
 
-        Game elicottero = new Game("Elicottero", getHelicopterHighScore(), R.drawable.helicopterrun);
+        elicottero = new Game("Elicottero", getHelicopterHighScore(), R.drawable.helicopterrun);
         gameList.add(elicottero);
 
         //Aggiusta questo
-        Game frogger = new Game("Frogger", getScoreFrogger(), R.drawable.frog);
+        frogger = new Game("Frogger", getScoreFrogger(), R.drawable.frog);
         gameList.add(frogger);
     }
 
@@ -100,4 +114,43 @@ public class GameFragment extends Fragment {
         int highScore = frogger.getInt("TopScoreFrogger", 0);
         return highScore;
     }
+
+    @Override
+    public void onResume() {
+        //serve per avere il best score nella home premendo il tasto indietro di android. 
+        super.onResume();
+
+        gameList.remove(tetris);
+        gameList.remove(game2048);
+        gameList.remove(elicottero);
+        gameList.remove(endless);
+        gameList.remove(frogger);
+
+        GameAdapter mAdapter = new GameAdapter(gameList);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        createElement();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        tetris.setHighScore(getTetrisHighScore());
+        game2048.setHighScore(get2048HighScore());
+        elicottero.setHighScore(getHelicopterHighScore());
+        endless.setHighScore(getScoreEndless());
+        frogger.setHighScore(getScoreFrogger());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        tetris.setHighScore(getTetrisHighScore());
+        game2048.setHighScore(get2048HighScore());
+        elicottero.setHighScore(getHelicopterHighScore());
+        endless.setHighScore(getScoreEndless());
+        frogger.setHighScore(getScoreFrogger());
+    }
+
+
 }
