@@ -251,7 +251,7 @@ public class TetrisCtrl extends View {
         if( mTopScore < mScore ) {
             mTopScore = mScore;
             SharedPreferences.Editor edit = mPref.edit();
-            edit.putInt("TopScore", mTopScore);
+            edit.putInt("TopScoreTetris", mTopScore);
             edit.commit();
         }
         return filledCount;

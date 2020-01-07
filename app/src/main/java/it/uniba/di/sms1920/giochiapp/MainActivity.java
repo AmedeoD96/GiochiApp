@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    //Metodi per la toolbar superiore
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
