@@ -39,21 +39,22 @@
 
                     <TextView
                         android:id="@+id/tvGameName"
-                        android:layout_width="235dp"
+                        android:layout_width="184dp"
                         android:layout_height="match_parent"
                         android:background="#4caf50"
                         android:text="João Pereira"
                         android:textColor="@color/black"
                         android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold" />"
 
                     <TextView
                         android:id="@+id/tvHighScore"
-                        android:layout_width="131dp"
+                        android:layout_width="177dp"
                         android:layout_height="42dp"
                         android:background="#4caf50"
                         android:text="High score: "
                         android:textColor="@color/black"
+                        android:layout_gravity="right"
                         android:textSize="18sp" />
                 </LinearLayout>
 
