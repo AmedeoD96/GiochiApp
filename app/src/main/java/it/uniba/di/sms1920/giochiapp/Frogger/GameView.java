@@ -50,9 +50,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     boolean wasRunning;
 
-    Context context = GlobalApplicationContext.getAppContext();
-    SharedPreferences pref = context.getSharedPreferences("info", Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = pref.edit();
 
     public GameView(Context context) {
         super(context);
@@ -173,12 +170,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         frog.setX(frog.getxStart());
         inWater = false;
 
-        int highScore = pref.getInt("TopScore", 0);
 
-        if(highScore<points) {
-            editor.putInt("TopScoreFrogger", points);
-            editor.apply();
-        }
     }
 
     public void score(){
@@ -367,12 +359,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             paint.setARGB(225,99, 65, 65);
             canvas.drawText("score", canvas.getWidth()-logBitmap.getWidth(),0, paint);
 
-            int highScore = pref.getInt("TopScoreFrogger", 0);
-
-            if(highScore<points) {
-                editor.putInt("TopScoreFrogger", points);
-                editor.apply();
-            }
         }
 
         collision();
