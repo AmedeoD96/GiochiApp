@@ -39,7 +39,7 @@
 
                     <TextView
                         android:id="@+id/tvGameName"
-                        android:layout_width="251dp"
+                        android:layout_width="235dp"
                         android:layout_height="match_parent"
                         android:background="#4caf50"
                         android:text="João Pereira"
