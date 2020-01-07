@@ -30,7 +30,8 @@ public class Game {
         return image;
     }
 
-    public void setHighScore(int highScore) {
-        this.highScore = highScore;
+    public void setHighScore(int maxhishscore) {
+        highScore = maxhishscore;
     }
+
 }
