@@ -10,6 +10,8 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
+import it.uniba.di.sms1920.giochiapp.User;
+import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -27,7 +29,7 @@ public class GameplayScene implements Scene {
 
     private OrientationData orientationData;
     private long frameTime;
-    Context context = GlobalApplicationContext.getAppContext();
+    //Context context = GlobalApplicationContext.getAppContext();
 
     public GameplayScene() {
         player = new RectPlayer(new Rect(100,100,200,200), Color.rgb(255,0,0));
@@ -88,8 +90,9 @@ public class GameplayScene implements Scene {
 
         if(gameOver) {
 
-            SharedPreferences endless = context.getSharedPreferences("info", MODE_PRIVATE);
-            int highScore = endless.getInt("TopScoreEndless", 0);
+            //SharedPreferences endless = context.getSharedPreferences("info", MODE_PRIVATE);
+            //int highScore = endless.getInt("TopScoreEndless", 0);
+            User user = UsersManager.getInstance().getCurrentUser();
             Paint paint = new Paint();
             paint.setTextSize(100);
             paint.setColor(Color.GREEN);
@@ -98,7 +101,7 @@ public class GameplayScene implements Scene {
             int xPos = (canvas.getWidth() / 2);
             int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) ;
             canvas.drawText("Game Over", xPos, yPos, paint);
-            canvas.drawText("High score: " + highScore, xPos, 100+ yPos, paint);
+            canvas.drawText("High score: " + user.scoreAlienrun, xPos, 100+ yPos, paint);
 
         }
     }

@@ -51,9 +51,8 @@
                         android:id="@+id/tvHighScore"
                         android:layout_width="177dp"
                         android:layout_height="match_parent"
-
                         android:background="#4caf50"
-                        android:text="High score: 300"
+                        android:text="High score: "
                         android:paddingEnd="8dp"
                         android:textAlignment="textEnd"
                         android:textColor="@color/black"

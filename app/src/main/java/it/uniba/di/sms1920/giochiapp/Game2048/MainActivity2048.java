@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 
+import it.uniba.di.sms1920.giochiapp.User;
+import it.uniba.di.sms1920.giochiapp.UsersManager;
+
 public class MainActivity2048 extends AppCompatActivity {
     private static final String WIDTH = "width";
     private static final String HEIGHT = "height";
@@ -66,6 +69,7 @@ public class MainActivity2048 extends AppCompatActivity {
 
 
     private void save() {
+        User user = UsersManager.getInstance().getCurrentUser();
         SharedPreferences settings = this.getSharedPreferences("info", MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         Tile[][] field = view.game.grid.field;
@@ -93,7 +97,14 @@ public class MainActivity2048 extends AppCompatActivity {
         editor.putBoolean(CAN_UNDO, view.game.canUndo);
         editor.putInt(GAME_STATE, view.game.gameState);
         editor.putInt(UNDO_GAME_STATE, view.game.lastGameState);
-        editor.commit();
+        editor.apply();
+
+        //TODO se possibile cambiare il tipo nel metodo del db da int a long
+
+        int highScore = Integer.parseInt(String.valueOf(view.game.highScore));
+
+        //Salvo sul db
+        user.setScore2048(highScore);
     }
 
     protected void onResume() {

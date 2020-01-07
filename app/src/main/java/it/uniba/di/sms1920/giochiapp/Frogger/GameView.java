@@ -45,6 +45,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     Heart heart;
     boolean started;
     SharedPreferences mPref=null;
+    //TODO salvare sul db e non sulle shared. Lo deve fare Alessia altrimenti si arrabbia
 
     public void setWasRunning(boolean wasRunning) {
         this.wasRunning = wasRunning;

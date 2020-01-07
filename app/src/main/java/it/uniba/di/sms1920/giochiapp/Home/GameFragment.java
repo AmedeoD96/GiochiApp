@@ -111,7 +111,7 @@ public class GameFragment extends Fragment {
         // int highScore = endless.getInt("TopScoreEndless", 0);
         // return highScore;
 
-        return UsersManager.getInstance().getCurrentUser().scoreHelicopter;
+        return UsersManager.getInstance().getCurrentUser().scoreAlienrun;
     }
 
     private int getScoreFrogger() {

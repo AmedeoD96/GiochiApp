@@ -37,6 +37,7 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
     public void onBindParentViewHolder(TitleParentViewHolder titleParentViewHolder, int i, Object o) {
         TitleParent title = (TitleParent)o;
         titleParentViewHolder._textView.setText(title.getTitle());
+        titleParentViewHolder._score.setText(title.getGlobalScore());
 
     }
 
@@ -48,6 +49,12 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         titleChildViewHolder.alienRun.setText(title.getAlienRun());
         titleChildViewHolder.rocket.setText(title.getRocket());
         titleChildViewHolder.frogger.setText(title.getFrogger());
+
+        titleChildViewHolder.tetrisScore.setText(title.getScoreTetris());
+        titleChildViewHolder.score2048.setText(title.getScore2048());
+        titleChildViewHolder.scoreAlien.setText(title.getAlienRunScore());
+        titleChildViewHolder.scoreRocket.setText(title.getRocketScore());
+        titleChildViewHolder.scoreFrog.setText(title.getFroggerScore());
 
     }
 }

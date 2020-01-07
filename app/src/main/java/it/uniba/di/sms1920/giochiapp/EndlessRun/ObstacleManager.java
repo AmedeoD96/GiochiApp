@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
+import it.uniba.di.sms1920.giochiapp.User;
+import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class ObstacleManager {
     private ArrayList<Obstacle> obstacles;
@@ -65,10 +67,14 @@ public class ObstacleManager {
         }
     }
 
-
+/*
     Context context = GlobalApplicationContext.getAppContext();
     SharedPreferences pref = context.getSharedPreferences("info", Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = pref.edit();
+
+ */
+
+    User user = UsersManager.getInstance().getCurrentUser();
 
     public void update() {
         if (startTime < Constants.INIT_TIME) {
@@ -87,12 +93,19 @@ public class ObstacleManager {
             obstacles.remove(obstacles.size()-1);
             score++;
 
-            int highScore = pref.getInt("TopScore", 0);
+            //TODO verificare il funzionamento chiudendo in vari modi il gioco
+            //Salvataggio dati endlss
+            if(user.scoreAlienrun < score){
+                user.setScoreAlienrun(score);
+            }
 
-            if(highScore<score) {
+            //int highScore = pref.getInt("TopScore", 0);
+
+            /*if(highScore<score) {
                 editor.putInt("TopScoreEndless", score);
                 editor.apply();
             }
+             */
         }
 
     }

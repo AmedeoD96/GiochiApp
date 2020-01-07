@@ -11,8 +11,10 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
+import android.os.UserManager;
 import android.view.View;
 
+import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class TetrisCtrl extends View {
@@ -253,8 +255,11 @@ public class TetrisCtrl extends View {
             edit.putInt("TopScoreTetris", mTopScore);
             edit.commit();
         }*/
-        if(UsersManager.getInstance().getCurrentUser().scoreTetris < mScore) {
-            UsersManager.getInstance().getCurrentUser().setScoreTetris(mScore);
+
+        User user = UsersManager.getInstance().getCurrentUser();
+
+        if(user.scoreTetris < mScore) {
+            user.setScoreTetris(mScore);
             // SharedPreferences.Editor edit = mPref.edit();
             // edit.putInt("TopScoreTetris", mTopScore);
             // edit.commit();

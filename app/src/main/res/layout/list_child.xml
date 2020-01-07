@@ -13,11 +13,11 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/tetris"
+            android:id="@+id/scoreGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Option 1"
+            android:text="Tetris"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,9 +26,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Option 1"
+            android:text="2048"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tetris" />
+            app:layout_constraintTop_toBottomOf="@id/score1" />
 
         <TextView
             android:id="@+id/alienRun"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/game2048"
             android:padding="8dp"
-            android:text="Option 1"
+            android:text="Alien Run"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/game2048" />
 
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/alienRun"
             android:padding="8dp"
-            android:text="Option 1"
+            android:text="Rocket"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alienRun" />
 
@@ -56,17 +56,17 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/rocket"
             android:padding="8dp"
-            android:text="Option 1"
+            android:text="Frogger"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rocket" />
 
         <TextView
-            android:id="@+id/tetrisSCore"
+            android:id="@+id/score1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="SCore"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tetris"
+            app:layout_constraintBaseline_toBaselineOf="@+id/scoreGame"
             app:layout_constraintEnd_toEndOf="parent" />
         <TextView
             android:id="@+id/score2048"

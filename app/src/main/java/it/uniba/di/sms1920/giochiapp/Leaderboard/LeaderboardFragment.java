@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
+import it.uniba.di.sms1920.giochiapp.User;
+import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class LeaderboardFragment extends Fragment {
     Context context = GlobalApplicationContext.getAppContext();
@@ -46,6 +48,7 @@ public class LeaderboardFragment extends Fragment {
         return view;
     }
 
+    //TODO settare i punteggi per singolo gioco
     private List<ParentObject> initData() {
         TitleCreator titleCreator = TitleCreator.get(context);
         List<TitleParent> titles = titleCreator.getAll();

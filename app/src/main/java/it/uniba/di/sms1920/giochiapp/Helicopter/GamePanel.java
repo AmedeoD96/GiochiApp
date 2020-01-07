@@ -20,6 +20,8 @@ import java.util.Random;
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 
 import it.uniba.di.sms1920.giochiapp.R;
+import it.uniba.di.sms1920.giochiapp.User;
+import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static final int WIDTH=856;
@@ -48,10 +50,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private boolean started;
     private int best;
 
+    //FIXME il salvataggio non funziona
+    User user = UsersManager.getInstance().getCurrentUser();
 
-    Context context = getContext();
-    SharedPreferences pref = context.getSharedPreferences("info", Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = pref.edit();
+
+    //Context context = getContext();
+    //SharedPreferences pref = context.getSharedPreferences("info", Context.MODE_PRIVATE);
+    //SharedPreferences.Editor editor = pref.edit();
 
     BitmapFactory.Options o = new BitmapFactory.Options();
 
@@ -90,10 +95,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder){
         bg = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.grassbg1, o));
         player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter, o),65,25,3);
-        smoke = new ArrayList<Smokepuff>();
-        missiles = new ArrayList<Missile>();
-        topBorders = new ArrayList<TopBorder>();
-        bottomBorders = new ArrayList<BottomBorder>();
+        smoke = new ArrayList<>();
+        missiles = new ArrayList<>();
+        topBorders = new ArrayList<>();
+        bottomBorders = new ArrayList<>();
         missileStartTime = System.nanoTime();
         SmokeStartTime = System.nanoTime();
         thread = new MainThread(getHolder(),this);
@@ -122,6 +127,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
         return super.onTouchEvent(event);
     }
+
     public void update(){
         if(player.getPlaying()) {
             if(bottomBorders.isEmpty()){
@@ -147,11 +153,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 if(collision(bottomBorders.get(i),player)){
                     player.setPlaying(false);
 
-                    int highScore = pref.getInt("TopScore", 0);
+                    //int highScore = pref.getInt("TopScore", 0);
+                    int highScore = user.scoreHelicopter;
 
                     if(highScore<player.getScore()) {
-                        editor.putInt("TopScoreEndless", player.getScore());
-                        editor.apply();
+                        //editor.putInt("TopScoreEndless", player.getScore());
+                        //editor.apply();
+                        user.setScoreHelicopter(highScore);
                     }
                 }
             }
@@ -160,11 +168,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 if(collision(topBorders.get(i),player)){
                     player.setPlaying(false);
 
-                    int highScore = pref.getInt("TopScore", 0);
+                    //int highScore = pref.getInt("TopScore", 0);
+                    int highScore = user.scoreHelicopter;
 
                     if(highScore<player.getScore()) {
-                        editor.putInt("TopScoreEndless", player.getScore());
-                        editor.apply();
+                        //editor.putInt("TopScoreEndless", player.getScore());
+                        //editor.apply();
+                        user.setScoreHelicopter(highScore);
                     }
                 }
             }
@@ -196,11 +206,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     missiles.remove(i);
                     player.setPlaying(false);
 
-                    int highScore = pref.getInt("TopScore", 0);
+                    //int highScore = pref.getInt("TopScore", 0);
+                    int highScore = user.scoreHelicopter;
 
                     if(highScore<player.getScore()) {
-                        editor.putInt("TopScoreEndless", player.getScore());
-                        editor.apply();
+                        //editor.putInt("TopScoreEndless", player.getScore());
+                        //editor.apply();
+                        user.setScoreHelicopter(highScore);
                     }
                     break;
                 }
@@ -353,7 +365,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void drawText(Canvas canvas) {
-        best = pref.getInt("TopScoreHelicopter", 0);
+        //best = pref.getInt("TopScoreHelicopter", 0);
+        best = user.scoreHelicopter;
 
         Paint paint=new Paint();
         paint.setColor(Color.BLACK);
@@ -385,17 +398,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         minBorderHeight=5;
         maxBorderHeight=30;
 
-        //player.resetScore();
         player.setY(HEIGHT / 2);
         player.resetDY();
+        //int highScore = pref.getInt("TopScore", 0);
+        int highScore = user.scoreHelicopter;
 
-        if(player.getScore()>best){
-            best=player.getScore();
-
-            //Saving best score in shared preferences
-            editor.putInt("TopScoreHelicopter", best);
-            editor.apply();
+        if(highScore<player.getScore()) {
+            //editor.putInt("TopScoreEndless", player.getScore());
+            //editor.apply();
+            user.setScoreHelicopter(highScore);
         }
+
         player.resetScore();
 
 
