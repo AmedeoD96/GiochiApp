@@ -1,6 +1,7 @@
 package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,11 +11,16 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import it.uniba.di.sms1920.giochiapp.R;
+
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private MainThread thread;
 
     private SceneManager manager;
+
+    private Background bg;
+
 
     public GamePanel(Context context) {
         super(context);
@@ -40,6 +46,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceCreated(SurfaceHolder holder) {
         thread = new MainThread(getHolder(), this);
         Constants.INIT_TIME = System.currentTimeMillis();
+        bg = new Background(BitmapFactory.decodeResource(getResources(), R.drawable.sfondoendless));
         thread.setRunning(true);
         thread.start();
     }
@@ -70,6 +77,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
+        bg.update();
         manager.update();
     }
 
@@ -77,6 +85,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
+        bg.draw(canvas);
         manager.draw(canvas);
     }
 

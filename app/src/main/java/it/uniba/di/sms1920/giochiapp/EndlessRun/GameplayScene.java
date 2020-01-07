@@ -81,7 +81,7 @@ public class GameplayScene implements Scene {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawColor(Color.WHITE);
+        //canvas.drawColor(Color.WHITE);
 
         player.draw(canvas);
         obstacleManager.draw(canvas);

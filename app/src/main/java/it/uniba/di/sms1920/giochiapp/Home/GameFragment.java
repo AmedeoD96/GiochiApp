@@ -61,7 +61,7 @@ public class GameFragment extends Fragment {
         Game endless = new Game("Endless", getScoreEndless(), R.drawable.endless);
         gameList.add(endless);
 
-        Game elicottero = new Game("Elicottero", getHelicopterHighScore(), R.drawable.flappy);
+        Game elicottero = new Game("Elicottero", getHelicopterHighScore(), R.drawable.helicopterrun);
         gameList.add(elicottero);
 
         //Aggiusta questo
