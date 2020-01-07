@@ -18,10 +18,11 @@ import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     Frog frog;
@@ -43,6 +44,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     ArrayList<Integer> remove[];
     Heart heart;
     boolean started;
+    SharedPreferences mPref=null;
 
     public void setWasRunning(boolean wasRunning) {
         this.wasRunning = wasRunning;
@@ -80,7 +82,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             logRows[i]=new ArrayList<LogObj>();
         }
         waterBox = new Rect (0, logBitmap.getHeight()*2, getWidth(), ((LOGSTRIP-2)*logBitmap.getHeight())); //getWidth() dà 1080
-     //   se cambio left da 0 a getWidth() la rana mi cammina sull'acqua
+        //se cambio left da 0 a getWidth() la rana mi cammina sull'acqua
+        //il tronco sostitutivo dovrà avere altezza 40 px, devi ridimensionare l'immagine con paint
         frog.setY((LOGSTRIP-1)*logBitmap.getHeight());
         frog.setStart(frog.getX(), frog.getY());
         speeds = new int[logRows.length];
@@ -97,10 +100,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             speeds[i]=ran.nextInt(10)+3;
             //speeds[i] *= Math.signum(ran.nextFloat()-0.5);
         }
-        for (int i = 0; i < speeds.length; i+=2){
+        for (int i = 0; i < speeds.length; i+=2){ //le velocità pari vanno in un senso (moltiplicate per 1)
             speeds[i] *= 1;
         }
-        for (int i = 1; i < speeds.length; i+=2){
+        for (int i = 1; i < speeds.length; i+=2){ //le velocità dispari vanno nell'altro senso (moltiplicate per -1)
             speeds[i] *= -1;
         }
 
@@ -109,7 +112,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             Random ran = new Random();
             times[i]=ran.nextInt(2000)+1000;
         }
-        t = new Timer();
+        t = new Timer(); //NON VIENE PIU' USATA
 
 
         if(!wasRunning)
@@ -145,7 +148,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void collision(){
         if(!frog.getBox().intersect(0,0,getWidth(),getHeight()))hit();
 
-        if(frog.getBox().intersect(0,0,getWidth(),logBitmap.getHeight()*2))score();
+        if(frog.getBox().intersect(0,0,getWidth(),logBitmap.getHeight()*2))score(); //left top è il punto in alto a sinistra
 
         if(frog.getBox().intersect(waterBox)){
             inWater = true;
@@ -176,13 +179,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public void score(){
         points ++;
         if(points<0)points=0;
+
+        //salva dati
+        int highscore_stored_frogger;
+        highscore_stored_frogger=loadScore(GlobalApplicationContext.getAppContext());
+        if(points>=highscore_stored_frogger){
+            saveScore();
+        }
+
+        //reset gioco, usare la funzione di reset
         speeds = new int[logRows.length];
         times = new long[speeds.length];
         lastMils = new long[times.length];
         frog.setY(frog.getyStart());
         frog.setX(frog.getxStart());
         frog.setxVel(0);
-        for(long l : lastMils){
+        for(long l : lastMils){ //inutile
             l = System.currentTimeMillis();
         }
 
@@ -204,7 +216,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             times[i]=ran.nextInt(2000)+1000;
         }
 
-    }
+    }//cancellare e usare metodo reset
 
     public void reset(){
         points=0;
@@ -362,5 +374,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         collision();
+    }
+
+
+    public void saveScore(){
+
+        SharedPreferences.Editor editor = mPref.edit();
+        editor.putInt("highscore_frogger", points);
+        editor.commit();
+    }
+
+    public int loadScore(Context context){
+        int highscore_frogger;
+        mPref=context.getSharedPreferences("info", MODE_PRIVATE);
+        highscore_frogger = mPref.getInt("highscore_frogger", 0);
+        return highscore_frogger;
     }
 }
