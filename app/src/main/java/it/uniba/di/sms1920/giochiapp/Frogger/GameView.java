@@ -7,14 +7,20 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
+
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
@@ -381,10 +387,26 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         //qui cambia il colore nel caso di morte
         if(heart.getdead()==true){
+            /*
             paint.setARGB(140, 70, 70, 70);
             canvas.drawRect(0,0,canvas.getWidth(),canvas.getHeight(),paint);
             paint.setARGB(225,99, 65, 65);
             canvas.drawText("score", canvas.getWidth()-logBitmap.getWidth(),0, paint);
+             */
+
+            //HO IMPARATO COME SI METTONO I FONT. GUARDA MAMMA
+            Context context = GlobalApplicationContext.getAppContext();
+            Typeface customTypeface = ResourcesCompat.getFont(context, R.font.montserratalternatesblack);
+            Paint paintDeath = new Paint();
+            paintDeath.setTextSize(120);
+            paintDeath.setColor(Color.BLACK);
+            paintDeath.setTextAlign(Paint.Align.CENTER);
+            paint.setTypeface(customTypeface);
+            User user = UsersManager.getInstance().getCurrentUser();
+            int xPos = (canvas.getWidth() / 2);
+            int yPos = (int) ((canvas.getHeight() / 2) - ((paintDeath.descent() + paintDeath.ascent()) / 2)) ;
+            canvas.drawText("Game Over", xPos, yPos, paintDeath);
+            canvas.drawText("High score: " + user.scoreFrogger, xPos, 100+ yPos, paintDeath);
 
         }
 
