@@ -1,11 +1,10 @@
 package it.uniba.di.sms1920.giochiapp.Game2048;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.KeyEvent;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
@@ -70,8 +69,10 @@ public class MainActivity2048 extends AppCompatActivity {
 
     private void save() {
         User user = UsersManager.getInstance().getCurrentUser();
+
         SharedPreferences settings = this.getSharedPreferences("info", MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
+
         Tile[][] field = view.game.grid.field;
         Tile[][] undoField = view.game.grid.undoField;
         editor.putInt(WIDTH, field.length);

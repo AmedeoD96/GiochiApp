@@ -11,7 +11,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
-import android.os.UserManager;
 import android.view.View;
 
 import it.uniba.di.sms1920.giochiapp.User;

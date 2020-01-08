@@ -12,10 +12,11 @@ import it.uniba.di.sms1920.giochiapp.UsersManager;
 public class TitleCreator {
     static TitleCreator _titleCreator;
     List<TitleParent> _titleParents;
-    Map<String, User> users= UsersManager.getInstance().getAllUsers();
 
     public TitleCreator(Context context) {
         _titleParents = new ArrayList<>();
+
+        Map<String, User> users= UsersManager.getInstance().getAllUsers();
 
         for(Map.Entry<String, User> entry : users.entrySet()){
             TitleParent title = new TitleParent(entry.getValue().name, entry.getValue().getTotalScore());

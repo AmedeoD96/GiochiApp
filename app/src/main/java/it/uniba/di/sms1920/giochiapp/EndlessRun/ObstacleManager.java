@@ -1,18 +1,11 @@
 package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
 
-import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
-import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
 
@@ -74,7 +67,6 @@ public class ObstacleManager {
 
  */
 
-    User user = UsersManager.getInstance().getCurrentUser();
 
     public void update() {
         if (startTime < Constants.INIT_TIME) {
@@ -95,6 +87,7 @@ public class ObstacleManager {
 
             //TODO verificare il funzionamento chiudendo in vari modi il gioco
             //Salvataggio dati endlss
+            User user = UsersManager.getInstance().getCurrentUser();
             if(user.scoreAlienrun < score){
                 user.setScoreAlienrun(score);
             }

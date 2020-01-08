@@ -1,8 +1,6 @@
 package it.uniba.di.sms1920.giochiapp.Helicopter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,14 +8,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.SurfaceHolder;
-import android.view.View;
+import android.view.SurfaceView;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
@@ -49,9 +44,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private boolean disappear;
     private boolean started;
     private int best;
-
-    //FIXME il salvataggio non funziona
-    User user = UsersManager.getInstance().getCurrentUser();
 
 
     //Context context = getContext();
@@ -148,6 +140,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             if(maxBorderHeight>HEIGHT/4)maxBorderHeight=HEIGHT/4;
             minBorderHeight=5+player.getScore()/progressDenom;
 
+            User user = UsersManager.getInstance().getCurrentUser();
+
             //check bottom border collision
             for(int i=0;i<bottomBorders.size();i++){
                 if(collision(bottomBorders.get(i),player)){
@@ -156,10 +150,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     //int highScore = pref.getInt("TopScore", 0);
                     int highScore = user.scoreHelicopter;
 
-                    if(highScore<player.getScore()) {
+                    if(highScore < player.getScore()) {
                         //editor.putInt("TopScoreEndless", player.getScore());
                         //editor.apply();
-                        user.setScoreHelicopter(highScore);
+                        user.setScoreHelicopter(player.getScore());
                     }
                 }
             }
@@ -171,10 +165,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     //int highScore = pref.getInt("TopScore", 0);
                     int highScore = user.scoreHelicopter;
 
-                    if(highScore<player.getScore()) {
+                    if(highScore < player.getScore()) {
                         //editor.putInt("TopScoreEndless", player.getScore());
                         //editor.apply();
-                        user.setScoreHelicopter(highScore);
+                        user.setScoreHelicopter(player.getScore());
                     }
                 }
             }
@@ -212,7 +206,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     if(highScore<player.getScore()) {
                         //editor.putInt("TopScoreEndless", player.getScore());
                         //editor.apply();
-                        user.setScoreHelicopter(highScore);
+                        user.setScoreHelicopter(player.getScore());
                     }
                     break;
                 }
@@ -366,6 +360,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public void drawText(Canvas canvas) {
         //best = pref.getInt("TopScoreHelicopter", 0);
+        User user = UsersManager.getInstance().getCurrentUser();
         best = user.scoreHelicopter;
 
         Paint paint=new Paint();
@@ -401,12 +396,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         player.setY(HEIGHT / 2);
         player.resetDY();
         //int highScore = pref.getInt("TopScore", 0);
+        User user = UsersManager.getInstance().getCurrentUser();
         int highScore = user.scoreHelicopter;
 
         if(highScore<player.getScore()) {
             //editor.putInt("TopScoreEndless", player.getScore());
             //editor.apply();
-            user.setScoreHelicopter(highScore);
+            user.setScoreHelicopter(player.getScore());
         }
 
         player.resetScore();
