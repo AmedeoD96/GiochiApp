@@ -3,6 +3,7 @@ package it.uniba.di.sms1920.giochiapp.Tetris;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -36,6 +37,10 @@ public class Tetris extends AppCompatActivity {
         mScreenSize.x = dm.widthPixels;
         mScreenSize.y = dm.heightPixels;
         mCellSize = (int)(mScreenSize.x / 8);
+
+        MediaPlayer mMediaPlayer= MediaPlayer.create(Tetris.this,R.raw.tetris);
+        mMediaPlayer.start();
+        mMediaPlayer.setLooping(true);
 
         initTetrisCtrl();
     }
