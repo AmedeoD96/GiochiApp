@@ -1,11 +1,13 @@
 package it.uniba.di.sms1920.giochiapp.Game2048;
 
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
 
@@ -21,6 +23,8 @@ public class MainActivity2048 extends AppCompatActivity {
     private static final String UNDO_GAME_STATE = "undo game state";
     private MainView view;
 
+    MediaPlayer mMediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +32,10 @@ public class MainActivity2048 extends AppCompatActivity {
 
         SharedPreferences settings = this.getSharedPreferences("info", MODE_PRIVATE);
         view.hasSaveState = settings.getBoolean("save_state", false);
+
+        mMediaPlayer= MediaPlayer.create(MainActivity2048.this, R.raw.d2048sunrise);
+        mMediaPlayer.start();
+        mMediaPlayer.setLooping(true);
 
         if (savedInstanceState != null) {
             if (savedInstanceState.getBoolean("hasState")) {
@@ -148,17 +156,20 @@ public class MainActivity2048 extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         save();
+        mMediaPlayer.stop();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         save();
+        mMediaPlayer.stop();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         save();
+        mMediaPlayer.stop();
     }
 }

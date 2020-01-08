@@ -2,7 +2,12 @@ package it.uniba.di.sms1920.giochiapp;
 
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import it.uniba.di.sms1920.giochiapp.Database.DatabaseManager;
@@ -135,6 +140,92 @@ public class UsersManager {
     }
 
 
+    public Collection<User> getAllUserSort(OrderType orderType, final boolean ascendentVsDescentend) {
+        Collection<User> collection = getAllUsers().values();
+        List<User> list = new ArrayList(collection);
+
+        switch (orderType) {
+            case TOTAL_SCORE:
+                Collections.sort(list, new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        return compareInt(o1.getTotalScore(), o2.getTotalScore(), ascendentVsDescentend);
+                    }
+                });
+                break;
+            case SCORE_HELICOPTER:
+                Collections.sort(list, new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        return compareInt(o1.scoreHelicopter, o2.scoreHelicopter, ascendentVsDescentend);
+                    }
+                });
+                break;
+            case SCORE_ALIENRUN:
+                Collections.sort(list, new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        return compareInt(o1.scoreAlienrun, o2.scoreAlienrun, ascendentVsDescentend);
+                    }
+                });
+                break;
+            case SCORE_2048:
+                Collections.sort(list, new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        return compareInt(o1.score2048, o2.score2048, ascendentVsDescentend);
+                    }
+                });
+                break;
+            case SCORE_TETRIS:
+                Collections.sort(list, new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        return compareInt(o1.scoreTetris, o2.scoreTetris, ascendentVsDescentend);
+                    }
+                });
+                break;
+            case SCORE_FROGGER:
+                Collections.sort(list, new Comparator<User>() {
+                    @Override
+                    public int compare(User o1, User o2) {
+                        return compareInt(o1.scoreFrogger, o2.scoreFrogger, ascendentVsDescentend);
+                    }
+                });
+                break;
+        }
+
+        return list;
+    }
+
+    int compareInt(int a, int b, boolean ascendentVsDescendent) {
+        if(ascendentVsDescendent) {
+            if(a > b) {
+                return 1;
+            } else if(a < b) {
+                return -1;
+            } else {
+                return 0;
+            }
+        } else {
+            if(a < b) {
+                return 1;
+            } else if(a > b) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    public enum OrderType {
+        TOTAL_SCORE,
+        SCORE_HELICOPTER,
+        SCORE_ALIENRUN,
+        SCORE_2048,
+        SCORE_TETRIS,
+        SCORE_FROGGER
+    }
 
 
     private void saveCurrentUserID() {

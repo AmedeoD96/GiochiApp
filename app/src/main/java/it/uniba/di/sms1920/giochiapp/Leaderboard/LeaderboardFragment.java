@@ -6,14 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
@@ -25,9 +28,11 @@ public class LeaderboardFragment extends Fragment {
     public TextView countTv;
     private RecyclerView recyclerView;
 
+
     public LeaderboardFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,24 +55,39 @@ public class LeaderboardFragment extends Fragment {
         return view;
     }
 
-    //TODO associare i punteggi all'utente che ha fatto quei punteggi
+
     private List<ParentObject> initData() {
         TitleCreator titleCreator = TitleCreator.get(context);
-        List<TitleParent> titles = titleCreator.getAll();
         List<ParentObject> parentObject = new ArrayList<>();
+        titleCreator.clearTitles();
 
-        Map<String, User> allUser = UsersManager.getInstance().getAllUsers();
-        int i = 0;
-        int j = 0;
-        List<Object> childList = new ArrayList<>();
+        Collection<User> allUser = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.TOTAL_SCORE, false);
 
+        for (User user : allUser) {
+            TitleParent title = new TitleParent(user.name, user.getTotalScore());
 
-        for(Map.Entry<String, User> user : allUser.entrySet()) {
-            childList.add(new TitleChild("Tetris", "2048", "Alien Run", "Rocket", "Frogger",
-                    user.getValue().scoreTetris, user.getValue().score2048, user.getValue().scoreAlienrun, user.getValue().scoreHelicopter, user.getValue().scoreFrogger));
-            titles.get(i).setChildObjectList(childList);
-            parentObject.add(titles.get(i));
+            List<Object> childList = new ArrayList<>();
+
+            childList.add(new TitleChild(
+                            "Tetris",
+                            "2048",
+                            "Alien Run",
+                            "Rocket",
+                            "Frogger",
+                            user.scoreTetris,
+                            user.score2048,
+                            user.scoreAlienrun,
+                            user.scoreHelicopter,
+                            user.scoreFrogger
+                    )
+            );
+
+            title.setChildObjectList(childList);
+            titleCreator.addTitle(title);
+            parentObject.add(title);
         }
+
         return parentObject;
     }
+
 }

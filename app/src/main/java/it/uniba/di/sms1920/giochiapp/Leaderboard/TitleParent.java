@@ -3,7 +3,6 @@ package it.uniba.di.sms1920.giochiapp.Leaderboard;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
-import java.util.UUID;
 
 public class TitleParent implements ParentObject {
 
