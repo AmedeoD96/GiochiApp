@@ -1,7 +1,6 @@
 package it.uniba.di.sms1920.giochiapp.Frogger;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -9,22 +8,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextPaint;
-import android.view.MotionEvent;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 
-import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     Frog frog;
@@ -48,7 +43,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     boolean started;
     //SharedPreferences mPref=null;
 
-    User user = UsersManager.getInstance().getCurrentUser();
 
     public void setWasRunning(boolean wasRunning) {
         this.wasRunning = wasRunning;
@@ -188,8 +182,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
        /* int highscore_stored_frogger;
         highscore_stored_frogger=loadScore(GlobalApplicationContext.getAppContext());
         */
+        User user = UsersManager.getInstance().getCurrentUser();
         if(points>=user.scoreFrogger){
-            saveScore();
+            user.setScoreFrogger(points);
         }
 
         //reset gioco, usare la funzione di reset
@@ -368,7 +363,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         textPaint.setTextSize(150);
 
         canvas.drawText(points + "", canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight()+50, textPaint);
-        saveScore();
 
 
         if(heart.getdead()==true){
@@ -380,16 +374,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         collision();
-    }
-
-
-    public void saveScore(){
-    /*
-        SharedPreferences.Editor editor = mPref.edit();
-        editor.putInt("highscore_frogger", points);
-        editor.commit();
-        */
-        user.setScoreFrogger(points);
     }
 
 
