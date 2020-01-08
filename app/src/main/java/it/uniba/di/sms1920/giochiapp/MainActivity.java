@@ -50,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
             switch (menuItem.getItemId()){
                 case R.id.navigation_home:
                     fragmentManager.beginTransaction().hide(active).show(fragment1).commit();
+                    fragmentManager.beginTransaction().hide(setting).commit();
                     active = fragment1;
                     return  true;
                 case R.id.navigation_leaderboard:
                     fragmentManager.beginTransaction().hide(active).show(fragment2).commit();
+                    fragmentManager.beginTransaction().hide(setting).commit();
                     active = fragment2;
                     return true;
             }
