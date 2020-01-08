@@ -3,6 +3,7 @@ package it.uniba.di.sms1920.giochiapp.Tetris;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -22,6 +23,7 @@ public class Tetris extends AppCompatActivity {
     Point mMousePos = new Point(-1, -1);
     int mCellSize = 0;
     boolean mIsTouchMove = false;
+    MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,10 @@ public class Tetris extends AppCompatActivity {
         mScreenSize.x = dm.widthPixels;
         mScreenSize.y = dm.heightPixels;
         mCellSize = (int)(mScreenSize.x / 8);
+
+        mMediaPlayer= MediaPlayer.create(Tetris.this,R.raw.tetris);
+        mMediaPlayer.start();
+        mMediaPlayer.setLooping(true);
 
         initTetrisCtrl();
     }
@@ -88,6 +94,7 @@ public class Tetris extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         mTetrisCtrl.pauseGame();
+        mMediaPlayer.stop();
     }
 
     @Override
@@ -111,5 +118,17 @@ public class Tetris extends AppCompatActivity {
                 mTetrisCtrl.block2Rotate();
                 break;*/
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mMediaPlayer.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMediaPlayer.stop();
     }
 }
