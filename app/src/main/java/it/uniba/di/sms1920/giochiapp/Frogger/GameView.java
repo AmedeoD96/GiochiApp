@@ -170,8 +170,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         frog.setY(frog.getyStart());
         frog.setX(frog.getxStart());
         inWater = false;
-
-
     }
 
     public void score(){

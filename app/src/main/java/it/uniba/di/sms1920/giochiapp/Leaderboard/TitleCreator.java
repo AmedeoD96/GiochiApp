@@ -4,10 +4,6 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import it.uniba.di.sms1920.giochiapp.User;
-import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class TitleCreator {
     static TitleCreator _titleCreator;
@@ -15,23 +11,24 @@ public class TitleCreator {
 
     public TitleCreator(Context context) {
         _titleParents = new ArrayList<>();
-
-        Map<String, User> users= UsersManager.getInstance().getAllUsers();
-
-        for(Map.Entry<String, User> entry : users.entrySet()){
-            TitleParent title = new TitleParent(entry.getValue().name, entry.getValue().getTotalScore());
-            _titleParents.add(title);
-        }
     }
 
     public static TitleCreator get(Context context) {
-        if(_titleCreator == null)
+        if(_titleCreator == null) {
             _titleCreator = new TitleCreator(context);
+        }
         return _titleCreator;
     }
 
-    public List<TitleParent> getAll() {
-        return _titleParents;
+    public void clearTitles() {
+        _titleParents.clear();
     }
+
+    public void addTitle(TitleParent titleParent) {
+        if(!_titleParents.contains(titleParent)) {
+            _titleParents.add(titleParent);
+        }
+    }
+
 }
 
