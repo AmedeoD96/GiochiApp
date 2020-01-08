@@ -12,11 +12,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
-
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
@@ -42,6 +40,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     Heart heart;
     boolean started;
     //SharedPreferences mPref=null;
+    Animation water_anim;
+    AnimationManager animationManager;
 
 
     public void setWasRunning(boolean wasRunning) {
@@ -56,6 +56,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         getHolder().addCallback(this);
 
         logBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.log);
+
+        //water=BitmapFactory.decodeResource(getResources(), R.drawable.water);
+        waterAnim();
 
         frog = new Frog(BitmapFactory.decodeResource(getResources(), R.drawable.frog), logBitmap.getHeight());
         thread = new GameThread(getHolder(), this);
@@ -161,6 +164,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             }
             if(inWater)hit();
         }
+
+        //todo fare in modo che Bulbasaur non cammini sull'acqua quando vado a dx o sx sul log
     }
 
     public  void hit(){
@@ -276,21 +281,25 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     angle += 360;
                 }
                 if(angle > 225 && angle < 315){
+                    frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frog));
                     frog.frogJump(0,-1);
                     frog.setxVel(0);
                     Log.d("Direction", "Up");
                 }
                 else if (angle > 135 && angle < 225){
+                    frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogsx));
                     frog.frogJump(-1,0);
                     frog.setxVel(0);
                     Log.d("Direction", "Left");
                 }
                 else if (angle > 45 && angle < 135){
+                    frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogdown));
                     frog.frogJump(0,1);
                     frog.setxVel(0);
                     Log.d("Direction", "Down");
                 }
                 else{
+                    frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogright));
                     frog.frogJump(1,0);
                     frog.setxVel(0);
                     Log.d("Direction", "Right");
@@ -343,12 +352,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+
     @Override
     public void onDraw(Canvas canvas){
+
+
         if (!started) {
             return;
         }
-        canvas.drawColor(Color.BLUE);
+        animationManager.playAnim(0);
+        animationManager.update();
+        animationManager.draw(canvas,waterBox);
+
+
         spawnLogs(System.currentTimeMillis(), canvas);
         Paint paint = new Paint();
         paint.setColor(Color.GREEN);
@@ -376,5 +392,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         collision();
     }
 
+    public void waterAnim(){
+        Bitmap water = BitmapFactory.decodeResource(getResources(), R.drawable.water);
+        Bitmap waterflip = BitmapFactory.decodeResource(getResources(), R.drawable.waterflip);
+        Bitmap waterflop = BitmapFactory.decodeResource(getResources(), R.drawable.waterflop);
 
+        water_anim=new Animation(new Bitmap[]{water,waterflip, waterflop}, 2, false);
+
+        animationManager= new AnimationManager(new Animation[]{water_anim});
+    }
 }

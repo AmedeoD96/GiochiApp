@@ -83,8 +83,11 @@ public class LogObj {
 
 
      public void draw(Canvas canvas) {
+         box = new Rect((int)getX(), (int)getY(),(int)(getX()+getBitmap().getWidth()), (int)(getY()+getBitmap().getHeight()));
          canvas.drawBitmap(bitmap, x, y, null);
          x += xVel;
-         box = new Rect((int)getX(), (int)getY(),(int)(getX()+getBitmap().getWidth()), (int)(getY()+getBitmap().getHeight()));
+
+
+
      }
  }

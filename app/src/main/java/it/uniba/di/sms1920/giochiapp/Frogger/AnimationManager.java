@@ -2,11 +2,10 @@ package it.uniba.di.sms1920.giochiapp.Frogger;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-
-import it.uniba.di.sms1920.giochiapp.EndlessRun.Animation;
+import android.util.Log;
 
 public class AnimationManager {
-    private it.uniba.di.sms1920.giochiapp.EndlessRun.Animation[] animations;
+    private Animation[] animations;
     private int animationIndex = 0;
 
     public AnimationManager(Animation[] animations) {
@@ -28,6 +27,7 @@ public class AnimationManager {
 
 
     public void draw(Canvas canvas, Rect rect) {
+        Log.i("isplaying", String.valueOf(animations[animationIndex].isPlaying()));
         if (animations[animationIndex].isPlaying()) {
             animations[animationIndex].draw(canvas, rect);
         }
