@@ -158,6 +158,4 @@ public class GameFragment extends Fragment {
         endless.setHighScore(getScoreEndless());
         frogger.setHighScore(getScoreFrogger());
     }
-
-
 }

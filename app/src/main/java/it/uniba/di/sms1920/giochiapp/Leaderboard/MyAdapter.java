@@ -1,6 +1,8 @@
 package it.uniba.di.sms1920.giochiapp.Leaderboard;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +57,5 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         titleChildViewHolder.scoreAlien.setText(title.getAlienRunScore());
         titleChildViewHolder.scoreRocket.setText(title.getRocketScore());
         titleChildViewHolder.scoreFrog.setText(title.getFroggerScore());
-
     }
 }

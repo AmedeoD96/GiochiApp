@@ -90,4 +90,18 @@ public class LeaderboardFragment extends Fragment {
         return parentObject;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        MyAdapter mAdapter = new MyAdapter(context, initData());
+
+
+        mAdapter.setParentClickableViewAnimationDefaultDuration();
+        mAdapter.setParentAndIconExpandOnClick(true);
+
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+    }
 }

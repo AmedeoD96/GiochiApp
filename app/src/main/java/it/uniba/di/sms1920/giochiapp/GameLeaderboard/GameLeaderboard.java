@@ -17,6 +17,7 @@ import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
 
 public class GameLeaderboard extends Fragment {
+    //TODO modificare il layout di fragment_single_leaderboard
     Context context = GlobalApplicationContext.getAppContext();
 
     private TextView gameName;
