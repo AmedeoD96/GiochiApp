@@ -99,9 +99,9 @@ public class MainActivity2048 extends AppCompatActivity {
         editor.putInt(UNDO_GAME_STATE, view.game.lastGameState);
         editor.apply();
 
-        //TODO se possibile cambiare il tipo nel metodo del db da int a long
-
-        int highScore = Integer.parseInt(String.valueOf(view.game.highScore));
+        Long longHighScore = new Long(view.game.highScore);
+        int highScore = longHighScore.intValue();
+        //int highScore2 = Integer.parseInt(String.valueOf(view.game.highScore));
 
         //Salvo sul db
         user.setScore2048(highScore);

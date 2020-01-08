@@ -47,7 +47,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     Heart heart;
     boolean started;
     //SharedPreferences mPref=null;
-    
+
     User user = UsersManager.getInstance().getCurrentUser();
 
     public void setWasRunning(boolean wasRunning) {
