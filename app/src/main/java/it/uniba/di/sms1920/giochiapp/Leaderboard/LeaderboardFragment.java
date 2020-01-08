@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
@@ -48,19 +50,24 @@ public class LeaderboardFragment extends Fragment {
         return view;
     }
 
-    //TODO settare i punteggi per singolo gioco
+    //TODO associare i punteggi all'utente che ha fatto quei punteggi
     private List<ParentObject> initData() {
         TitleCreator titleCreator = TitleCreator.get(context);
         List<TitleParent> titles = titleCreator.getAll();
         List<ParentObject> parentObject = new ArrayList<>();
-        for(TitleParent title:titles)
-        {
-            List<Object> childList = new ArrayList<>();
-            childList.add(new TitleChild("Tetris","2048", "Alien Run", "Rocket", "Frogger"));
-            title.setChildObjectList(childList);
-            parentObject.add(title);
+
+        Map<String, User> allUser = UsersManager.getInstance().getAllUsers();
+        int i = 0;
+        int j = 0;
+        List<Object> childList = new ArrayList<>();
+
+
+        for(Map.Entry<String, User> user : allUser.entrySet()) {
+            childList.add(new TitleChild("Tetris", "2048", "Alien Run", "Rocket", "Frogger",
+                    user.getValue().scoreTetris, user.getValue().score2048, user.getValue().scoreAlienrun, user.getValue().scoreHelicopter, user.getValue().scoreFrogger));
+            titles.get(i).setChildObjectList(childList);
+            parentObject.add(titles.get(i));
         }
         return parentObject;
-
     }
 }

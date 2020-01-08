@@ -14,8 +14,8 @@ public class TitleChild {
     private int rocketScore;
     private int froggerScore;
 
-    //TODO mettere nel costruttore i punteggi
-    public TitleChild(String tetris, String game2084, String alienRun, String rocket, String frogger) {
+
+    public TitleChild(String tetris, String game2084, String alienRun, String rocket, String frogger, int scoreTetris, int score2048, int alienRunScore, int rocketScore, int froggerScore) {
         this.tetris = tetris;
         this.game2084 = game2084;
         this.alienRun = alienRun;

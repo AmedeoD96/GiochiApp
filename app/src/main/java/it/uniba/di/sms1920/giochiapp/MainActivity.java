@@ -15,12 +15,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import it.uniba.di.sms1920.giochiapp.Home.GameFragment;
 import it.uniba.di.sms1920.giochiapp.Leaderboard.LeaderboardFragment;
+import it.uniba.di.sms1920.giochiapp.Setting.Setting;
 
 
 public class MainActivity extends AppCompatActivity {
 
     final Fragment fragment1 = new GameFragment();
     final Fragment fragment2 = new LeaderboardFragment();
+    final Fragment setting = new Setting();
     final FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment active = fragment1;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        fragmentManager.beginTransaction().add(R.id.main_container, setting, "3").hide(setting).commit();
         fragmentManager.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
         fragmentManager.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
     }
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
         User userTemp = UsersManager.getInstance().getCurrentUser();
         Log.i("USER_DEBUG", userTemp.toString());
+
+        fragmentManager.beginTransaction().hide(active).show(setting).commit();
 
         return super.onOptionsItemSelected(item);
     }
