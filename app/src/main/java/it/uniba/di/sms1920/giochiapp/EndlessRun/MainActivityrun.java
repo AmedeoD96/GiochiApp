@@ -1,13 +1,17 @@
 package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Window;
 import android.view.WindowManager;
 
+import it.uniba.di.sms1920.giochiapp.R;
+
 
 public class MainActivityrun extends Activity {
+    MediaPlayer mMediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +24,28 @@ public class MainActivityrun extends Activity {
         Constants.SCREEN_WIDTH = ds.widthPixels;
         Constants.SCREEN_HEIGHT = ds.heightPixels;
 
+        mMediaPlayer= MediaPlayer.create(MainActivityrun.this, R.raw.doodlejumpsong);
+        mMediaPlayer.start();
+        mMediaPlayer.setLooping(true);
 
         setContentView(new GamePanel(this));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mMediaPlayer.stop();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mMediaPlayer.stop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMediaPlayer.stop();
     }
 }

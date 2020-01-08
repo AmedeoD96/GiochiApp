@@ -18,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(gv);
 
+        //TODO sta da mettere la musica a frogger
+
 
     }
 
