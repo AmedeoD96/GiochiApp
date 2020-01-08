@@ -21,6 +21,8 @@ import java.util.Timer;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
+import it.uniba.di.sms1920.giochiapp.User;
+import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -44,8 +46,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     ArrayList<Integer> remove[];
     Heart heart;
     boolean started;
-    SharedPreferences mPref=null;
-    //TODO salvare sul db e non sulle shared. Lo deve fare Alessia altrimenti si arrabbia
+    //SharedPreferences mPref=null;
+    
+    User user = UsersManager.getInstance().getCurrentUser();
 
     public void setWasRunning(boolean wasRunning) {
         this.wasRunning = wasRunning;
@@ -182,9 +185,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if(points<0)points=0;
 
         //salva dati
-        int highscore_stored_frogger;
+       /* int highscore_stored_frogger;
         highscore_stored_frogger=loadScore(GlobalApplicationContext.getAppContext());
-        if(points>=highscore_stored_frogger){
+        */
+        if(points>=user.scoreFrogger){
             saveScore();
         }
 
@@ -364,6 +368,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         textPaint.setTextSize(150);
 
         canvas.drawText(points + "", canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight()+50, textPaint);
+        saveScore();
 
 
         if(heart.getdead()==true){
@@ -379,16 +384,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void saveScore(){
-
+    /*
         SharedPreferences.Editor editor = mPref.edit();
         editor.putInt("highscore_frogger", points);
         editor.commit();
+        */
+        user.setScoreFrogger(points);
     }
 
-    public int loadScore(Context context){
-        int highscore_frogger;
-        mPref=context.getSharedPreferences("info", MODE_PRIVATE);
-        highscore_frogger = mPref.getInt("highscore_frogger", 0);
-        return highscore_frogger;
-    }
+
 }
