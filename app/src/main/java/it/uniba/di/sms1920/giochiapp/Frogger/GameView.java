@@ -379,6 +379,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText(points + "", canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight()+50, textPaint);
 
 
+        //qui cambia il colore nel caso di morte
         if(heart.getdead()==true){
             paint.setARGB(140, 70, 70, 70);
             canvas.drawRect(0,0,canvas.getWidth(),canvas.getHeight(),paint);
