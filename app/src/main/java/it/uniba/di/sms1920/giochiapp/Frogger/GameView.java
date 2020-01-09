@@ -54,8 +54,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     //SharedPreferences mPref=null;
     Animation water_anim, grass_anim;
     AnimationManager animationManagerWater, animationManagerGrass;
-    SoundPool soundPool;
-    int hitId;
+    SoundPool soundPool_hit, soundPool_walking;
+    int hitId,walkId;
 
 
 
@@ -84,12 +84,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 BitmapFactory.decodeResource(getResources(), R.drawable.heart));
 
 
-        //audio Frogger hit
-        AudioAttributes attributes= new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
-        soundPool = new SoundPool.Builder().setMaxStreams(10).setAudioAttributes(attributes).build();
-        hitId=soundPool.load(getContext(), R.raw.hitsound, 1);
+        //audio hit
+        AudioAttributes attributes_hit= new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
+        soundPool_hit = new SoundPool.Builder().setMaxStreams(10).setAudioAttributes(attributes_hit).build();
+        hitId=soundPool_hit.load(getContext(), R.raw.flooding, 1);
 
-
+        //audio walk
+        AudioAttributes attributes_walk= new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
+        soundPool_walking = new SoundPool.Builder().setMaxStreams(10).setAudioAttributes(attributes_walk).build();
+        walkId=soundPool_walking.load(getContext(), R.raw.walking, 1);
 
     }
 
@@ -202,7 +205,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         frog.setX(frog.getxStart());
         inWater = false;
 
-        soundPool.play(hitId,1,1,1,0,1);
+        soundPool_hit.play(hitId,1,1,1,0,1);
     }
 
     public void score(){
@@ -310,24 +313,33 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frog));
                     frog.frogJump(0,-1);
                     frog.setxVel(0);
+
+                    soundPool_walking.play(walkId,1,1,1,0,1);
+
                     Log.d("Direction", "Up");
                 }
                 else if (angle > 135 && angle < 225){
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogsx));
                     frog.frogJump(-1,0);
                     frog.setxVel(0);
+
+                    soundPool_walking.play(walkId,1,1,1,0,1);
                     Log.d("Direction", "Left");
                 }
                 else if (angle > 45 && angle < 135){
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogdown));
                     frog.frogJump(0,1);
                     frog.setxVel(0);
+
+                    soundPool_walking.play(walkId,1,1,1,0,1);
                     Log.d("Direction", "Down");
                 }
                 else{
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogright));
                     frog.frogJump(1,0);
                     frog.setxVel(0);
+
+                    soundPool_walking.play(walkId,1,1,1,0,1);
                     Log.d("Direction", "Right");
                 }
 
