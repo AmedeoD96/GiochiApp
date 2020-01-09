@@ -8,6 +8,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaActionSound;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.provider.MediaStore;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -48,6 +54,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     //SharedPreferences mPref=null;
     Animation water_anim, grass_anim;
     AnimationManager animationManagerWater, animationManagerGrass;
+    SoundPool soundPool;
+    int hitId;
+
 
 
     public void setWasRunning(boolean wasRunning) {
@@ -73,6 +82,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 BitmapFactory.decodeResource(getResources(), R.drawable.heart3),
                 BitmapFactory.decodeResource(getResources(), R.drawable.heart2),
                 BitmapFactory.decodeResource(getResources(), R.drawable.heart));
+
+
+        //audio Frogger hit
+        AudioAttributes attributes= new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
+        soundPool = new SoundPool.Builder().setMaxStreams(10).setAudioAttributes(attributes).build();
+        hitId=soundPool.load(getContext(), R.raw.hitsound, 1);
+
+
+
     }
 
     @Override
@@ -176,12 +194,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public  void hit(){
+
         heart.lifeChange(-1);
         frog.setxVel(0);
         frog.setyVel(0);
         frog.setY(frog.getyStart());
         frog.setX(frog.getxStart());
         inWater = false;
+
+        soundPool.play(hitId,1,1,1,0,1);
     }
 
     public void score(){
