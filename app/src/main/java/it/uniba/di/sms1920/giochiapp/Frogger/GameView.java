@@ -36,7 +36,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     int LOGSTRIP;
     int points;
     long lastMils[];
-    Rect waterBox;
+    Rect waterBox, upperGrass, lowerGrass;
     Timer t;
     boolean haveMoved = false;
     GameThread thread;
@@ -46,8 +46,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     Heart heart;
     boolean started;
     //SharedPreferences mPref=null;
-    Animation water_anim;
-    AnimationManager animationManager;
+    Animation water_anim, grass_anim;
+    AnimationManager animationManagerWater, animationManagerGrass;
 
 
     public void setWasRunning(boolean wasRunning) {
@@ -65,6 +65,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         //water=BitmapFactory.decodeResource(getResources(), R.drawable.water);
         waterAnim();
+        grassAnim();
 
         frog = new Frog(BitmapFactory.decodeResource(getResources(), R.drawable.frog), logBitmap.getHeight());
         thread = new GameThread(getHolder(), this);
@@ -364,16 +365,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if (!started) {
             return;
         }
-        animationManager.playAnim(0);
-        animationManager.update();
-        animationManager.draw(canvas,waterBox);
+        animationManagerWater.playAnim(0);
+        animationManagerGrass.playAnim(0);
+        animationManagerWater.update();
+        animationManagerGrass.update();
+        animationManagerWater.draw(canvas,waterBox);
 
 
         spawnLogs(System.currentTimeMillis(), canvas);
         Paint paint = new Paint();
         paint.setColor(Color.GREEN);
-        canvas.drawRect(0,(LOGSTRIP-2)*logBitmap.getHeight(),canvas.getWidth(),canvas.getHeight(),paint);
-        canvas.drawRect(0,0,canvas.getWidth(),logBitmap.getHeight()*2,paint);
+        upperGrass = new Rect(0,(LOGSTRIP-2)*logBitmap.getHeight(),canvas.getWidth(),canvas.getHeight());
+        lowerGrass = new Rect(0,0,canvas.getWidth(),logBitmap.getHeight()*2);
+        animationManagerGrass.draw(canvas,upperGrass);
+        animationManagerGrass.draw(canvas,lowerGrass);
         drawLogs(canvas);
         frog.draw(canvas);
         heart.draw(canvas);
@@ -420,6 +425,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         water_anim=new Animation(new Bitmap[]{water,waterflip, waterflop}, 2, false);
 
-        animationManager= new AnimationManager(new Animation[]{water_anim});
+        animationManagerWater= new AnimationManager(new Animation[]{water_anim});
+    }
+
+    public void grassAnim(){
+        Bitmap grass = BitmapFactory.decodeResource(getResources(), R.drawable.grass);
+        Bitmap grassflip = BitmapFactory.decodeResource(getResources(), R.drawable.grassflip);
+        Bitmap grassflop = BitmapFactory.decodeResource(getResources(), R.drawable.grassflop);
+
+        grass_anim=new Animation(new Bitmap[]{grass, grassflip,grassflop}, 2,false);
+
+        animationManagerGrass= new AnimationManager(new Animation[]{grass_anim});
     }
 }
