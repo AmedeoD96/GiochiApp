@@ -85,7 +85,6 @@ public class ObstacleManager {
             obstacles.remove(obstacles.size()-1);
             score++;
 
-            //TODO verificare il funzionamento chiudendo in vari modi il gioco
             //Salvataggio dati endlss
             User user = UsersManager.getInstance().getCurrentUser();
             if(user.scoreAlienrun < score){
