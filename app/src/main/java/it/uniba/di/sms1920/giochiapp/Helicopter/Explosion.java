@@ -1,7 +1,10 @@
 package it.uniba.di.sms1920.giochiapp.Helicopter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 
 public class Explosion {
     private int x;
@@ -37,6 +40,15 @@ public class Explosion {
             animation.update();
         }
     }
+
+    public Animation getAnimation() {
+        return animation;
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animation = animation;
+    }
+
     public int getHeight(){
         return height;
     }

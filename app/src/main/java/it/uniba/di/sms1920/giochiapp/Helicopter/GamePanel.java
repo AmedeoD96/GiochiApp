@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -239,10 +240,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 reset = true;
                 disappear = true;
 
-                explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion, o),player.getX(),player.getY()-30,100,100,2);
+                explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion, o),player.getX(),player.getY()-30,100,100,10);
             }
-            explosion.update();
             long resetElapsed=(System.nanoTime()-startReset)/1000000;
+            explosion.update();
+
             if(resetElapsed<2500 && !newGamecreated){
                 newGame();
             }
@@ -378,7 +380,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint1.setTextSize(20);
             canvas.drawText("PRESS AND HOLD TO GO UP",WIDTH/2-50,HEIGHT/2+20,paint1);
             canvas.drawText("RELEASE TO GO DOWN",WIDTH/2-50,HEIGHT/2+40,paint1);
-
+            Animation animation =  explosion.getAnimation();
+            //QUA
         }
 
     }
