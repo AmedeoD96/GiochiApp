@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     final Fragment gameListFragment = new GameFragment();
     final Fragment leaderboardFragment = new LeaderboardFragment();
     final Fragment setting = new Setting();
-    final Fragment tetrisLeaderboard = new TetrisLeaderboard();
+    final TetrisLeaderboard tetrisLeaderboard = new TetrisLeaderboard();
     final FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment active = gameListFragment;
 
@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void gameTransaction(GameLeaderboard gameLeaderboard){
         this.gameLeaderboard = gameLeaderboard;
+
+        tetrisLeaderboard.setRecyclerView(gameLeaderboard);
 
         fragmentManager.beginTransaction().hide(gameListFragment).commit();
         fragmentManager.beginTransaction().show(tetrisLeaderboard).commit();

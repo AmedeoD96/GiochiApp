@@ -38,15 +38,11 @@ public class TetrisLeaderboard extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        ScoreAdapter scoreAdapter = new ScoreAdapter(context, initData());
-        scoreAdapter.setParentAndIconExpandOnClick(false);
-
-        recyclerView.setAdapter(scoreAdapter);
 
         return view;
     }
 
-    private List<ParentObject> initData(){
+    private List<ParentObject> initData(MainActivity.GameLeaderboard gameLeaderboard){
 
         ElementCreator elementCreator = ElementCreator.get(context);
 
@@ -55,7 +51,7 @@ public class TetrisLeaderboard extends Fragment {
         elementCreator.clearTitles();
 
 
-        switch (MainActivity.getInstance().gameLeaderboard){
+        switch (gameLeaderboard){
             case TETRIS:
                 Collection<User> allUserTetris = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_TETRIS, false);
 
@@ -108,16 +104,18 @@ public class TetrisLeaderboard extends Fragment {
         return parentObject;
     }
 
+    public void setRecyclerView(MainActivity.GameLeaderboard gameLeaderboard){
+        ScoreAdapter scoreAdapter = new ScoreAdapter(context, initData(gameLeaderboard));
+        scoreAdapter.setParentAndIconExpandOnClick(false);
+
+        recyclerView.setAdapter(scoreAdapter);
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        ScoreAdapter scoreAdapter = new ScoreAdapter(context, initData());
-        scoreAdapter.setParentAndIconExpandOnClick(false);
-
-        recyclerView.setAdapter(scoreAdapter);
 
     }
 }
