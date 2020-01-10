@@ -2,7 +2,7 @@ package it.uniba.di.sms1920.giochiapp.Helicopter;
 
 import android.graphics.Bitmap;
 
-public class Animation {
+public class Animation  {
     private Bitmap[] frames;
     private int currentFrames;
     private long startTimes;
@@ -26,6 +26,8 @@ public class Animation {
             playedOnce=true;
         }
     }
+
+
     public Bitmap getImage(){
         return frames[currentFrames];
     }
