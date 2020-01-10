@@ -66,7 +66,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().tetrisTransaction();
+                        MainActivity.getInstance().gameTransaction();
                     }
                 });
                 break;
@@ -91,7 +91,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().tetrisTransaction();
+                        MainActivity.getInstance().gameTransaction();
                     }
                 });
                 break;
@@ -116,7 +116,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().tetrisTransaction();
+                        MainActivity.getInstance().gameTransaction();
                     }
                 });
                 break;
@@ -141,7 +141,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().tetrisTransaction();
+                        MainActivity.getInstance().gameTransaction();
                     }
                 });
                 break;
@@ -166,7 +166,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().tetrisTransaction();
+                        MainActivity.getInstance().gameTransaction();
                     }
                 });
                 break;

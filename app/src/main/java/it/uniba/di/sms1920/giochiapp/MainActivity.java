@@ -26,9 +26,18 @@ public class MainActivity extends AppCompatActivity {
 
     static MainActivity _instance = null;
 
+    public enum GameLeaderboard{
+        TETRIS,
+        GAME2048,
+        ALIEN_RUN,
+        ROCKET,
+        FROGGER
+    }
+
     public static MainActivity getInstance() {
         return _instance;
     }
+
 
 
     @Override
@@ -97,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         UsersManager.getInstance().saveCurrentUser();
     }
-    public void tetrisTransaction(){
+    public void gameTransaction(GameLeaderboard gameLeaderboard){
         fragmentManager.beginTransaction().hide(gameListFragment).commit();
         fragmentManager.beginTransaction().show(tetrisLeaderboard).commit();
     }
