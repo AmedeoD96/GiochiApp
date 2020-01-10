@@ -10,18 +10,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import it.uniba.di.sms1920.giochiapp.GameLeaderboard.GameLeaderboard;
+import it.uniba.di.sms1920.giochiapp.GameLeaderboard.TetrisLeaderboard;
 import it.uniba.di.sms1920.giochiapp.Home.GameFragment;
 import it.uniba.di.sms1920.giochiapp.Leaderboard.LeaderboardFragment;
 import it.uniba.di.sms1920.giochiapp.Setting.Setting;
 
 public class MainActivity extends AppCompatActivity {
-    final Fragment fragment1 = new GameFragment();
-    final Fragment fragment2 = new LeaderboardFragment();
+    //TODO PER LUCA: NON SALVA IL NOME E I PUNTEGGI SU FIREBASE SE MODIFICATI IN MODALITA OFFLINE
+    final Fragment gameListFragment = new GameFragment();
+    final Fragment leaderboardFragment = new LeaderboardFragment();
     final Fragment setting = new Setting();
-    final Fragment gameLeaderboard = new GameLeaderboard();
+    final Fragment tetrisLeaderboard = new TetrisLeaderboard();
     final FragmentManager fragmentManager = getSupportFragmentManager();
-    Fragment active = fragment1;
+    Fragment active = gameListFragment;
 
     static MainActivity _instance = null;
 
@@ -44,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        fragmentManager.beginTransaction().add(R.id.main_container, gameLeaderboard, "4").hide(gameLeaderboard).commit();
+        fragmentManager.beginTransaction().add(R.id.main_container, tetrisLeaderboard, "4").hide(tetrisLeaderboard).commit();
         fragmentManager.beginTransaction().add(R.id.main_container, setting, "3").hide(setting).commit();
-        fragmentManager.beginTransaction().add(R.id.main_container, fragment2, "2").hide(fragment2).commit();
-        fragmentManager.beginTransaction().add(R.id.main_container, fragment1, "1").commit();
+        fragmentManager.beginTransaction().add(R.id.main_container, leaderboardFragment, "2").hide(leaderboardFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.main_container, gameListFragment, "1").commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -56,16 +57,16 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.navigation_home:
-                    fragmentManager.beginTransaction().hide(active).show(fragment1).commit();
+                    fragmentManager.beginTransaction().hide(active).show(gameListFragment).commit();
                     fragmentManager.beginTransaction().hide(setting).commit();
-                    fragmentManager.beginTransaction().hide(gameLeaderboard).commit();
-                    active = fragment1;
+                    fragmentManager.beginTransaction().hide(tetrisLeaderboard).commit();
+                    active = gameListFragment;
                     return  true;
                 case R.id.navigation_leaderboard:
-                    fragmentManager.beginTransaction().hide(active).show(fragment2).commit();
+                    fragmentManager.beginTransaction().hide(active).show(leaderboardFragment).commit();
                     fragmentManager.beginTransaction().hide(setting).commit();
-                    fragmentManager.beginTransaction().hide(gameLeaderboard).commit();
-                    active = fragment2;
+                    fragmentManager.beginTransaction().hide(tetrisLeaderboard).commit();
+                    active = leaderboardFragment;
                     return true;
             }
             return false;
@@ -73,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
     };
 
     //Metodi per la toolbar superiore
-    //TODO mettere il tasto indietro nella toolbar
-    //TODO cambiare i tre puntini e mettere l'icona dei setting
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -98,8 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
         UsersManager.getInstance().saveCurrentUser();
     }
-    public void transaction(){
-        fragmentManager.beginTransaction().hide(fragment1).commit();
-        fragmentManager.beginTransaction().show(gameLeaderboard).commit();
+    public void tetrisTransaction(){
+        fragmentManager.beginTransaction().hide(gameListFragment).commit();
+        fragmentManager.beginTransaction().show(tetrisLeaderboard).commit();
     }
 }

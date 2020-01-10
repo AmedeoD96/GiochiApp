@@ -8,6 +8,8 @@ public class Animation {
     private long startTimes;
     private long delay;
     private boolean playedOnce;
+    boolean mStarted = false;
+    boolean mEnded = false;
     public void setFrames(Bitmap[] frames){
         this.frames=frames;
         currentFrames=0;
@@ -26,6 +28,12 @@ public class Animation {
             playedOnce=true;
         }
     }
+    public void deleteAnimation(){
+        currentFrames=0;
+        playedOnce=true;
+    }
+
+
     public Bitmap getImage(){
         return frames[currentFrames];
     }

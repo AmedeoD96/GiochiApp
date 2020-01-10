@@ -1,16 +1,21 @@
 package it.uniba.di.sms1920.giochiapp.Frogger;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.WindowManager;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import it.uniba.di.sms1920.giochiapp.R;
+
 public class MainActivity extends AppCompatActivity {
 
     GameView gv;
     int score;
     int lives;
+    MediaPlayer mediaPlayerFrogger;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         gv = new GameView(this);
@@ -18,7 +23,9 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(gv);
 
-        //TODO sta da mettere la musica a frogger
+        mediaPlayerFrogger= MediaPlayer.create(MainActivity.this, R.raw.route1);
+        mediaPlayerFrogger.start();
+        mediaPlayerFrogger.setLooping(true);
 
 
     }
@@ -26,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        mediaPlayerFrogger.stop();
         score = gv.points;
         lives = gv.heart.getLives();
         this.gv.thread.setRunning(false);
@@ -55,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mediaPlayerFrogger.stop();
         //chiamare il metodo di salvataggio su database
 
     }

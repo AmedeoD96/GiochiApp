@@ -8,6 +8,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaActionSound;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
+import android.provider.MediaStore;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -36,7 +42,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     int LOGSTRIP;
     int points;
     long lastMils[];
-    Rect waterBox;
+    Rect waterBox, upperGrass, lowerGrass;
     Timer t;
     boolean haveMoved = false;
     GameThread thread;
@@ -46,8 +52,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     Heart heart;
     boolean started;
     //SharedPreferences mPref=null;
-    Animation water_anim;
-    AnimationManager animationManager;
+    Animation water_anim, grass_anim;
+    AnimationManager animationManagerWater, animationManagerGrass;
+    SoundPool soundPool_hit, soundPool_walking;
+    int hitId,walkId;
+
 
 
     public void setWasRunning(boolean wasRunning) {
@@ -65,6 +74,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         //water=BitmapFactory.decodeResource(getResources(), R.drawable.water);
         waterAnim();
+        grassAnim();
 
         frog = new Frog(BitmapFactory.decodeResource(getResources(), R.drawable.frog), logBitmap.getHeight());
         thread = new GameThread(getHolder(), this);
@@ -72,6 +82,18 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 BitmapFactory.decodeResource(getResources(), R.drawable.heart3),
                 BitmapFactory.decodeResource(getResources(), R.drawable.heart2),
                 BitmapFactory.decodeResource(getResources(), R.drawable.heart));
+
+
+        //audio hit
+        AudioAttributes attributes_hit= new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
+        soundPool_hit = new SoundPool.Builder().setMaxStreams(10).setAudioAttributes(attributes_hit).build();
+        hitId=soundPool_hit.load(getContext(), R.raw.flooding, 1);
+
+        //audio walk
+        AudioAttributes attributes_walk= new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).setUsage(AudioAttributes.USAGE_GAME).build();
+        soundPool_walking = new SoundPool.Builder().setMaxStreams(10).setAudioAttributes(attributes_walk).build();
+        walkId=soundPool_walking.load(getContext(), R.raw.walking, 1);
+
     }
 
     @Override
@@ -175,12 +197,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public  void hit(){
+
         heart.lifeChange(-1);
         frog.setxVel(0);
         frog.setyVel(0);
         frog.setY(frog.getyStart());
         frog.setX(frog.getxStart());
         inWater = false;
+
+        soundPool_hit.play(hitId,1,1,1,0,1);
     }
 
     public void score(){
@@ -288,24 +313,33 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frog));
                     frog.frogJump(0,-1);
                     frog.setxVel(0);
+
+                    soundPool_walking.play(walkId,1,1,1,0,1);
+
                     Log.d("Direction", "Up");
                 }
                 else if (angle > 135 && angle < 225){
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogsx));
                     frog.frogJump(-1,0);
                     frog.setxVel(0);
+
+                    soundPool_walking.play(walkId,1,1,1,0,1);
                     Log.d("Direction", "Left");
                 }
                 else if (angle > 45 && angle < 135){
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogdown));
                     frog.frogJump(0,1);
                     frog.setxVel(0);
+
+                    soundPool_walking.play(walkId,1,1,1,0,1);
                     Log.d("Direction", "Down");
                 }
                 else{
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogright));
                     frog.frogJump(1,0);
                     frog.setxVel(0);
+
+                    soundPool_walking.play(walkId,1,1,1,0,1);
                     Log.d("Direction", "Right");
                 }
 
@@ -364,16 +398,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if (!started) {
             return;
         }
-        animationManager.playAnim(0);
-        animationManager.update();
-        animationManager.draw(canvas,waterBox);
+        animationManagerWater.playAnim(0);
+        animationManagerGrass.playAnim(0);
+        animationManagerWater.update();
+        animationManagerGrass.update();
+        animationManagerWater.draw(canvas,waterBox);
 
 
         spawnLogs(System.currentTimeMillis(), canvas);
         Paint paint = new Paint();
         paint.setColor(Color.GREEN);
-        canvas.drawRect(0,(LOGSTRIP-2)*logBitmap.getHeight(),canvas.getWidth(),canvas.getHeight(),paint);
-        canvas.drawRect(0,0,canvas.getWidth(),logBitmap.getHeight()*2,paint);
+        upperGrass = new Rect(0,(LOGSTRIP-2)*logBitmap.getHeight(),canvas.getWidth(),canvas.getHeight());
+        lowerGrass = new Rect(0,0,canvas.getWidth(),logBitmap.getHeight()*2);
+        animationManagerGrass.draw(canvas,upperGrass);
+        animationManagerGrass.draw(canvas,lowerGrass);
         drawLogs(canvas);
         frog.draw(canvas);
         heart.draw(canvas);
@@ -420,6 +458,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         water_anim=new Animation(new Bitmap[]{water,waterflip, waterflop}, 2, false);
 
-        animationManager= new AnimationManager(new Animation[]{water_anim});
+        animationManagerWater= new AnimationManager(new Animation[]{water_anim});
+    }
+
+    public void grassAnim(){
+        Bitmap grass = BitmapFactory.decodeResource(getResources(), R.drawable.grass);
+        Bitmap grassflip = BitmapFactory.decodeResource(getResources(), R.drawable.grassflip);
+        Bitmap grassflop = BitmapFactory.decodeResource(getResources(), R.drawable.grassflop);
+
+        grass_anim=new Animation(new Bitmap[]{grass, grassflip,grassflop}, 2,false);
+
+        animationManagerGrass= new AnimationManager(new Animation[]{grass_anim});
     }
 }

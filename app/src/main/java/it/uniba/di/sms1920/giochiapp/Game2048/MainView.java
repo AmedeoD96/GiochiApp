@@ -555,7 +555,7 @@ public class MainView extends View {
 
         sYIcons = (startingY + eYAll) / 2 - iconSize / 2;
         sXNewGame = (endingX - iconSize);
-        sXUndo = sXNewGame - iconSize * 3 / 2 - iconPaddingSize;
+        sXUndo = sXNewGame - iconSize  * 3 / 2 - iconPaddingSize + 40;
         resyncTime();
     }
 
