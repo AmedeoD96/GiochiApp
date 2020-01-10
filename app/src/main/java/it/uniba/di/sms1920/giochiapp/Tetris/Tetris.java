@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ public class Tetris extends AppCompatActivity {
     int mCellSize = 0;
     boolean mIsTouchMove = false;
     MediaPlayer mMediaPlayer;
+    Button Rotate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class Tetris extends AppCompatActivity {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_tetris);
 
+        Rotate = (Button) findViewById(R.id.btnRotate);
 
         DisplayMetrics dm = this.getApplicationContext().getResources().getDisplayMetrics();
         mScreenSize.x = dm.widthPixels;
@@ -44,6 +47,14 @@ public class Tetris extends AppCompatActivity {
         mMediaPlayer.setLooping(true);
 
         initTetrisCtrl();
+
+        Rotate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTetrisCtrl.block2Rotate();
+            }
+        });
+
     }
 
     void initTetrisCtrl() {
@@ -114,9 +125,10 @@ public class Tetris extends AppCompatActivity {
             case R.id.btnBottom :
                 mTetrisCtrl.block2Bottom();
                 break;
-            /*case R.id.btnRotate :
+            case R.id.btnRotate :
                 mTetrisCtrl.block2Rotate();
-                break;*/
+                mMousePos.set(-1, -1);
+                break;
         }
     }
 
