@@ -8,6 +8,7 @@ public interface IGameDatabase {
     String saveUser(String id, User user);
 
     void loadAllUsers(OnUserLoadedListener onUserLoadedListener);
+    void loadUser(String userId, OnUserLoadedListener onUserLoadedListener);
 
 
     interface OnUserLoadedListener {

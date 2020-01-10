@@ -1,7 +1,5 @@
 package it.uniba.di.sms1920.giochiapp;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,35 +46,42 @@ public class UsersManager {
 
     public void populateIfEmpty() {
         if(allUsers.isEmpty()) {
-            populateUsers(null);
+            populateUsers();
         }
     }
 
-    public void populateUsers(final IUserManagerCallback userManagerCallback) {
+    public void populateUsers() {
         allUsers.clear();
 
-        loadCurrentUserID();
+        final DatabaseManager db = DatabaseManager.getInstance();
+        String id = loadCurrentUserID();
 
-        DatabaseManager.getInstance().loadAllUsers(new IGameDatabase.OnUserLoadedListener() {
+        db.loadUser(id, new IGameDatabase.OnUserLoadedListener() {
             @Override
             public void onUserLoaded(String id, User user) {
-                allUsers.put(id, user);
+                db.saveUser(id, user);
             }
 
             @Override
             public void onLoadCompleted() {
-                final User user = getCurrentUser();
-
-                user.registerCallback(new User.UserListener() {
+                db.loadAllUsers(new IGameDatabase.OnUserLoadedListener() {
                     @Override
-                    public void OnValueChange() {
-                        saveCurrentUser();
+                    public void onUserLoaded(String id, User user) {
+                        allUsers.put(id, user);
+                    }
+
+                    @Override
+                    public void onLoadCompleted() {
+                        final User user = getCurrentUser();
+
+                        user.registerCallback(new User.UserListener() {
+                            @Override
+                            public void OnValueChange() {
+                                saveCurrentUser();
+                            }
+                        });
                     }
                 });
-
-                if(userManagerCallback != null) {
-                    userManagerCallback.OnLoadingComplete();
-                }
             }
         });
     }
@@ -88,10 +93,10 @@ public class UsersManager {
         return allUsers;
     }
 
+
     public User getCurrentUser() {
         User resultUser;
 
-        Log.i("USER_DEBUG", "Id: " +idCurrentUser+ " is contained: " + allUsers.containsKey(idCurrentUser));
         if(allUsers.containsKey(idCurrentUser)) {
 
             resultUser = allUsers.get(idCurrentUser);
@@ -102,7 +107,7 @@ public class UsersManager {
             allUsers.put(idCurrentUser, resultUser);
         }
 
-        Log.i("USER_DEBUG", resultUser.toString());
+        //Log.i("USER_DEBUG", "Id: " + idCurrentUser + " User: " + resultUser.toString());
         return resultUser;
     }
 
@@ -136,6 +141,7 @@ public class UsersManager {
 
     public void saveCurrentUser() {
         User user = getCurrentUser();
+        user.updateUser();
         DatabaseManager.getInstance().saveUser(idCurrentUser, user);
     }
 
@@ -232,14 +238,10 @@ public class UsersManager {
         DatabaseManager.getInstance().saveString(USER_KEY, idCurrentUser);
     }
 
-    private void loadCurrentUserID() {
+    private String loadCurrentUserID() {
         idCurrentUser = DatabaseManager.getInstance().loadString(USER_KEY, DEFAULT_ID);
+        return idCurrentUser;
     }
 
-
-
-    public interface IUserManagerCallback {
-        void OnLoadingComplete();
-    }
 
 }
