@@ -105,6 +105,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         if(event.getAction()== MotionEvent.ACTION_DOWN){
             if(!player.getPlaying() && newGamecreated && reset){
                 player.setPlaying(true);
+                Animation animation = explosion.getAnimation();
+                animation.deleteAnimation();
                 player.setUp(true);
             }
             if(player.getPlaying()) {
@@ -240,7 +242,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 reset = true;
                 disappear = true;
 
-                explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion, o),player.getX(),player.getY()-30,100,100,10);
+                explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion, o),player.getX(),player.getY()-30,100,100,24);
             }
             long resetElapsed=(System.nanoTime()-startReset)/1000000;
             explosion.update();
@@ -350,7 +352,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             for (Border bb : bottomBorders) {
                 bb.draw(canvas);
             }
-            //draw Exploison
+            //draw Explosion
             if (started) {
                 explosion.draw(canvas);
             }
@@ -380,9 +382,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint1.setTextSize(20);
             canvas.drawText("PRESS AND HOLD TO GO UP",WIDTH/2-50,HEIGHT/2+20,paint1);
             canvas.drawText("RELEASE TO GO DOWN",WIDTH/2-50,HEIGHT/2+40,paint1);
-            Animation animation =  explosion.getAnimation();
-            //QUA
-
         }
 
     }

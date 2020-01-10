@@ -2,12 +2,14 @@ package it.uniba.di.sms1920.giochiapp.Helicopter;
 
 import android.graphics.Bitmap;
 
-public class Animation  {
+public class Animation {
     private Bitmap[] frames;
     private int currentFrames;
     private long startTimes;
     private long delay;
     private boolean playedOnce;
+    boolean mStarted = false;
+    boolean mEnded = false;
     public void setFrames(Bitmap[] frames){
         this.frames=frames;
         currentFrames=0;
@@ -25,6 +27,10 @@ public class Animation  {
             currentFrames=0;
             playedOnce=true;
         }
+    }
+    public void deleteAnimation(){
+        currentFrames=0;
+        playedOnce=true;
     }
 
 
