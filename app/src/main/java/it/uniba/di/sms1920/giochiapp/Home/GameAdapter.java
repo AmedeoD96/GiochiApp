@@ -1,6 +1,5 @@
 package it.uniba.di.sms1920.giochiapp.Home;
 
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,17 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
 import it.uniba.di.sms1920.giochiapp.Game2048.MainActivity2048;
-import it.uniba.di.sms1920.giochiapp.GameLeaderboard.GameLeaderboard;
-import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.MainActivity;
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.Tetris.Tetris;
@@ -72,7 +66,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().transaction();
+                        MainActivity.getInstance().tetrisTransaction();
                     }
                 });
                 break;
@@ -97,7 +91,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().transaction();
+                        MainActivity.getInstance().tetrisTransaction();
                     }
                 });
                 break;
@@ -122,7 +116,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().transaction();
+                        MainActivity.getInstance().tetrisTransaction();
                     }
                 });
                 break;
@@ -147,7 +141,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().transaction();
+                        MainActivity.getInstance().tetrisTransaction();
                     }
                 });
                 break;
@@ -172,7 +166,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().transaction();
+                        MainActivity.getInstance().tetrisTransaction();
                     }
                 });
                 break;
