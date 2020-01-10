@@ -16,6 +16,7 @@ import it.uniba.di.sms1920.giochiapp.Leaderboard.LeaderboardFragment;
 import it.uniba.di.sms1920.giochiapp.Setting.Setting;
 
 public class MainActivity extends AppCompatActivity {
+    //TODO PER LUCA: NON SALVA IL NOME E I PUNTEGGI SU FIREBASE SE MODIFICATI IN MODALITA OFFLINE
     final Fragment fragment1 = new GameFragment();
     final Fragment fragment2 = new LeaderboardFragment();
     final Fragment setting = new Setting();
@@ -73,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
     };
 
     //Metodi per la toolbar superiore
-    //TODO mettere il tasto indietro nella toolbar
-    //TODO cambiare i tre puntini e mettere l'icona dei setting
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
