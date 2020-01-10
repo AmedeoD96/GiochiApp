@@ -1,6 +1,5 @@
 package it.uniba.di.sms1920.giochiapp.Database;
 
-import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,12 +21,11 @@ public class FirebaseWrapper implements IGameDatabase {
 
     @Override
     public String saveUser(String id, User user) {
-        Log.i("FirebaseTest", "id: " +id+ " User: " + user.toString());
+        myRef = database.getReference();
 
         if(id.equals(UsersManager.DEFAULT_ID)) {
             id = myRef.push().getKey();
         }
-        Log.i("FirebaseTest", "id created: " +id);
 
         myRef = database.getReference().child(id);
         myRef.setValue(user);
@@ -42,19 +40,45 @@ public class FirebaseWrapper implements IGameDatabase {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Log.i("FirebaseTest", "data read: "+dataSnapshot.toString());
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     User value = data.getValue(User.class);
                     onUserLoadedListener.onUserLoaded(data.getKey(), value);
-                    Log.i("FirebaseTest", "user read: "+value.toString());
                 }
                 onUserLoadedListener.onLoadCompleted();
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                //Log.i("FirebaseTest", "failed to reed database");
+                onUserLoadedListener.onLoadCompleted();
+            }
+        });
+    }
+
+    @Override
+    public void loadUser(final String userId, final OnUserLoadedListener onUserLoadedListener) {
+        myRef = database.getReference();
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                //Log.i("FirebaseTest", "Load user");
+
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+
+                    //Log.i("FirebaseTest", "User key " +data.getKey()+ " == User searched " +userId+ " = " + (data.getKey().equals(userId)));
+                    if(data.getKey().equals(userId)) {
+
+                        User value = data.getValue(User.class);
+                        onUserLoadedListener.onUserLoaded(data.getKey(), value);
+                        break;
+                    }
+                }
+                onUserLoadedListener.onLoadCompleted();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                onUserLoadedListener.onLoadCompleted();
             }
         });
     }

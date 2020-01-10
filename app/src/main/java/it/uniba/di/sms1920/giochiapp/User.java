@@ -16,10 +16,13 @@ public class User {
     public int score2048 = 0;
     public int totalScore = 0;
 
+    private int updatesCounter = 0;
+
+
     private List<UserListener> callbacks = new ArrayList<>();
 
     public User() {
-
+        updatesCounter = 0;
     }
 
     public void registerCallback(UserListener userListener) {
@@ -72,6 +75,21 @@ public class User {
         }
     }
 
+    public int getUpdatesCounter() {
+        return updatesCounter;
+    }
+
+    public void setUpdatesCounter(int updatesCounter) {
+        this.updatesCounter = updatesCounter;
+    }
+
+    public void updateUser() {
+        updatesCounter++;
+    }
+
+    public boolean isMoreUpdatedThan(User user) {
+        return  updatesCounter > user.updatesCounter;
+    }
 
     @Override
     public boolean equals(Object o) {
