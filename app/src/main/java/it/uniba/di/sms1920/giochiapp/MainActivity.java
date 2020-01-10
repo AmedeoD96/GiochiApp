@@ -10,8 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import it.uniba.di.sms1920.giochiapp.GameLeaderboard.TetrisLeaderboard;
-import it.uniba.di.sms1920.giochiapp.Home.Game;
+import it.uniba.di.sms1920.giochiapp.GameLeaderboard.SingleGameLeaderboard;
 import it.uniba.di.sms1920.giochiapp.Home.GameFragment;
 import it.uniba.di.sms1920.giochiapp.Leaderboard.LeaderboardFragment;
 import it.uniba.di.sms1920.giochiapp.Setting.Setting;
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     final Fragment gameListFragment = new GameFragment();
     final Fragment leaderboardFragment = new LeaderboardFragment();
     final Fragment setting = new Setting();
-    final TetrisLeaderboard tetrisLeaderboard = new TetrisLeaderboard();
+    final SingleGameLeaderboard singleGameLeaderboard = new SingleGameLeaderboard();
     final FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment active = gameListFragment;
 
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        fragmentManager.beginTransaction().add(R.id.main_container, tetrisLeaderboard, "4").hide(tetrisLeaderboard).commit();
+        fragmentManager.beginTransaction().add(R.id.main_container, singleGameLeaderboard, "4").hide(singleGameLeaderboard).commit();
         fragmentManager.beginTransaction().add(R.id.main_container, setting, "3").hide(setting).commit();
         fragmentManager.beginTransaction().add(R.id.main_container, leaderboardFragment, "2").hide(leaderboardFragment).commit();
         fragmentManager.beginTransaction().add(R.id.main_container, gameListFragment, "1").commit();
@@ -71,13 +70,13 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     fragmentManager.beginTransaction().hide(active).show(gameListFragment).commit();
                     fragmentManager.beginTransaction().hide(setting).commit();
-                    fragmentManager.beginTransaction().hide(tetrisLeaderboard).commit();
+                    fragmentManager.beginTransaction().hide(singleGameLeaderboard).commit();
                     active = gameListFragment;
                     return  true;
                 case R.id.navigation_leaderboard:
                     fragmentManager.beginTransaction().hide(active).show(leaderboardFragment).commit();
                     fragmentManager.beginTransaction().hide(setting).commit();
-                    fragmentManager.beginTransaction().hide(tetrisLeaderboard).commit();
+                    fragmentManager.beginTransaction().hide(singleGameLeaderboard).commit();
                     active = leaderboardFragment;
                     return true;
             }
@@ -113,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
     public void gameTransaction(GameLeaderboard gameLeaderboard){
         this.gameLeaderboard = gameLeaderboard;
 
-        tetrisLeaderboard.setRecyclerView(gameLeaderboard);
+        singleGameLeaderboard.setRecyclerView(gameLeaderboard);
 
         fragmentManager.beginTransaction().hide(gameListFragment).commit();
-        fragmentManager.beginTransaction().show(tetrisLeaderboard).commit();
+        fragmentManager.beginTransaction().show(singleGameLeaderboard).commit();
     }
 }

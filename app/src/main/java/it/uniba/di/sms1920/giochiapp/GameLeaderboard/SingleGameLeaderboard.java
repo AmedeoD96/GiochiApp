@@ -20,13 +20,13 @@ import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
 
-public class TetrisLeaderboard extends Fragment {
-    //TODO modificare il layout di fragment_single_leaderboard
+public class SingleGameLeaderboard extends Fragment {
+    //TODO apro leaderbord->chiudo dal tasto centrale l'app->apro un'altra leaderboard->app crasha
     Context context = GlobalApplicationContext.getAppContext();
 
     private RecyclerView recyclerView;
 
-    public TetrisLeaderboard(){
+    public SingleGameLeaderboard(){
         //Required empty public constructor
     }
 
