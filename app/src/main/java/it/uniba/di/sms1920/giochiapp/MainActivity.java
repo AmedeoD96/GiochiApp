@@ -11,12 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import it.uniba.di.sms1920.giochiapp.GameLeaderboard.TetrisLeaderboard;
+import it.uniba.di.sms1920.giochiapp.Home.Game;
 import it.uniba.di.sms1920.giochiapp.Home.GameFragment;
 import it.uniba.di.sms1920.giochiapp.Leaderboard.LeaderboardFragment;
 import it.uniba.di.sms1920.giochiapp.Setting.Setting;
 
 public class MainActivity extends AppCompatActivity {
-    //TODO PER LUCA: NON SALVA IL NOME E I PUNTEGGI SU FIREBASE SE MODIFICATI IN MODALITA OFFLINE
+
     final Fragment gameListFragment = new GameFragment();
     final Fragment leaderboardFragment = new LeaderboardFragment();
     final Fragment setting = new Setting();
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         ROCKET,
         FROGGER
     }
+
+    public GameLeaderboard gameLeaderboard = GameLeaderboard.TETRIS;
 
     public static MainActivity getInstance() {
         return _instance;
@@ -103,10 +106,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         UsersManager.getInstance().saveCurrentUser();
     }
+
+
     public void gameTransaction(GameLeaderboard gameLeaderboard){
+        this.gameLeaderboard = gameLeaderboard;
+
         fragmentManager.beginTransaction().hide(gameListFragment).commit();
         fragmentManager.beginTransaction().show(tetrisLeaderboard).commit();
     }

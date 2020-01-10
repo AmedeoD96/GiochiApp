@@ -66,7 +66,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().gameTransaction();
+                        MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.TETRIS);
                     }
                 });
                 break;
@@ -91,7 +91,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().gameTransaction();
+                        MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.GAME2048);
                     }
                 });
                 break;
@@ -116,7 +116,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().gameTransaction();
+                        MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.ALIEN_RUN);
                     }
                 });
                 break;
@@ -141,7 +141,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().gameTransaction();
+                        MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.ROCKET);
                     }
                 });
                 break;
@@ -166,7 +166,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().gameTransaction();
+                        MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.FROGGER);
                     }
                 });
                 break;
