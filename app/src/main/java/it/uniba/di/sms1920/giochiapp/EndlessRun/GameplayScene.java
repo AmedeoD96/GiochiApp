@@ -2,14 +2,18 @@ package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
+import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
 
@@ -96,11 +100,17 @@ public class GameplayScene implements Scene {
             Paint paint = new Paint();
             paint.setTextSize(100);
             paint.setColor(Color.GREEN);
+            Bitmap gameOverImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.gameover);
+            Matrix m = new Matrix();
+            int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
+            int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
+            gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
             //drawCenterText(canvas, paint, "Game Over\nHigh score: " + highScore); Il \n non funziona quando si disegna un canvas.
             paint.setTextAlign(Paint.Align.CENTER);
             int xPos = (canvas.getWidth() / 2);
             int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) ;
-            canvas.drawText("Game Over", xPos, yPos, paint);
+            //canvas.drawText("Game Over", xPos, yPos, paint);
+            canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
             canvas.drawText("High score: " + user.scoreAlienrun, xPos, 100+ yPos, paint);
 
         }

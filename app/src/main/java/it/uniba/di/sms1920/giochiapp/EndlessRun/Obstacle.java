@@ -48,11 +48,9 @@ public class Obstacle implements GameObject {
         obstacleGreenFlipped = Bitmap.createBitmap(obstacleGreenFlipped, 0, 0, obstacleGreenFlipped.getWidth(), obstacleGreenFlipped.getHeight(), m, false);
         obstacleOrangeFlipped = Bitmap.createBitmap(obstacleOrangeFlipped, 0, 0, obstacleOrangeFlipped.getWidth(), obstacleOrangeFlipped.getHeight(), m2, false);
 
-        Log.i("1","1");
         greenMovement = new Animation(new Bitmap[]{ obstacleGreenImg, obstacleGreenFlipped },0.5f, false);
         orangeMovement = new Animation(new Bitmap[] {obstacleOrangeImg, obstacleOrangeFlipped}, 0.5f, false);
 
-        Log.i("2","2");
         animationManagerGreen = new AnimationManager(new Animation[] {greenMovement});
         animationManagerOrange = new AnimationManager(new Animation[] {orangeMovement});
     }

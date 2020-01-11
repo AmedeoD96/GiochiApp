@@ -53,6 +53,7 @@ public class RectPlayer implements GameObject {
         animManager.draw(canvas, rectangle);
     }
 
+
     @Override
     public void update() {
         animManager.update();
