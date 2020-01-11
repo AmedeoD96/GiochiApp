@@ -63,14 +63,15 @@ public class FirebaseWrapper implements IGameDatabase {
     public void loadUser(final String userId, final OnUserLoadedListener onUserLoadedListener) {
         myRef = database.getReference();
 
+        Log.i("FirebaseTest", "trying load user: "+userId);
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Log.i("FirebaseTest", "Load user");
+                Log.i("FirebaseTest", "Load user");
 
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
 
-                    //Log.i("FirebaseTest", "User key " +data.getKey()+ " == User searched " +userId+ " = " + (data.getKey().equals(userId)));
+                    Log.i("FirebaseTest", "User key " +data.getKey()+ " == User searched " +userId+ " = " + (data.getKey().equals(userId)));
                     if(data.getKey().equals(userId)) {
 
                         User value = data.getValue(User.class);

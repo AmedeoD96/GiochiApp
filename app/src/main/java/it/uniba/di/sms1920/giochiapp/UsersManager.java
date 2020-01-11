@@ -60,17 +60,6 @@ public class UsersManager {
     }
 
 
-    public void addOnUserLoadedCallback(IUsersLoadedCallback usersLoadedCallback) {
-        if(!usersLoadedCallbacks.contains(usersLoadedCallback)) {
-            usersLoadedCallbacks.add(usersLoadedCallback);
-        }
-    }
-
-    public boolean removeOnUserLoadedCallback(IUsersLoadedCallback usersLoadedCallback) {
-        return usersLoadedCallbacks.remove(usersLoadedCallback);
-    }
-
-
     public void populateUsers(IUsersLoadedCallback usersLoadedCallback) {
         allUsers.clear();
         internalLoadUsers(usersLoadedCallback);

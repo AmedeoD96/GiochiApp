@@ -49,7 +49,7 @@ public class LeaderboardFragment extends Fragment {
         countTv.setText("Global Leaderboard");
 
 
-        UsersManager.getInstance().addOnUserLoadedCallback(new UsersManager.IUsersLoadedCallback() {
+        UsersManager.getInstance().getAllUsers(new UsersManager.IUsersLoadedCallback() {
             @Override
             public void OnAllUsersLoaded(Map<String, User> allUsers) {
                 MyAdapter mAdapter = new MyAdapter(context, initData());

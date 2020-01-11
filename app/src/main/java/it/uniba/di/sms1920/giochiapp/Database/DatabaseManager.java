@@ -75,7 +75,7 @@ public class DatabaseManager {
         }
     }
 
-    public void loadUser(String userId, final IGameDatabase.OnUserLoadedListener userLoadedListener) {
+    public void loadUser(final String userId, final IGameDatabase.OnUserLoadedListener userLoadedListener) {
         Log.i("DATABASE_DEBUG", "load user: " + userId);
 
         localDatabase.loadUser(userId, new IGameDatabase.OnUserLoadedListener() {
@@ -85,7 +85,7 @@ public class DatabaseManager {
             public void onUserLoaded(String id, final User userLocal) {
                 hasLoadLocally = true;
 
-                Log.i("DATABASE_DEBUG", "User local loaded: " + userLocal.toString());
+                Log.i("DATABASE_DEBUG", "using Remote: "+!useLocalVsRemote+" User local loaded: " + userLocal.toString());
 
                 if(!useLocalVsRemote) {
                     remoteDatabase.loadUser(id, new IGameDatabase.OnUserLoadedListener() {
@@ -112,11 +112,27 @@ public class DatabaseManager {
             @Override
             public void onLoadCompleted() {
                 // If not has load the local user and is set to use the local user
-                Log.i("DATABASE_DEBUG", "user local completed need continue: " + (!hasLoadLocally && useLocalVsRemote) + " Use local vs remote: " + useLocalVsRemote);
+                Log.i("DATABASE_DEBUG", "user local completed need continue: " + (hasLoadLocally && useLocalVsRemote) + " Use local vs remote: " + useLocalVsRemote);
 
                 if(hasLoadLocally && useLocalVsRemote) {
 
                     userLoadedListener.onLoadCompleted();
+                } else if(!hasLoadLocally) {
+
+                    remoteDatabase.loadUser(userId, new IGameDatabase.OnUserLoadedListener() {
+                        @Override
+                        public void onUserLoaded(String id, User user) {
+                            Log.i("DATABASE_DEBUG", "Remote user" + user.toString());
+                            userLoadedListener.onUserLoaded(id, user);
+                        }
+
+                        @Override
+                        public void onLoadCompleted() {
+                            Log.i("DATABASE_DEBUG", "user remote completed");
+
+                            userLoadedListener.onLoadCompleted();
+                        }
+                    });
                 }
             }
         });

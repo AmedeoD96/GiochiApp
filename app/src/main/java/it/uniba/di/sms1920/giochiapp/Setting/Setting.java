@@ -35,7 +35,7 @@ public class Setting extends Fragment {
 
         final String wellcomeInitialString = welcome.getText().toString();
 
-        UsersManager.getInstance().addOnUserLoadedCallback(new UsersManager.IUsersLoadedCallback() {
+        UsersManager.getInstance().getAllUsers(new UsersManager.IUsersLoadedCallback() {
             @Override
             public void OnAllUsersLoaded(Map<String, User> users) {
                 User user = UsersManager.getInstance().getCurrentUser();
