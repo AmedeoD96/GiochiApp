@@ -117,22 +117,25 @@ public class DatabaseManager {
                 if(hasLoadLocally && useLocalVsRemote) {
 
                     userLoadedListener.onLoadCompleted();
-                } else if(!hasLoadLocally) {
+                } else if(!hasLoadLocally && !useLocalVsRemote) {
 
-                    remoteDatabase.loadUser(userId, new IGameDatabase.OnUserLoadedListener() {
-                        @Override
-                        public void onUserLoaded(String id, User user) {
-                            Log.i("DATABASE_DEBUG", "Remote user" + user.toString());
-                            userLoadedListener.onUserLoaded(id, user);
-                        }
+                        remoteDatabase.loadUser(userId, new IGameDatabase.OnUserLoadedListener() {
+                            @Override
+                            public void onUserLoaded(String id, User user) {
+                                Log.i("DATABASE_DEBUG", "Remote user" + user.toString());
+                                userLoadedListener.onUserLoaded(id, user);
+                            }
 
-                        @Override
-                        public void onLoadCompleted() {
-                            Log.i("DATABASE_DEBUG", "user remote completed");
+                            @Override
+                            public void onLoadCompleted() {
+                                Log.i("DATABASE_DEBUG", "user remote completed");
 
-                            userLoadedListener.onLoadCompleted();
-                        }
-                    });
+                                userLoadedListener.onLoadCompleted();
+                            }
+                        });
+
+                } else {
+                    userLoadedListener.onLoadCompleted();
                 }
             }
         });
