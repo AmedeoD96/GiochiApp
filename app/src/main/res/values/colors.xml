@@ -13,6 +13,8 @@
     <color name="icon_background">#e8ba2e</color>
     <color name="grey">#B3BCAF</color>
     <color name="black">#000000</color>
+    <color name="orange">#FF8F0A</color>
+    <color name="brown">#531B1A</color>
 
     <color name="status_background">#bbada0</color>
 </resources>

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -435,6 +436,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             //HO IMPARATO COME SI METTONO I FONT. GUARDA MAMMA
             Context context = GlobalApplicationContext.getAppContext();
             Typeface customTypeface = ResourcesCompat.getFont(context, R.font.montserratalternatesblack);
+            Bitmap gameOverImg = BitmapFactory.decodeResource(getResources(), R.drawable.gameover);
+            Matrix m = new Matrix();
+            int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
+            int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
+            gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
             Paint paintDeath = new Paint();
             paintDeath.setTextSize(120);
             paintDeath.setColor(Color.BLACK);
@@ -443,7 +449,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             User user = UsersManager.getInstance().getCurrentUser();
             int xPos = (canvas.getWidth() / 2);
             int yPos = (int) ((canvas.getHeight() / 2) - ((paintDeath.descent() + paintDeath.ascent()) / 2)) ;
-            canvas.drawText("Game Over", xPos, yPos, paintDeath);
+            //canvas.drawText("Game Over", xPos, yPos, paintDeath);
+            canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
             canvas.drawText("High score: " + user.scoreFrogger, xPos, 100+ yPos, paintDeath);
 
         }

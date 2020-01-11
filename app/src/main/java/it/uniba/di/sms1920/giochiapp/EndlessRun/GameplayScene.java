@@ -10,7 +10,10 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.MotionEvent;
+
+import androidx.core.content.res.ResourcesCompat;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
@@ -96,22 +99,28 @@ public class GameplayScene implements Scene {
 
             //SharedPreferences endless = context.getSharedPreferences("info", MODE_PRIVATE);
             //int highScore = endless.getInt("TopScoreEndless", 0);
+            Context context = GlobalApplicationContext.getAppContext();
+            Typeface customTypeface = ResourcesCompat.getFont(context, R.font.fippsregular);
             User user = UsersManager.getInstance().getCurrentUser();
             Paint paint = new Paint();
             paint.setTextSize(100);
-            paint.setColor(Color.GREEN);
+            paint.setColor(Color.rgb(255,143,10));
+            paint.setTypeface(customTypeface);
             Bitmap gameOverImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.gameover);
+            Bitmap highScoreImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.highscore);
             Matrix m = new Matrix();
             int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
             int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
             gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
+            highScoreImg = Bitmap.createBitmap(highScoreImg,0,0, highScoreImg.getWidth(),highScoreImg.getHeight(),m,false);
             //drawCenterText(canvas, paint, "Game Over\nHigh score: " + highScore); Il \n non funziona quando si disegna un canvas.
             paint.setTextAlign(Paint.Align.CENTER);
             int xPos = (canvas.getWidth() / 2);
             int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) ;
             //canvas.drawText("Game Over", xPos, yPos, paint);
             canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
-            canvas.drawText("High score: " + user.scoreAlienrun, xPos, 100+ yPos, paint);
+            canvas.drawBitmap(highScoreImg,centreX+150,centreY+170,paint);
+            canvas.drawText(String.valueOf(user.scoreAlienrun), xPos, 290+ yPos, paint);
 
         }
     }
