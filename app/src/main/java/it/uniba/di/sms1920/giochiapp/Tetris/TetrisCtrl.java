@@ -299,6 +299,7 @@ public class TetrisCtrl extends View {
         pnt.setARGB(128, 255, 255,255);
         int posX = (int)(fontSize * 0.5);
         int poxY = (int)(fontSize * 1.5);
+        pnt.setColor(Color.WHITE);
         canvas.drawText("Score : " + mScore, posX, poxY, pnt);
 
         poxY += (int)(fontSize * 1.5);
