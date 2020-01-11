@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GiochiApp</string>
+    <string name="continue_game">Elimina</string>
+    <string name="endless">Modalità Senza Fine</string>
+    <string name="for_now">Per ora...</string>
+    <string name="game_over">Hai Perso!</string>
+    <string name="go_on">Tocca per Continuare</string>
+    <string name="header">2048</string>
+    <string name="high_score">Miglior Punteggio</string>
+    <string name="instructions">Scorri per muovere. 2 + 2 = 4. Raggiungi 2048</string>
+    <string name="reset">Ricomincia</string>
+    <string name="reset_dialog_message">Sei sicuro di voler ricominciare il gioco?</string>
+    <string name="reset_dialog_title">Vuoi ricominciare il gioco?</string>
+    <string name="score">PUNTI</string>
+    <string name="you_win">Hai Vinto!</string>
+
+    <plurals name="numberOfRiversSurpassed">
+        <item quantity="one">Fiume superato una volta</item>
+        <item quantity="few">Fiume superato %d volte</item>
+        <item quantity="other">Fiume superato %d volte</item>
+    </plurals>
+</resources>
