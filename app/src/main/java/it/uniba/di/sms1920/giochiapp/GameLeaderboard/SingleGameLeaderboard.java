@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,6 +24,7 @@ import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class SingleGameLeaderboard extends Fragment {
     //TODO apro leaderbord->chiudo dal tasto centrale l'app->apro un'altra leaderboard->app crasha
+    //FIXME non crasha l'app perchè ho sostituito .commit() con .commitAllowingStateLoss() nella MainActivity ma non mostra più la leaderboard fino a qunado non si riavvia.
     Context context = GlobalApplicationContext.getAppContext();
 
     private RecyclerView recyclerView;
@@ -36,9 +39,6 @@ public class SingleGameLeaderboard extends Fragment {
         View view = inflater.inflate(R.layout.fragment_single_leaderboard, container, false);
         recyclerView = view.findViewById(R.id.rvLeaderboard);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-
-
         return view;
     }
 
@@ -49,7 +49,7 @@ public class SingleGameLeaderboard extends Fragment {
         List<ParentObject> parentObject = new ArrayList<>();
 
         elementCreator.clearTitles();
-
+        TextView gameName = getActivity().findViewById(R.id.gameName);
 
         switch (gameLeaderboard){
             case TETRIS:
@@ -60,6 +60,7 @@ public class SingleGameLeaderboard extends Fragment {
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                 }
+                gameName.setText("Tetris");
                 break;
             case GAME2048:
                 Collection<User> allUser2048 = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_2048, false);
@@ -69,6 +70,7 @@ public class SingleGameLeaderboard extends Fragment {
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                 }
+                gameName.setText("2048");
                 break;
             case ALIEN_RUN:
                 Collection<User> allUserAlienRun = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_ALIENRUN, false);
@@ -78,6 +80,7 @@ public class SingleGameLeaderboard extends Fragment {
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                 }
+                gameName.setText("Alien Run");
                 break;
             case ROCKET:
                 Collection<User> allUserRocket = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_HELICOPTER, false);
@@ -87,6 +90,7 @@ public class SingleGameLeaderboard extends Fragment {
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                 }
+                gameName.setText("Rocket");
                 break;
             case FROGGER:
                 Collection<User> allUserFrogger = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_FROGGER, false);
@@ -96,6 +100,7 @@ public class SingleGameLeaderboard extends Fragment {
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                 }
+                gameName.setText("Frogger");
                 break;
 
         }
@@ -116,6 +121,5 @@ public class SingleGameLeaderboard extends Fragment {
     public void onResume() {
         super.onResume();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
     }
 }

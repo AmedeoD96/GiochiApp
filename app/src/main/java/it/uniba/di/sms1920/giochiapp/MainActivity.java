@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        fragmentManager.beginTransaction().add(R.id.main_container, singleGameLeaderboard, "4").hide(singleGameLeaderboard).commit();
-        fragmentManager.beginTransaction().add(R.id.main_container, setting, "3").hide(setting).commit();
-        fragmentManager.beginTransaction().add(R.id.main_container, leaderboardFragment, "2").hide(leaderboardFragment).commit();
-        fragmentManager.beginTransaction().add(R.id.main_container, gameListFragment, "1").commit();
+        fragmentManager.beginTransaction().add(R.id.main_container, singleGameLeaderboard, "4").hide(singleGameLeaderboard).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().add(R.id.main_container, setting, "3").hide(setting).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().add(R.id.main_container, leaderboardFragment, "2").hide(leaderboardFragment).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().add(R.id.main_container, gameListFragment, "1").commitAllowingStateLoss();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -68,15 +68,15 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
             switch (menuItem.getItemId()){
                 case R.id.navigation_home:
-                    fragmentManager.beginTransaction().hide(active).show(gameListFragment).commit();
-                    fragmentManager.beginTransaction().hide(setting).commit();
-                    fragmentManager.beginTransaction().hide(singleGameLeaderboard).commit();
+                    fragmentManager.beginTransaction().hide(active).show(gameListFragment).commitAllowingStateLoss();
+                    fragmentManager.beginTransaction().hide(setting).commitAllowingStateLoss();
+                    fragmentManager.beginTransaction().hide(singleGameLeaderboard).commitAllowingStateLoss();
                     active = gameListFragment;
                     return  true;
                 case R.id.navigation_leaderboard:
-                    fragmentManager.beginTransaction().hide(active).show(leaderboardFragment).commit();
-                    fragmentManager.beginTransaction().hide(setting).commit();
-                    fragmentManager.beginTransaction().hide(singleGameLeaderboard).commit();
+                    fragmentManager.beginTransaction().hide(active).show(leaderboardFragment).commitAllowingStateLoss();
+                    fragmentManager.beginTransaction().hide(setting).commitAllowingStateLoss();
+                    fragmentManager.beginTransaction().hide(singleGameLeaderboard).commitAllowingStateLoss();
                     active = leaderboardFragment;
                     return true;
             }
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         User userTemp = UsersManager.getInstance().getCurrentUser();
         Log.i("USER_DEBUG", userTemp.toString());
 
-        fragmentManager.beginTransaction().hide(active).show(setting).commit();
+        fragmentManager.beginTransaction().hide(active).show(setting).commitAllowingStateLoss();
 
         return super.onOptionsItemSelected(item);
     }
@@ -114,7 +114,8 @@ public class MainActivity extends AppCompatActivity {
 
         singleGameLeaderboard.setRecyclerView(gameLeaderboard);
 
-        fragmentManager.beginTransaction().hide(gameListFragment).commit();
-        fragmentManager.beginTransaction().show(singleGameLeaderboard).commit();
+        fragmentManager.beginTransaction().hide(gameListFragment).commitAllowingStateLoss();
+        fragmentManager.beginTransaction().show(singleGameLeaderboard).commitAllowingStateLoss();
     }
+
 }
