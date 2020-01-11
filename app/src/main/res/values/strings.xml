@@ -17,4 +17,11 @@
     <string name="continue_game">Cancel</string>
     <string name="reset_dialog_title">Reset game?</string>
     <string name="reset_dialog_message">Are you sure you wish to reset the game?</string>
+
+
+    <plurals name="numberOfRiversSurpassed">
+        <item quantity="one">River surpassed one time</item>
+        <item quantity="few">River surpassed %d times</item>
+        <item quantity="other">River surpassed %d times</item>
+    </plurals>
 </resources>

@@ -1,6 +1,7 @@
 package it.uniba.di.sms1920.giochiapp.Frogger;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -442,7 +443,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
             gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
             Paint paintDeath = new Paint();
-            paintDeath.setTextSize(120);
+            paintDeath.setTextSize(100);
             paintDeath.setColor(Color.BLACK);
             paintDeath.setTextAlign(Paint.Align.CENTER);
             paint.setTypeface(customTypeface);
@@ -451,7 +452,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             int yPos = (int) ((canvas.getHeight() / 2) - ((paintDeath.descent() + paintDeath.ascent()) / 2)) ;
             //canvas.drawText("Game Over", xPos, yPos, paintDeath);
             canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
-            canvas.drawText("High score: " + user.scoreFrogger, xPos, 100+ yPos, paintDeath);
+            Resources res = getResources();
+            String numberScore = res.getQuantityString(R.plurals.numberOfRiversSurpassed, user.scoreFrogger, user.scoreFrogger);
+            canvas.drawText(numberScore, xPos, 100+ yPos, paintDeath);
 
         }
 

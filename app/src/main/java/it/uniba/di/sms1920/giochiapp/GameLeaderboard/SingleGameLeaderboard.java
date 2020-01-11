@@ -2,6 +2,7 @@ package it.uniba.di.sms1920.giochiapp.GameLeaderboard;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class SingleGameLeaderboard extends Fragment {
         List<ParentObject> parentObject = new ArrayList<>();
 
         elementCreator.clearTitles();
-        TextView gameName = getActivity().findViewById(R.id.gameName);
+        //TextView gameName = getActivity().findViewById(R.id.gameName);
 
         switch (gameLeaderboard){
             case TETRIS:
@@ -60,7 +61,7 @@ public class SingleGameLeaderboard extends Fragment {
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                 }
-                gameName.setText("Tetris");
+                //gameName.setText("Tetris");
                 break;
             case GAME2048:
                 Collection<User> allUser2048 = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_2048, false);
@@ -70,7 +71,7 @@ public class SingleGameLeaderboard extends Fragment {
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                 }
-                gameName.setText("2048");
+                //gameName.setText("2048");
                 break;
             case ALIEN_RUN:
                 Collection<User> allUserAlienRun = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_ALIENRUN, false);
@@ -80,7 +81,7 @@ public class SingleGameLeaderboard extends Fragment {
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                 }
-                gameName.setText("Alien Run");
+               // gameName.setText("Alien Run");
                 break;
             case ROCKET:
                 Collection<User> allUserRocket = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_HELICOPTER, false);
@@ -90,7 +91,7 @@ public class SingleGameLeaderboard extends Fragment {
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                 }
-                gameName.setText("Rocket");
+               // gameName.setText("Rocket");
                 break;
             case FROGGER:
                 Collection<User> allUserFrogger = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_FROGGER, false);
@@ -100,7 +101,7 @@ public class SingleGameLeaderboard extends Fragment {
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                 }
-                gameName.setText("Frogger");
+               // gameName.setText("Frogger");
                 break;
 
         }
@@ -121,5 +122,7 @@ public class SingleGameLeaderboard extends Fragment {
     public void onResume() {
         super.onResume();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        Log.i("ONRESUME", "on resume");
+        initData(MainActivity.getInstance().gameLeaderboard);
     }
 }
