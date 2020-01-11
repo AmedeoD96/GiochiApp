@@ -26,7 +26,9 @@ public class User {
     }
 
     public void registerCallback(UserListener userListener) {
-        callbacks.add(userListener);
+        if(!callbacks.contains(userListener)) {
+            callbacks.add(userListener);
+        }
     }
 
     public void unregistCallback(UserListener userListener) {

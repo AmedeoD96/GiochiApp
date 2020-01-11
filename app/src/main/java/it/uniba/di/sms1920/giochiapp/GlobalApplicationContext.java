@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 
+import it.uniba.di.sms1920.giochiapp.Database.DatabaseManager;
 import it.uniba.di.sms1920.giochiapp.Network.NetworkChangeReceiver;
 
 
@@ -20,6 +21,7 @@ public class GlobalApplicationContext extends Application {
         appContext = getApplicationContext();
 
         addNetworkReceiver();
+        initSystem();
     }
 
     @Override
@@ -47,4 +49,12 @@ public class GlobalApplicationContext extends Application {
     private void removeNetworkReceiver() {
         unregisterReceiver(networkChangeReceiver);
     }
+
+
+    private void initSystem() {
+        DatabaseManager.getInstance().init();
+        UsersManager.getInstance().init();
+    }
+
+
 }

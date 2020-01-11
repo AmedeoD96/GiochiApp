@@ -1,15 +1,17 @@
 package it.uniba.di.sms1920.giochiapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import it.uniba.di.sms1920.giochiapp.GameLeaderboard.SingleGameLeaderboard;
 import it.uniba.di.sms1920.giochiapp.Home.GameFragment;
 import it.uniba.di.sms1920.giochiapp.Leaderboard.LeaderboardFragment;
@@ -93,10 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        User userTemp = UsersManager.getInstance().getCurrentUser();
-        Log.i("USER_DEBUG", userTemp.toString());
-
         fragmentManager.beginTransaction().hide(active).show(setting).commitAllowingStateLoss();
 
         return super.onOptionsItemSelected(item);

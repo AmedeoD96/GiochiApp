@@ -17,6 +17,7 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
@@ -24,8 +25,10 @@ import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class LeaderboardFragment extends Fragment {
+
     Context context = GlobalApplicationContext.getAppContext();
     public TextView countTv;
+
     private RecyclerView recyclerView;
 
 
@@ -42,16 +45,25 @@ public class LeaderboardFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvGame);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        MyAdapter mAdapter = new MyAdapter(context, initData());
-
-
-        mAdapter.setParentClickableViewAnimationDefaultDuration();
-        mAdapter.setParentAndIconExpandOnClick(true);
-
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
         countTv = view.findViewById(R.id.gameName);
         countTv.setText("Global Leaderboard");
+
+
+        UsersManager.getInstance().addOnUserLoadedCallback(new UsersManager.IUsersLoadedCallback() {
+            @Override
+            public void OnAllUsersLoaded(Map<String, User> allUsers) {
+                MyAdapter mAdapter = new MyAdapter(context, initData());
+
+
+                mAdapter.setParentClickableViewAnimationDefaultDuration();
+                mAdapter.setParentAndIconExpandOnClick(true);
+
+                recyclerView.setAdapter(mAdapter);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+            }
+        });
+
+
         return view;
     }
 

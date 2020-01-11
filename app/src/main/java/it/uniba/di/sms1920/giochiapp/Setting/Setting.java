@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.Map;
+
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
@@ -21,13 +23,27 @@ public class Setting extends Fragment {
     private EditText name;
     private ToggleButton button;
     View view;
-    User user;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_setting, container, false);
-        initializeUI();
+        welcome = view.findViewById(R.id.welcome);
+        name = view.findViewById(R.id.etName);
+        button = view.findViewById(R.id.toggleButton);
+        name.setEnabled(false);
+
+        final String wellcomeInitialString = welcome.getText().toString();
+
+        UsersManager.getInstance().addOnUserLoadedCallback(new UsersManager.IUsersLoadedCallback() {
+            @Override
+            public void OnAllUsersLoaded(Map<String, User> users) {
+                User user = UsersManager.getInstance().getCurrentUser();
+
+                welcome.setText(wellcomeInitialString + user.name);
+                name.setText(user.name);
+            }
+        });
 
         button.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
@@ -37,9 +53,10 @@ public class Setting extends Fragment {
                 }else{
                     name.setEnabled(false);
 
-                    if(!name.getText().toString().equals(""))
-                    user.setName(name.getText().toString());
-                    welcome.setText("Welcome Back: " + name.getText().toString());
+                    if(!name.getText().toString().equals("")) {
+                        UsersManager.getInstance().getCurrentUser().setName(name.getText().toString());
+                        welcome.setText("Welcome Back: " + name.getText().toString());
+                    }
                 }
             }
         });
@@ -47,16 +64,6 @@ public class Setting extends Fragment {
 
 
         return view;
-    }
-
-    private void initializeUI(){
-        user = UsersManager.getInstance().getCurrentUser();
-        welcome = view.findViewById(R.id.welcome);
-        name = view.findViewById(R.id.etName);
-        button = view.findViewById(R.id.toggleButton);
-        name.setEnabled(false);
-        welcome.setText(welcome.getText() + user.name);
-        name.setText(user.name);
     }
 
 

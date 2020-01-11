@@ -97,9 +97,13 @@ public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
             Pair<String, User> user = GetUser(cursor_userscores);
             cursor_userscores.moveToNext();
 
-            onUserLoadedListener.onUserLoaded(user.first, user.second);
+            if(onUserLoadedListener != null) {
+                onUserLoadedListener.onUserLoaded(user.first, user.second);
+            }
         }
-        onUserLoadedListener.onLoadCompleted();
+        if(onUserLoadedListener != null) {
+            onUserLoadedListener.onLoadCompleted();
+        }
 
         cursor_userscores.close();
     }

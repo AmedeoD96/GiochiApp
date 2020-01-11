@@ -2,10 +2,12 @@ package it.uniba.di.sms1920.giochiapp.Database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.Map;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
+import it.uniba.di.sms1920.giochiapp.Network.NetworkChangeReceiver;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
 
@@ -37,6 +39,21 @@ public class DatabaseManager {
         return ourInstance;
     }
 
+    public void init() {
+        NetworkChangeReceiver.getInstance().registerCallback(new NetworkChangeReceiver.INetworkCallback() {
+            @Override
+            public void OnNetworkChange(boolean isNetworkPresent) {
+                boolean precValue = useLocalVsRemote;
+                useLocalVsRemote = isNetworkPresent;
+
+                if(!precValue && useLocalVsRemote) {
+                    OnGoingOffline();
+                } else if(precValue && !useLocalVsRemote) {
+                    OnGoingOnline();
+                }
+            }
+        });
+    }
 
 
     public void saveUser(String id, User user) {
@@ -54,13 +71,12 @@ public class DatabaseManager {
         if(useLocalVsRemote) {
             localDatabase.loadAllUsers(userLoadedListener);
         } else {
-            localDatabase.loadAllUsers(userLoadedListener);
             remoteDatabase.loadAllUsers(userLoadedListener);
         }
     }
 
     public void loadUser(String userId, final IGameDatabase.OnUserLoadedListener userLoadedListener) {
-        //Log.i("DATABASE_DEBUG", "load user: " + userId);
+        Log.i("DATABASE_DEBUG", "load user: " + userId);
 
         localDatabase.loadUser(userId, new IGameDatabase.OnUserLoadedListener() {
             boolean hasLoadLocally;
@@ -69,13 +85,13 @@ public class DatabaseManager {
             public void onUserLoaded(String id, final User userLocal) {
                 hasLoadLocally = true;
 
-                //Log.i("DATABASE_DEBUG", "User local loaded: " + userLocal.toString());
+                Log.i("DATABASE_DEBUG", "User local loaded: " + userLocal.toString());
 
                 if(!useLocalVsRemote) {
                     remoteDatabase.loadUser(id, new IGameDatabase.OnUserLoadedListener() {
                         @Override
                         public void onUserLoaded(String id, User user) {
-                            //Log.i("DATABASE_DEBUG", "User local more updated of remote: " +userLocal.isMoreUpdatedThan(user)+ "\nLocal user: "+ userLocal.toString() + "\nRemote user" + user.toString());
+                            Log.i("DATABASE_DEBUG", "User local more updated of remote: " +userLocal.isMoreUpdatedThan(user)+ "\nLocal user: "+ userLocal.toString() + "\nRemote user" + user.toString());
                             if(userLocal.isMoreUpdatedThan(user)) {
                                 userLoadedListener.onUserLoaded(id, userLocal);
                             } else {
@@ -85,7 +101,7 @@ public class DatabaseManager {
 
                         @Override
                         public void onLoadCompleted() {
-                            //Log.i("DATABASE_DEBUG", "user remote completed");
+                            Log.i("DATABASE_DEBUG", "user remote completed");
 
                             userLoadedListener.onLoadCompleted();
                         }
@@ -96,9 +112,9 @@ public class DatabaseManager {
             @Override
             public void onLoadCompleted() {
                 // If not has load the local user and is set to use the local user
-                //Log.i("DATABASE_DEBUG", "user local completed need continue: " + (!hasLoadLocally && useLocalVsRemote) + " Use local vs remote: " + useLocalVsRemote);
+                Log.i("DATABASE_DEBUG", "user local completed need continue: " + (!hasLoadLocally && useLocalVsRemote) + " Use local vs remote: " + useLocalVsRemote);
 
-                if(!hasLoadLocally && useLocalVsRemote) {
+                if(hasLoadLocally && useLocalVsRemote) {
 
                     userLoadedListener.onLoadCompleted();
                 }
@@ -106,26 +122,17 @@ public class DatabaseManager {
         });
     }
 
-    public void setUseLocalVsRemote(boolean useLocalVsRemote) {
-        boolean precValue = this.useLocalVsRemote;
-        this.useLocalVsRemote = useLocalVsRemote;
-
-        if(!precValue && useLocalVsRemote) {
-            OnGoingOffline();
-        } else if(precValue && !useLocalVsRemote) {
-            OnGoingOnline();
-        }
-    }
 
 
     void OnGoingOffline() {
-        cloneRemoteDBIntoLocalDB();
+
     }
 
     void OnGoingOnline() {
-        UsersManager.getInstance().populateUsers();
-        cloneRemoteDBIntoLocalDB();
+
     }
+
+
 
 
     public void saveString(String key, String value) {
@@ -150,8 +157,8 @@ public class DatabaseManager {
 
 
 
-    private void cloneRemoteDBIntoLocalDB() {
-        Map<String, User> users = UsersManager.getInstance().getAllUsers();
+    public void saveUsersIntoLocalDB(Map<String, User> users) {
+        Log.i("DATABASE_DEBUG", "Cloning db");
 
         for (Map.Entry<String, User> user : users.entrySet()) {
             localDatabase.saveUser(user.getKey(), user.getValue());

@@ -1,5 +1,7 @@
 package it.uniba.di.sms1920.giochiapp;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,11 +12,10 @@ import java.util.Map;
 
 import it.uniba.di.sms1920.giochiapp.Database.DatabaseManager;
 import it.uniba.di.sms1920.giochiapp.Database.IGameDatabase;
+import it.uniba.di.sms1920.giochiapp.Network.NetworkChangeReceiver;
 
 
 public class UsersManager {
-
-
 
     public static final String DEFAULT_ID = "-";
     public static final String DEFAULT_NAME = "guest";
@@ -27,13 +28,18 @@ public class UsersManager {
 
     private static UsersManager instance;
 
+    private List<IUsersLoadedCallback> usersLoadedCallbacks = new ArrayList<>();
+
+    private User.UserListener userListener = new User.UserListener() {
+        @Override
+        public void OnValueChange() {
+            saveCurrentUser();
+        }
+    };
 
 
 
-
-    private UsersManager() {
-        populateIfEmpty();
-    }
+    private UsersManager() { }
 
     public static UsersManager getInstance() {
         if(instance == null) {
@@ -43,60 +49,45 @@ public class UsersManager {
     }
 
 
+    public void init() {
+        NetworkChangeReceiver.getInstance().registerCallback(new NetworkChangeReceiver.INetworkCallback() {
+            @Override
+            public void OnNetworkChange(boolean isNetworkPresent) {
+                reloadUsers(null);
+            }
+        });
+        reloadUsers(null);
+    }
 
-    public void populateIfEmpty() {
-        if(allUsers.isEmpty()) {
-            populateUsers();
+
+    public void addOnUserLoadedCallback(IUsersLoadedCallback usersLoadedCallback) {
+        if(!usersLoadedCallbacks.contains(usersLoadedCallback)) {
+            usersLoadedCallbacks.add(usersLoadedCallback);
         }
     }
 
-    public void populateUsers() {
-        allUsers.clear();
-
-        final DatabaseManager db = DatabaseManager.getInstance();
-        String id = loadCurrentUserID();
-
-        db.loadUser(id, new IGameDatabase.OnUserLoadedListener() {
-            @Override
-            public void onUserLoaded(String id, User user) {
-                db.saveUser(id, user);
-            }
-
-            @Override
-            public void onLoadCompleted() {
-                db.loadAllUsers(new IGameDatabase.OnUserLoadedListener() {
-                    @Override
-                    public void onUserLoaded(String id, User user) {
-                        allUsers.put(id, user);
-                    }
-
-                    @Override
-                    public void onLoadCompleted() {
-                        final User user = getCurrentUser();
-
-                        user.registerCallback(new User.UserListener() {
-                            @Override
-                            public void OnValueChange() {
-                                saveCurrentUser();
-                            }
-                        });
-                    }
-                });
-            }
-        });
+    public boolean removeOnUserLoadedCallback(IUsersLoadedCallback usersLoadedCallback) {
+        return usersLoadedCallbacks.remove(usersLoadedCallback);
     }
 
 
-    public Map<String, User> getAllUsers() {
-        populateIfEmpty();
+    public void populateUsers(IUsersLoadedCallback usersLoadedCallback) {
+        allUsers.clear();
+        internalLoadUsers(usersLoadedCallback);
+    }
 
-        return allUsers;
+    public void reloadUsers(IUsersLoadedCallback usersLoadedCallback) {
+        internalLoadUsers(usersLoadedCallback);
+    }
+
+
+    public void getAllUsers(IUsersLoadedCallback usersLoadedCallback) {
+        reloadUsers(usersLoadedCallback);
     }
 
 
     public User getCurrentUser() {
         User resultUser;
-
         if(allUsers.containsKey(idCurrentUser)) {
 
             resultUser = allUsers.get(idCurrentUser);
@@ -107,7 +98,7 @@ public class UsersManager {
             allUsers.put(idCurrentUser, resultUser);
         }
 
-        //Log.i("USER_DEBUG", "Id: " + idCurrentUser + " User: " + resultUser.toString());
+        Log.i("USER_DEBUG", "Id: " + idCurrentUser + " User: " + resultUser.toString());
         return resultUser;
     }
 
@@ -126,8 +117,6 @@ public class UsersManager {
     }
     
     public String getUserID(User user) {
-        populateIfEmpty();
-        
         if(allUsers.containsValue(user)) {
             for (Map.Entry<String, User> entry : allUsers.entrySet()) {
                 if(entry.getValue().equals(user)) {
@@ -140,6 +129,7 @@ public class UsersManager {
 
 
     public void saveCurrentUser() {
+        Log.i("USER_DEBUG", "Save current user");
         User user = getCurrentUser();
         user.updateUser();
         DatabaseManager.getInstance().saveUser(idCurrentUser, user);
@@ -147,7 +137,7 @@ public class UsersManager {
 
 
     public Collection<User> getAllUserSort(OrderType orderType, final boolean ascendentVsDescentend) {
-        Collection<User> collection = getAllUsers().values();
+        Collection<User> collection = allUsers.values();
         List<User> list = new ArrayList(collection);
 
         switch (orderType) {
@@ -243,5 +233,62 @@ public class UsersManager {
         return idCurrentUser;
     }
 
+
+    private void OnAllUsersLoaded() {
+        for (IUsersLoadedCallback userCallback : usersLoadedCallbacks) {
+            userCallback.OnAllUsersLoaded(allUsers);
+        }
+    }
+
+
+    private void internalLoadUsers(final IUsersLoadedCallback usersLoadedCallback) {
+        Log.i("DATABASE_DEBUG", "reload users");
+
+        final DatabaseManager db = DatabaseManager.getInstance();
+        String id = loadCurrentUserID();
+
+        db.loadUser(id, new IGameDatabase.OnUserLoadedListener() {
+            @Override
+            public void onUserLoaded(String id, User user) {
+                Log.i("USER_DEBUG", "user id: " +id+ " user: " + user);
+
+                allUsers.put(id, user);
+                db.saveUser(id, user);
+            }
+
+            @Override
+            public void onLoadCompleted() {
+                db.loadAllUsers(new IGameDatabase.OnUserLoadedListener() {
+                    @Override
+                    public void onUserLoaded(String id, User user) {
+                        allUsers.put(id, user);
+                    }
+
+                    @Override
+                    public void onLoadCompleted() {
+                        final User user = getCurrentUser();
+
+                        Log.i("USER_DEBUG", "On load completed current user id: " + idCurrentUser + "user: " + user);
+
+                        user.registerCallback(userListener);
+                        DatabaseManager.getInstance().saveUsersIntoLocalDB(allUsers);
+
+                        OnAllUsersLoaded();
+
+                        if(usersLoadedCallback != null) {
+                            usersLoadedCallback.OnAllUsersLoaded(allUsers);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+
+
+    public interface IUsersLoadedCallback {
+        void OnAllUsersLoaded(Map<String, User> users);
+    }
 
 }

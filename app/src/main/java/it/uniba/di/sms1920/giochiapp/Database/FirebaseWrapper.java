@@ -1,6 +1,8 @@
 package it.uniba.di.sms1920.giochiapp.Database;
 
 
+import android.util.Log;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,11 +46,14 @@ public class FirebaseWrapper implements IGameDatabase {
                     User value = data.getValue(User.class);
                     onUserLoadedListener.onUserLoaded(data.getKey(), value);
                 }
+                Log.i("FIREBASE_TEST", "firebase load completed");
+
                 onUserLoadedListener.onLoadCompleted();
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
+                Log.i("FIREBASE_TEST", "firebase load completed error");
                 onUserLoadedListener.onLoadCompleted();
             }
         });
