@@ -20,4 +20,16 @@
         <item quantity="few">Fiume superato %d volte</item>
         <item quantity="other">Fiume superato %d volte</item>
     </plurals>
+    <string name="gameOverTetris">"Il tuo punteggio è "</string>
+    <string name="again">Riprova</string>
+    <string name="notice">Hai perso!</string>
+    <string name="scoreMin">"Punteggio: "</string>
+    <string name="topScore">"Punteggio Massimo: "</string>
+    <string name="firstRun">"Primo tentativo "</string>
+    <string name="highScore">Punteggio Massimo</string>
+    <string name="best">"Miglior Punteggio: "</string>
+    <string name="distance">"Distanza: "</string>
+    <string name="goDown">RILASCIA PER ANDARE IN BASSO</string>
+    <string name="goUp">TOCCA E TIENI PREMUTO PER ANDARE IN ALTO</string>
+    <string name="pressToStart">TOCCA PER INIZIARE</string>
 </resources>

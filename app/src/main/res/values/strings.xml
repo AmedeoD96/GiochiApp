@@ -17,6 +17,18 @@
     <string name="continue_game">Cancel</string>
     <string name="reset_dialog_title">Reset game?</string>
     <string name="reset_dialog_message">Are you sure you wish to reset the game?</string>
+    <string name="gameOverTetris">"Your score is "</string>
+    <string name="again">Again </string>
+    <string name="notice">Game over </string>
+    <string name="scoreMin">"Score: "</string>
+    <string name="topScore">Top Score : </string>
+    <string name="highScore">High Score</string>
+    <string name="firstRun">"First Run "</string>
+    <string name="distance">Distance: </string>
+    <string name="best">Best: </string>
+    <string name="pressToStart">PRESS TO START</string>
+    <string name="goUp">PRESS AND HOLD TO GO UP</string>
+    <string name="goDown">RELEASE TO GO DOWN</string>
 
 
     <plurals name="numberOfRiversSurpassed">
