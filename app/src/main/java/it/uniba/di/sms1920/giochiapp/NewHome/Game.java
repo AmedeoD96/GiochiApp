@@ -1,4 +1,4 @@
-package it.uniba.di.sms1920.giochiapp.Home;
+package it.uniba.di.sms1920.giochiapp.NewHome;
 
 
 public class Game {

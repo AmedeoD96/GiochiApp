@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
@@ -24,7 +23,6 @@ import java.util.List;
 import it.uniba.di.sms1920.giochiapp.GameLeaderboard.ElementCreator;
 import it.uniba.di.sms1920.giochiapp.GameLeaderboard.Parent;
 import it.uniba.di.sms1920.giochiapp.GameLeaderboard.ScoreAdapter;
-import it.uniba.di.sms1920.giochiapp.MainActivity;
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
