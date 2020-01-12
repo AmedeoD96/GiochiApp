@@ -11,8 +11,10 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 
+import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
 
@@ -300,10 +302,10 @@ public class TetrisCtrl extends View {
         int posX = (int)(fontSize * 0.5);
         int poxY = (int)(fontSize * 1.5);
         pnt.setColor(Color.WHITE);
-        canvas.drawText("Score : " + mScore, posX, poxY, pnt);
+        canvas.drawText(getContext().getString(R.string.scoreMin) + mScore, posX, poxY, pnt);
 
         poxY += (int)(fontSize * 1.5);
-        canvas.drawText("Top Score : " + UsersManager.getInstance().getCurrentUser().scoreTetris, posX, poxY, pnt);
+        canvas.drawText(getContext().getString(R.string.topScore) + UsersManager.getInstance().getCurrentUser().scoreTetris, posX, poxY, pnt);
     }
 
     void showMatrix(Canvas canvas, int[][] arMatrix, boolean drawEmpth) {
@@ -377,12 +379,12 @@ public class TetrisCtrl extends View {
     }
 
     /*** Interface end ***/
-
+    //qua
     void showDialog_GameOver() {
-        mDlgMsg = new AlertDialog.Builder(context)
-                .setTitle("Notice")
-                .setMessage("Game over! Your score is " + mScore)
-                .setPositiveButton("Again",
+        mDlgMsg = new AlertDialog.Builder(context, mDlgMsg.THEME_HOLO_DARK)
+                .setTitle(R.string.notice)
+                .setMessage(getContext().getString(R.string.gameOverTetris) + mScore )
+                .setPositiveButton(R.string.again,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 mDlgMsg = null;
