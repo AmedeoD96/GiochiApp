@@ -87,9 +87,11 @@ public class GameList extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if(dy > 0 && navigationView.isShown()){
-                    navigationView.setVisibility(View.GONE);
+                    navigationView.animate().translationY(navigationView.getHeight()).alpha(1.0f).setListener(null);
+                    //navigationView.setVisibility(View.GONE);
                 }else if(dy<0){
-                    navigationView.setVisibility(View.VISIBLE);
+                    //navigationView.setVisibility(View.VISIBLE);
+                    navigationView.animate().translationY(0).setDuration(200).alpha(1.0f).setListener(null);
                 }
             }
         });
