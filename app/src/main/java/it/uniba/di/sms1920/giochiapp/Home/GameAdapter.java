@@ -18,6 +18,7 @@ import java.util.List;
 import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
 import it.uniba.di.sms1920.giochiapp.Game2048.MainActivity2048;
 import it.uniba.di.sms1920.giochiapp.MainActivity;
+import it.uniba.di.sms1920.giochiapp.NewHome.GameScoreboard;
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.Tetris.Tetris;
 
@@ -66,7 +67,12 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.TETRIS);
+                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.TETRIS);
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, GameScoreboard.class);
+                        intent.putExtra("game", 0);
+                        context.startActivity(intent);
+
                     }
                 });
                 break;
@@ -91,7 +97,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.GAME2048);
+                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.GAME2048);
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, GameScoreboard.class);
+                        intent.putExtra("game", 1);
+                        context.startActivity(intent);
                     }
                 });
                 break;
@@ -116,7 +126,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.ALIEN_RUN);
+                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.ALIEN_RUN);
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, GameScoreboard.class);
+                        intent.putExtra("game", 2);
+                        context.startActivity(intent);
                     }
                 });
                 break;
@@ -141,7 +155,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.ROCKET);
+                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.ROCKET);
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, GameScoreboard.class);
+                        intent.putExtra("game", 3);
+                        context.startActivity(intent);
                     }
                 });
                 break;
@@ -166,7 +184,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.FROGGER);
+                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.FROGGER);
+                        Context context = v.getContext();
+                        Intent intent = new Intent(context, GameScoreboard.class);
+                        intent.putExtra("game", 4);
+                        context.startActivity(intent);
                     }
                 });
                 break;

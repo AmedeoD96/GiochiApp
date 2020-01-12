@@ -76,7 +76,7 @@ public class MainActivity2048 extends AppCompatActivity {
 
 
     private void save() {
-        User user = UsersManager.getInstance().getCurrentUser();
+
 
         SharedPreferences settings = this.getSharedPreferences("info", MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
@@ -108,12 +108,7 @@ public class MainActivity2048 extends AppCompatActivity {
         editor.putInt(UNDO_GAME_STATE, view.game.lastGameState);
         editor.apply();
 
-        Long longHighScore = new Long(view.game.highScore);
-        int highScore = longHighScore.intValue();
-        //int highScore2 = Integer.parseInt(String.valueOf(view.game.highScore));
-
-        //Salvo sul db
-        user.setScore2048(highScore);
+        //Stava qua
     }
 
     protected void onResume() {
@@ -163,6 +158,13 @@ public class MainActivity2048 extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         save();
+        User user = UsersManager.getInstance().getCurrentUser();
+        Long longHighScore = new Long(view.game.highScore);
+        int highScore = longHighScore.intValue();
+        //int highScore2 = Integer.parseInt(String.valueOf(view.game.highScore));
+
+        //Salvo sul db
+        user.setScore2048(highScore);
         mMediaPlayer.stop();
     }
 

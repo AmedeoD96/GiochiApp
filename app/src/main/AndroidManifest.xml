@@ -13,8 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".SplashScreen"
+        <activity android:name=".NewHome.SetUserName"></activity>
+        <activity android:name=".NewHome.GameList" />
+        <activity android:name=".NewHome.GameScoreboard" />
+        <activity android:name=".NewHome.GlobalScoreboard" />
+        <activity
+            android:name=".SplashScreen"
             android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Game2048.MainActivity2048" />
         <activity android:name=".Frogger.MainActivity" />
         <activity
@@ -32,9 +35,7 @@
             android:name=".Helicopter.Game"
             android:screenOrientation="landscape" />
         <activity android:name=".Tetris.Tetris" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Map;
 
+import it.uniba.di.sms1920.giochiapp.NewHome.GameList;
+
 public class SplashScreen extends AppCompatActivity {
 
     boolean splashScreenShowed = true;
@@ -24,7 +26,7 @@ public class SplashScreen extends AppCompatActivity {
                 if(splashScreenShowed) {
                     splashScreenShowed = false;
 
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), GameList.class);
                     startActivity(intent);
                     finish();
                 }
