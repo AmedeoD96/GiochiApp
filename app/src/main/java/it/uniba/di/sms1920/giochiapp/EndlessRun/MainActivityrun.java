@@ -12,6 +12,7 @@ import it.uniba.di.sms1920.giochiapp.R;
 
 public class MainActivityrun extends Activity {
     MediaPlayer mMediaPlayer;
+    GamePanel gamePanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +29,8 @@ public class MainActivityrun extends Activity {
         mMediaPlayer.start();
         mMediaPlayer.setLooping(true);
 
-        setContentView(new GamePanel(this));
+        gamePanel = new GamePanel(this);
+        setContentView(gamePanel);
     }
 
     @Override
@@ -46,6 +48,7 @@ public class MainActivityrun extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        gamePanel.close();
         mMediaPlayer.stop();
     }
 }

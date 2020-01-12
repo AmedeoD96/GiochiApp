@@ -1,7 +1,6 @@
 package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -19,8 +18,6 @@ import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class GameplayScene implements Scene {
 
@@ -55,6 +52,7 @@ public class GameplayScene implements Scene {
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH/2,3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
+
         obstacleManager = new ObstacleManager(300,550,150, Color.BLACK);
         movingPlayer = false;
     }
@@ -62,6 +60,13 @@ public class GameplayScene implements Scene {
     @Override
     public void terminate() {
         SceneManager.ACTIVE_SCENE = 0;
+
+        if(obstacleManager != null) {
+            User user = UsersManager.getInstance().getCurrentUser();
+            if(user.scoreAlienrun < obstacleManager.getScore()) {
+                user.setScoreAlienrun(obstacleManager.getScore());
+            }
+        }
     }
 
     @Override
@@ -96,12 +101,15 @@ public class GameplayScene implements Scene {
         obstacleManager.draw(canvas);
 
         if(gameOver) {
+            User user = UsersManager.getInstance().getCurrentUser();
+            if(user.scoreAlienrun < obstacleManager.getScore()) {
+                user.setScoreAlienrun(obstacleManager.getScore());
+            }
 
             //SharedPreferences endless = context.getSharedPreferences("info", MODE_PRIVATE);
             //int highScore = endless.getInt("TopScoreEndless", 0);
             Context context = GlobalApplicationContext.getAppContext();
             Typeface customTypeface = ResourcesCompat.getFont(context, R.font.fippsregular);
-            User user = UsersManager.getInstance().getCurrentUser();
             Paint paint = new Paint();
             paint.setTextSize(100);
             paint.setColor(Color.rgb(255,143,10));

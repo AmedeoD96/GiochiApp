@@ -6,9 +6,6 @@ import android.graphics.Paint;
 
 import java.util.ArrayList;
 
-import it.uniba.di.sms1920.giochiapp.User;
-import it.uniba.di.sms1920.giochiapp.UsersManager;
-
 public class ObstacleManager {
     private ArrayList<Obstacle> obstacles;
     private int playerGap;
@@ -85,12 +82,6 @@ public class ObstacleManager {
             obstacles.remove(obstacles.size()-1);
             score++;
 
-            //Salvataggio dati endlss
-            User user = UsersManager.getInstance().getCurrentUser();
-            if(user.scoreAlienrun < score){
-                user.setScoreAlienrun(score);
-            }
-
             //int highScore = pref.getInt("TopScore", 0);
 
             /*if(highScore<score) {
@@ -100,6 +91,10 @@ public class ObstacleManager {
              */
         }
 
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public void draw(Canvas canvas) {

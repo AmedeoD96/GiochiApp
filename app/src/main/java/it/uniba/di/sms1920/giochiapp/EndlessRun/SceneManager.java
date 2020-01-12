@@ -1,7 +1,6 @@
 package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
 import android.graphics.Canvas;
-import android.text.method.Touch;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -26,5 +25,7 @@ public class SceneManager {
     public void draw(Canvas canvas) {
         scenes.get(ACTIVE_SCENE).draw(canvas);
     }
+
+    public void terminate() { scenes.get(ACTIVE_SCENE).terminate(); }
 
 }
