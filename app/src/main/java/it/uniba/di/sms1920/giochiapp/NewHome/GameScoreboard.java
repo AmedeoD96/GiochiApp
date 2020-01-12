@@ -82,9 +82,9 @@ public class GameScoreboard extends AppCompatActivity {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if(dy > 0 && navigation.isShown()){
-                    navigation.setVisibility(View.GONE);
+                    navigation.animate().translationY(navigation.getHeight()).alpha(1.0f).setListener(null);
                 }else if(dy<0){
-                    navigation.setVisibility(View.VISIBLE);
+                    navigation.animate().translationY(0).setDuration(200).alpha(1.0f).setListener(null);
                 }
             }
         });
