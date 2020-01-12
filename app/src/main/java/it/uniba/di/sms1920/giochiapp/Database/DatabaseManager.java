@@ -176,11 +176,26 @@ public class DatabaseManager {
 
 
 
-    public void saveUsersIntoLocalDB(Map<String, User> users) {
+    public void saveUsersIntoLocalDB(Map<String, User> precUsers, Map<String, User> users) {
         Log.i("DATABASE_DEBUG", "Cloning db");
 
         for (Map.Entry<String, User> user : users.entrySet()) {
-            localDatabase.saveUser(user.getKey(), user.getValue());
+            String currentUserKey = user.getKey();
+            User currentUser = user.getValue();
+
+            if(precUsers.containsKey(currentUserKey)) {
+                User precUser = precUsers.get(currentUserKey);
+
+                if(currentUser.isMoreUpdatedThan(precUser)) {
+                    Log.i("DATABASE_DEBUG", "Cloning user more update: \ncurrent user: " + currentUser.toString() + "\nprec user: "+precUser.toString());
+
+                    localDatabase.saveUser(currentUserKey, currentUser);
+                }
+            } else {
+                Log.i("DATABASE_DEBUG", "Cloning not contained user into db: " + currentUser);
+
+                localDatabase.saveUser(currentUserKey, currentUser);
+            }
         }
     }
 

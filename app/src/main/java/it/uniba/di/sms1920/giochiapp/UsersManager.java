@@ -23,16 +23,15 @@ public class UsersManager {
 
     private static final String USER_KEY = "currentUserId";
 
+    private final Map<String, User> precUsers = new HashMap<>();
     private final Map<String, User> allUsers = new HashMap<>();
     private String idCurrentUser;
 
     private static UsersManager instance;
 
-    private List<IUsersLoadedCallback> usersLoadedCallbacks = new ArrayList<>();
-
     private User.UserListener userListener = new User.UserListener() {
         @Override
-        public void OnValueChange() {
+        public void onValueChange() {
             saveCurrentUser();
         }
     };
@@ -62,10 +61,12 @@ public class UsersManager {
 
     public void populateUsers(IUsersLoadedCallback usersLoadedCallback) {
         allUsers.clear();
+        precUsers.clear();
         internalLoadUsers(usersLoadedCallback);
     }
 
     public void reloadUsers(IUsersLoadedCallback usersLoadedCallback) {
+        precUsers.putAll(allUsers);
         internalLoadUsers(usersLoadedCallback);
     }
 
@@ -223,13 +224,6 @@ public class UsersManager {
     }
 
 
-    private void OnAllUsersLoaded() {
-        for (IUsersLoadedCallback userCallback : usersLoadedCallbacks) {
-            userCallback.OnAllUsersLoaded(allUsers);
-        }
-    }
-
-
     private void internalLoadUsers(final IUsersLoadedCallback usersLoadedCallback) {
         Log.i("DATABASE_DEBUG", "reload users");
 
@@ -259,10 +253,8 @@ public class UsersManager {
 
                         Log.i("USER_DEBUG", "On load completed current user id: " + idCurrentUser + "user: " + user);
 
-                        user.registerCallback(userListener);
-                        DatabaseManager.getInstance().saveUsersIntoLocalDB(allUsers);
-
-                        OnAllUsersLoaded();
+                        user.setRegisterCallback(userListener);
+                        DatabaseManager.getInstance().saveUsersIntoLocalDB(precUsers, allUsers);
 
                         if(usersLoadedCallback != null) {
                             usersLoadedCallback.OnAllUsersLoaded(allUsers);

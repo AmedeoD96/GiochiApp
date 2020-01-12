@@ -11,11 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.MediaActionSound;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.provider.MediaStore;
 import android.text.TextPaint;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -185,8 +181,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             inWater = true;
 
             for (int i = 0; i < logRows.length; i++) {
-                for (int ii = 0; ii < logRows[i].size(); ii++) {
-                    if(frog.getBox().intersect(logRows[i].get(ii).getBox())){
+                for (int j = 0; j < logRows[i].size(); j++) {
+                    if(getFrogIntersect(frog.getBox(), logRows[i].get(j).getBox())){
                         frog.setxVel(speeds[i]);
                         inWater = false;
                     }
@@ -196,6 +192,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         //todo fare in modo che Bulbasaur non cammini sull'acqua quando vado a dx o sx sul log
+    }
+
+    boolean getFrogIntersect(Rect frog, Rect log) {
+        return frog.intersect(log);
     }
 
     public  void hit(){

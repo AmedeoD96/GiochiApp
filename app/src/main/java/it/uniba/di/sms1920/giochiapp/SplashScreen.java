@@ -18,7 +18,7 @@ public class SplashScreen extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
 
-        UsersManager.getInstance().populateUsers(new UsersManager.IUsersLoadedCallback() {
+        UsersManager.getInstance().reloadUsers(new UsersManager.IUsersLoadedCallback() {
             @Override
             public void OnAllUsersLoaded(Map<String, User> users) {
                 if(splashScreenShowed) {

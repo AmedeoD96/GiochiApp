@@ -1,7 +1,5 @@
 package it.uniba.di.sms1920.giochiapp;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -17,22 +15,14 @@ public class User {
     public int totalScore = 0;
 
     private int updatesCounter = 0;
-
-
-    private List<UserListener> callbacks = new ArrayList<>();
+    UserListener userChangeCallback;
 
     public User() {
         updatesCounter = 0;
     }
 
-    public void registerCallback(UserListener userListener) {
-        if(!callbacks.contains(userListener)) {
-            callbacks.add(userListener);
-        }
-    }
-
-    public void unregistCallback(UserListener userListener) {
-        callbacks.remove(userListener);
+    public void setRegisterCallback(UserListener userListener) {
+        userChangeCallback = userListener;
     }
 
     public int getTotalScore() {
@@ -72,8 +62,8 @@ public class User {
 
 
     void CallOnValueChange() {
-        for (UserListener callback: callbacks) {
-            callback.OnValueChange();
+        if(userChangeCallback != null) {
+            userChangeCallback.onValueChange();
         }
     }
 
@@ -125,7 +115,7 @@ public class User {
 
 
     public interface UserListener {
-        void OnValueChange();
+        void onValueChange();
     }
 
 }
