@@ -12,9 +12,13 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
 
+import it.uniba.di.sms1920.giochiapp.NewHome.GlobalScoreboard;
 import it.uniba.di.sms1920.giochiapp.R;
 
 public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,TitleChildViewHolder> {
+
+    GlobalScoreboard globalScoreboard = new GlobalScoreboard();
+    boolean flag = true;
 
     LayoutInflater inflater;
 
@@ -40,6 +44,20 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         TitleParent title = (TitleParent)o;
         titleParentViewHolder._textView.setText(title.getTitle());
         titleParentViewHolder._score.setText(title.getGlobalScore());
+
+        Log.i("posizione", String.valueOf(i) + titleParentViewHolder._textView.getText());
+
+        if(title.isCurrentUser()){
+            titleParentViewHolder._textView.setTextColor(Color.BLUE);
+
+        }
+/*
+        if(globalScoreboard.getPosition() == i && flag){
+            titleParentViewHolder._textView.setTextColor(Color.BLUE);
+            flag = false;
+        }
+
+ */
 
     }
 

@@ -193,7 +193,6 @@ public class GameList extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("Gamelist", "ondestroy");
         UsersManager.getInstance().saveCurrentUser();
     }
 }

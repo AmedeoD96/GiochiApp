@@ -9,10 +9,14 @@ public class TitleParent implements ParentObject {
     private List<Object> mChildrenList;
     private String title;
     private int globalScore;
+    private boolean isCurrentUser;
 
-    public TitleParent(String title, int globalScore) {
+
+
+    public TitleParent(String title, int globalScore, boolean isCurrentUser) {
         this.title = title;
         this.globalScore = globalScore;
+        this.isCurrentUser = isCurrentUser;
     }
 
     public String getGlobalScore() {
@@ -21,6 +25,10 @@ public class TitleParent implements ParentObject {
 
     public String getTitle() {
         return title;
+    }
+
+    public boolean isCurrentUser() {
+        return isCurrentUser;
     }
 
     @Override
