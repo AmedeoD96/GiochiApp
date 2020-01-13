@@ -17,26 +17,20 @@ public class Obstacle implements GameObject {
     private Rect rectangle2;
     private int color;
 
-    Bitmap obstacleGreenImg;
-    Bitmap obstacleOrangeImg;
-    Bitmap obstacleGreenFlipped;
-    Bitmap obstacleOrangeFlipped;
+    private AnimationManager animationManagerGreen;
+    private AnimationManager animationManagerOrange;
 
-    Animation orangeMovement;
-    Animation greenMovement;
-    AnimationManager animationManagerGreen;
-    AnimationManager animationManagerOrange;
-
-    public Obstacle(int rectHeight, int color, int startX,int startY, int playerGap) {
+    Obstacle(int rectHeight, int color, int startX, int startY, int playerGap) {
         this.color = color;
+        //vengono create le bitmap
         rectangle = new Rect(0, startY, startX, startY+rectHeight);
         rectangle2 = new Rect(startX + playerGap, startY, Constants.SCREEN_WIDTH, startY+rectHeight);
 
-        obstacleGreenImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.snakeslime);
-        obstacleOrangeImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.snakelava);
+        Bitmap obstacleGreenImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.snakeslime);
+        Bitmap obstacleOrangeImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.snakelava);
 
-        obstacleGreenFlipped = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.greenflipped);
-        obstacleOrangeFlipped = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.orangeflipped);
+        Bitmap obstacleGreenFlipped = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.greenflipped);
+        Bitmap obstacleOrangeFlipped = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.orangeflipped);
 
         Matrix m = new Matrix();
         Matrix m2 = new Matrix();
@@ -48,8 +42,9 @@ public class Obstacle implements GameObject {
         obstacleGreenFlipped = Bitmap.createBitmap(obstacleGreenFlipped, 0, 0, obstacleGreenFlipped.getWidth(), obstacleGreenFlipped.getHeight(), m, false);
         obstacleOrangeFlipped = Bitmap.createBitmap(obstacleOrangeFlipped, 0, 0, obstacleOrangeFlipped.getWidth(), obstacleOrangeFlipped.getHeight(), m2, false);
 
-        greenMovement = new Animation(new Bitmap[]{ obstacleGreenImg, obstacleGreenFlipped },0.5f, false);
-        orangeMovement = new Animation(new Bitmap[] {obstacleOrangeImg, obstacleOrangeFlipped}, 0.5f, false);
+        //vengono create le animation
+        Animation greenMovement = new Animation(new Bitmap[]{obstacleGreenImg, obstacleGreenFlipped}, 0.5f, false);
+        Animation orangeMovement = new Animation(new Bitmap[]{obstacleOrangeImg, obstacleOrangeFlipped}, 0.5f, false);
 
         animationManagerGreen = new AnimationManager(new Animation[] {greenMovement});
         animationManagerOrange = new AnimationManager(new Animation[] {orangeMovement});
@@ -59,19 +54,22 @@ public class Obstacle implements GameObject {
         return rectangle;
     }
 
-    public void incrementY(float y) {
+    void incrementY(float y) {
+        //si incrementano i lati del rettangolo di un float
         rectangle.top += y;
         rectangle.bottom += y;
         rectangle2.top += y;
         rectangle2.bottom += y;
     }
 
-    public boolean playerCollide(RectPlayer player) {
+    boolean playerCollide(RectPlayer player) {
+        //ritorna il boolean relativo all'intersezione del rettangolo utente con i rettangoli relativi agli ostacoli
         return Rect.intersects(rectangle,player.getRectangle()) || Rect.intersects(rectangle2,player.getRectangle());
     }
 
     @Override
     public void draw(Canvas canvas) {
+        //si disegna l'animazione del canvas sui rettangoli degli ostacoli
         Paint paint = new Paint();
         paint.setColor(color);
         animationManagerGreen.draw(canvas,rectangle);
@@ -83,6 +81,7 @@ public class Obstacle implements GameObject {
         animationManagerOrange.update();
         animationManagerGreen.update();
 
+        //viene attivata l'animazione
         animationManagerOrange.playAnim(0);
         animationManagerGreen.playAnim(0);
         animationManagerGreen.update();

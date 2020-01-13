@@ -21,8 +21,6 @@ import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class GameplayScene implements Scene {
 
-    private Rect r = new Rect();
-
     private RectPlayer player;
     private Point playerPoint;
     private ObstacleManager obstacleManager;
@@ -35,21 +33,27 @@ public class GameplayScene implements Scene {
     private long frameTime;
     //Context context = GlobalApplicationContext.getAppContext();
 
-    public GameplayScene() {
+    //costruttore
+    //crea il giocatore con una sua grandezza e con un suo colore di base
+    //Genera dinamicamente il punto di partenza del giocatore in base alla grandezza dello schermo
+    GameplayScene() {
         player = new RectPlayer(new Rect(100,100,200,200), Color.rgb(255,0,0));
         playerPoint = new Point(Constants.SCREEN_WIDTH/2,3*Constants.SCREEN_HEIGHT/4);
+        //il giocatore viene posto nel punto di partenza
         player.update(playerPoint);
 
+        //crea l'èobstacleManager dando come parametri le misure degli ostacoli da generare il colore di base
         obstacleManager = new ObstacleManager(300,550 ,150, Color.BLACK);
 
-
+        //viene istanziato e registrato l'OrientationData.
         orientationData = new OrientationData();
         orientationData.register();
         frameTime = System.currentTimeMillis();
 
     }
 
-    public void reset() {
+    //genera il punto di inizio e un nuovo Obstacle Manager in caso di reset della partita dopo il primo utilizzo
+    private void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH/2,3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
 
@@ -57,6 +61,8 @@ public class GameplayScene implements Scene {
         movingPlayer = false;
     }
 
+    //Usato per chiudere la sessione di gioco
+    //una volta ottenuto l'utente utilizzatore, confronta lo score e l'highscore per un eventuale set
     @Override
     public void terminate() {
         SceneManager.ACTIVE_SCENE = 0;
@@ -73,9 +79,11 @@ public class GameplayScene implements Scene {
     public void receiveTouch(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                //se la partita non fosse finita e se il giocatore fosse inserito correttamente sulla mappa, viene posto a true
                 if(!gameOver && player.getRectangle().contains((int)event.getX(),(int)event.getY())) {
                     movingPlayer = true;
                 }
+                //se la partita fosse finita ma l'utente non ha interagito con lo schermo, la partita viene resettata automaticamente
                 if(gameOver && System.currentTimeMillis() - gameOverTime >= 2000) {
                     reset();
                     gameOver = false;
@@ -83,6 +91,7 @@ public class GameplayScene implements Scene {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
+                //se la partita non fosse conclusa e l'utente fosse in movimento si settano i punti del piano in cui si trova il giocatore
                 if(!gameOver && movingPlayer) {
                     playerPoint.set((int)event.getX(),(int)event.getY());
                 }
@@ -95,28 +104,29 @@ public class GameplayScene implements Scene {
 
     @Override
     public void draw(Canvas canvas) {
-        //canvas.drawColor(Color.WHITE);
-
         player.draw(canvas);
         obstacleManager.draw(canvas);
 
+        //in caso di game over viene ottenuto l'utente corrente, settato l'highscore se effettivamente modificato
         if(gameOver) {
             User user = UsersManager.getInstance().getCurrentUser();
             if(user.scoreAlienrun < obstacleManager.getScore()) {
                 user.setScoreAlienrun(obstacleManager.getScore());
             }
 
-            //SharedPreferences endless = context.getSharedPreferences("info", MODE_PRIVATE);
-            //int highScore = endless.getInt("TopScoreEndless", 0);
+            //si ottiene il contesto
             Context context = GlobalApplicationContext.getAppContext();
+            //viene importato il font
             Typeface customTypeface = ResourcesCompat.getFont(context, R.font.fippsregular);
             Paint paint = new Paint();
             paint.setTextSize(100);
             paint.setColor(Color.rgb(255,143,10));
             paint.setTypeface(customTypeface);
+            //create le bitmap per le scritte di game over e highscore
             Bitmap gameOverImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.gameover);
             Bitmap highScoreImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.highscore);
             Matrix m = new Matrix();
+            //interi relativi al centro dello schermo
             int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
             int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
             gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
@@ -139,8 +149,10 @@ public class GameplayScene implements Scene {
             if(frameTime < Constants.INIT_TIME) {
                 frameTime = Constants.INIT_TIME;
             }
+            //viene settato il tempo trascorso dall'inizio della partita
             int elapsedTime = (int)(System.currentTimeMillis() - frameTime);
             frameTime = System.currentTimeMillis();
+            //si aumenta la velocità del giocatore in base all'orientamento attuale e a quello iniziale
             if(orientationData.getOrientation() != null && orientationData.getStartOrientation() != null) {
                 float pitch = orientationData.getOrientation()[1]- orientationData.getStartOrientation()[1];
                 float roll =  orientationData.getOrientation()[2]- orientationData.getStartOrientation()[2];
@@ -152,6 +164,7 @@ public class GameplayScene implements Scene {
                 playerPoint.y += Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;
             }
 
+            //evita che il punto in cui si trova l'utente non sia "sotto" lo schermo
             if(playerPoint.x < 0) {
                 playerPoint.x = 0;
             } else if (playerPoint.x > Constants.SCREEN_WIDTH) {
@@ -163,6 +176,7 @@ public class GameplayScene implements Scene {
                 playerPoint.y = Constants.SCREEN_HEIGHT;
             }
 
+            //se l'utente impatta un ostacolo allora viene settato lo stato di game over e ottenuto il tempo attuale
             player.update(playerPoint);
             obstacleManager.update();
             if(obstacleManager.playerCollide(player)) {
@@ -172,17 +186,4 @@ public class GameplayScene implements Scene {
         }
     }
 
-    /*
-    private void drawCenterText(Canvas canvas, Paint paint, String text) {
-        paint.setTextAlign(Paint.Align.LEFT);
-        canvas.getClipBounds(r);
-        int cHeight = r.height();
-        int cWidth = r.width();
-        paint.getTextBounds(text, 0, text.length(), r);
-        float x = cWidth / 2f - r.width() / 2f - r.left;
-        float y = cHeight / 2f + r.height() / 2f - r.bottom;
-        canvas.drawText(text, x, y, paint);
-    }
-
-     */
 }

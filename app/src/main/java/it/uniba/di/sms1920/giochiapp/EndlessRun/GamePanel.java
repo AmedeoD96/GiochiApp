@@ -18,6 +18,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Background bg;
 
 
+    //Costruttore della clsse
+    //Riceve il contesto corrente e lo setta come costante
+    //aggiunge una Callback, crea il MainThread e il SceneManager
     public GamePanel(Context context) {
         super(context);
 
@@ -38,6 +41,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+    //riceve in input un SurfaceHolder. Crea il background e da il comando start al thread
+    //inizializza la costante relativa al tempo di avvio dell'applicazione
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread = new MainThread(getHolder(), this);
@@ -47,6 +52,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         thread.start();
     }
 
+    //riceve in input il SurfaceHolder. Viene posto a null il thread
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry=true;
@@ -63,6 +69,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    //alla ricezione di un evento attua il receiveTouch dello SceneManager
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -72,11 +79,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //return super.onTouchEvent(event);
     }
 
+    //update del Background e dello SceneManager
     public void update() {
         bg.update();
         manager.update();
     }
 
+    //disegna il Background e lo SceneManager
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -85,7 +94,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         manager.draw(canvas);
     }
 
-
+    //termina lo SceneManager
     public void close() {
         manager.terminate();
     }

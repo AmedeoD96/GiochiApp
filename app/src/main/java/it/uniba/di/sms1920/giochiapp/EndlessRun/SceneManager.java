@@ -7,14 +7,15 @@ import java.util.ArrayList;
 
 public class SceneManager {
     private ArrayList<Scene> scenes = new ArrayList<>();
-    public static int ACTIVE_SCENE;
+    static int ACTIVE_SCENE;
 
-    public SceneManager() {
+    SceneManager() {
         ACTIVE_SCENE = 0;
+        //si aggiunge un gameplayScene ad un arraylist
         scenes.add(new GameplayScene());
     }
 
-    public void receiveTouch(MotionEvent event) {
+    void receiveTouch(MotionEvent event) {
         scenes.get(ACTIVE_SCENE).receiveTouch(event);
     }
 
@@ -26,6 +27,6 @@ public class SceneManager {
         scenes.get(ACTIVE_SCENE).draw(canvas);
     }
 
-    public void terminate() { scenes.get(ACTIVE_SCENE).terminate(); }
+    void terminate() { scenes.get(ACTIVE_SCENE).terminate(); }
 
 }

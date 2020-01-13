@@ -19,10 +19,9 @@ public class ObstacleManager {
     private int score = 0;
 
     private Animation greenObstacle;
-    private Animation orangeObstacle;
-    private AnimationManager animManager;
+    private Animation orangeObstacle ;
 
-    public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
+    ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
         this.obstacleHeight = obstacleHeight;
@@ -33,12 +32,12 @@ public class ObstacleManager {
         obstacles = new ArrayList<>();
 
 
-        animManager = new AnimationManager(new Animation[]{ greenObstacle, orangeObstacle });
+        AnimationManager animManager = new AnimationManager(new Animation[]{greenObstacle, orangeObstacle});
 
         populateObstacles();
     }
 
-    public boolean playerCollide(RectPlayer player) {
+    boolean playerCollide(RectPlayer player) {
         for(Obstacle ob: obstacles) {
             if(ob.playerCollide(player)) {
                 return true;
@@ -57,12 +56,6 @@ public class ObstacleManager {
         }
     }
 
-/*
-    Context context = GlobalApplicationContext.getAppContext();
-    SharedPreferences pref = context.getSharedPreferences("info", Context.MODE_PRIVATE);
-    SharedPreferences.Editor editor = pref.edit();
-
- */
 
 
     public void update() {
@@ -82,13 +75,6 @@ public class ObstacleManager {
             obstacles.remove(obstacles.size()-1);
             score++;
 
-            //int highScore = pref.getInt("TopScore", 0);
-
-            /*if(highScore<score) {
-                editor.putInt("TopScoreEndless", score);
-                editor.apply();
-            }
-             */
         }
 
     }
