@@ -17,9 +17,6 @@ import it.uniba.di.sms1920.giochiapp.R;
 
 public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,TitleChildViewHolder> {
 
-    GlobalScoreboard globalScoreboard = new GlobalScoreboard();
-    boolean flag = true;
-
     LayoutInflater inflater;
 
     public MyAdapter(Context context, List<ParentObject> parentItemList) {
@@ -48,17 +45,25 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         Log.i("posizione", String.valueOf(i) + titleParentViewHolder._textView.getText());
 
         if(title.isCurrentUser()){
-            titleParentViewHolder._textView.setTextColor(Color.BLUE);
+            titleParentViewHolder._textView.setTextColor(Color.GREEN);
+            titleParentViewHolder._score.setTextColor(Color.GREEN);
 
+        }else {
+            titleParentViewHolder._textView.setTextColor(Color.parseColor("#757575"));
+            titleParentViewHolder._score.setTextColor(Color.parseColor("#757575"));
         }
-/*
-        if(globalScoreboard.getPosition() == i && flag){
-            titleParentViewHolder._textView.setTextColor(Color.BLUE);
-            flag = false;
+
+        int position = title.getPosition();
+
+        if(position == 0){
+            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#FFCA28"));
+        }else if(position == 1){
+            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#B0BEC5"));
+        }else if(position == 2){
+            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#cc6633"));
+        }else {
+            titleParentViewHolder.itemView.setBackgroundColor(Color.WHITE);
         }
-
- */
-
     }
 
     @Override

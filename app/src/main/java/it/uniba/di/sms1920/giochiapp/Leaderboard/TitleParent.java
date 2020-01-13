@@ -10,13 +10,15 @@ public class TitleParent implements ParentObject {
     private String title;
     private int globalScore;
     private boolean isCurrentUser;
+    private int position;
 
 
 
-    public TitleParent(String title, int globalScore, boolean isCurrentUser) {
+    public TitleParent(String title, int globalScore, boolean isCurrentUser, int position) {
         this.title = title;
         this.globalScore = globalScore;
         this.isCurrentUser = isCurrentUser;
+        this.position = position;
     }
 
     public String getGlobalScore() {
@@ -29,6 +31,10 @@ public class TitleParent implements ParentObject {
 
     public boolean isCurrentUser() {
         return isCurrentUser;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     @Override
