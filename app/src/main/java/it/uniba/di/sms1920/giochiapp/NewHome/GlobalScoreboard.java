@@ -32,6 +32,16 @@ import it.uniba.di.sms1920.giochiapp.UsersManager;
 public class GlobalScoreboard extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private int position = 0;
+    private boolean isCurrentUser;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public GlobalScoreboard(){
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +62,8 @@ public class GlobalScoreboard extends AppCompatActivity {
 
                 recyclerView.setAdapter(myAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+
             }
         });
 
@@ -104,8 +116,18 @@ public class GlobalScoreboard extends AppCompatActivity {
 
         Collection<User> allUser = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.TOTAL_SCORE, false);
 
+        int count = 1;
+        User currentUser = UsersManager.getInstance().getCurrentUser();
+
         for (User user : allUser) {
-            TitleParent title = new TitleParent(user.name, user.getTotalScore());
+            boolean isCurrentUser = false;
+            if(user.equals(currentUser)){
+                //position = count-1;
+                isCurrentUser = true;
+                Log.i("UTENTE", "UTENTE CORRENTE" + currentUser.toString() + "\nUTENTE CORRENTE DEL FOR" + user.toString());
+            }
+            TitleParent title = new TitleParent("#" + count + "   "  + user.name, user.getTotalScore(), isCurrentUser);
+            count++;
 
             List<Object> childList = new ArrayList<>();
 
@@ -145,7 +167,6 @@ public class GlobalScoreboard extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("globalscoreboard", "ondestro");
         UsersManager.getInstance().saveCurrentUser();
     }
 
