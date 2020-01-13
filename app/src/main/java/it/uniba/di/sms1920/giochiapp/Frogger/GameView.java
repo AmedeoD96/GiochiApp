@@ -195,8 +195,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     boolean getFrogIntersect(Rect frog, Rect log) {
-        return frog.contains(log.centerX(), log.centerY());
-        //return frog.intersect(log);
+        //return frog.contains(log.centerX(), log.centerY());
+        return frog.intersect(log);
     }
 
     public  void hit(){
