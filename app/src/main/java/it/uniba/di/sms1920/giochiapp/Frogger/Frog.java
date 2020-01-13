@@ -2,11 +2,7 @@ package it.uniba.di.sms1920.giochiapp.Frogger;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.pdf.PdfDocument;
-import android.util.Log;
 
 
 public class Frog {
@@ -19,6 +15,8 @@ public class Frog {
     private float yStart;
     public float jumpH;
     Rect box;
+    
+    float widthPercentage = 0.3f;
 
 
     public Rect getBox() {
@@ -99,7 +97,10 @@ public class Frog {
 
     public void draw(Canvas canvas){
         canvas.drawBitmap(bitmap, x, y, null);
-        box = new Rect((int)getX(), (int)getY(),(int)(getX()+getBitmap().getWidth()), (int)(getY()+getBitmap().getHeight()));
+        Rect startFrogRect = new Rect((int)getX(), (int)getY(),(int)(getX()+getBitmap().getWidth()), (int)(getY()+getBitmap().getHeight()));
+        int boxWidth = Math.round(startFrogRect.width() * widthPercentage);
+
+        box = new Rect(startFrogRect.left + boxWidth, startFrogRect.top, startFrogRect.right - boxWidth, startFrogRect.bottom);
         x += xVel;
     }
 }
