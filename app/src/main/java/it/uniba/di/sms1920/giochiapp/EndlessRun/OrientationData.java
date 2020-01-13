@@ -19,32 +19,32 @@ public class OrientationData implements SensorEventListener {
     private float[]  magOutput;
 
     private float [] orientation = new float[3];
-    public float[] getOrientation() {
+    float[] getOrientation() {
         return orientation;
     }
 
     private float[] startOrientation = null;
-    public float[] getStartOrientation() {
+    float[] getStartOrientation() {
         return startOrientation;
     }
-    public void newGame() {
+    void newGame() {
         startOrientation = null;
     }
 
-    public OrientationData() {
+    OrientationData() {
+        //viene istanziato il manager per i sensori. Si inizializzano l'accelerometro e il magnetometro
         manager = (SensorManager) Constants.CURRENT_CONTEXT.getSystemService(Context.SENSOR_SERVICE);
+        assert manager != null;
         accelerometer = manager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         magnometer = manager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
     }
 
-    public void register() {
+    void register() {
+        //vengono registrati i Sensori nel sensormanager
         manager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME);
         manager.registerListener(this, magnometer, SensorManager.SENSOR_DELAY_GAME);
     }
 
-    public void pause() {
-        manager.unregisterListener(this);
-    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -53,11 +53,17 @@ public class OrientationData implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        //alla ricezione di un evento vengono ottenuti i valori relativi al sensore
         if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             accelOutput = event.values;
         } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
             magOutput = event.values;
         }
+        //se i valori ottenuti dai sensori fossero diversi da null si ottiene il booleano risultante da
+        //getRotationManager: se un array di 3 float contiene il vettore geomagnetico nelle coordinate del dispositivo
+        //il boolean è usato per ottenere l'orientation del SensorManager
+        //l'orientation viene poi inizializzata come un vettore di float
+        //viene effettuata, infine, una copia del vettore  per rendere effettivo il passaggio dei valori con il passaggio di sensore
         if (accelOutput != null  && magOutput != null) {
             float[] R = new float[9];
             float[] I = new float[9];

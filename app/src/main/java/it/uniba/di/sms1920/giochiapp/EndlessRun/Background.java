@@ -10,7 +10,7 @@ public class Background {
     private Bitmap image;
     private int x,y,dx;
 
-    public Background(Bitmap res){
+    Background(Bitmap res){
         image=res;
     }
 

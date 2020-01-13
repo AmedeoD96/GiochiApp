@@ -118,7 +118,7 @@ public class GlobalScoreboard extends AppCompatActivity {
 
         int count = 1;
         User currentUser = UsersManager.getInstance().getCurrentUser();
-
+        int position = 0;
         for (User user : allUser) {
             boolean isCurrentUser = false;
             if(user.equals(currentUser)){
@@ -126,7 +126,8 @@ public class GlobalScoreboard extends AppCompatActivity {
                 isCurrentUser = true;
                 Log.i("UTENTE", "UTENTE CORRENTE" + currentUser.toString() + "\nUTENTE CORRENTE DEL FOR" + user.toString());
             }
-            TitleParent title = new TitleParent("#" + count + "   "  + user.name, user.getTotalScore(), isCurrentUser);
+            TitleParent title = new TitleParent("#" + count + "   "  + user.name, user.getTotalScore(), isCurrentUser, position);
+            position++;
             count++;
 
             List<Object> childList = new ArrayList<>();

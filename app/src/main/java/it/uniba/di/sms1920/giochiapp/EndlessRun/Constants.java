@@ -2,11 +2,11 @@ package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
 import android.content.Context;
 
-public class Constants {
-    public static int SCREEN_WIDTH;
-    public static int SCREEN_HEIGHT;
+class Constants {
+    static int SCREEN_WIDTH;
+    static int SCREEN_HEIGHT;
 
-    public static Context CURRENT_CONTEXT;
+    static Context CURRENT_CONTEXT;
 
-    public static long INIT_TIME;
+    static long INIT_TIME;
 }

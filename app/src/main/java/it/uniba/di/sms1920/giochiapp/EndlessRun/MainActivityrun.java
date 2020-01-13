@@ -14,17 +14,22 @@ public class MainActivityrun extends Activity {
     MediaPlayer mMediaPlayer;
     GamePanel gamePanel;
 
+
+    //On Create del gioco
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //si setta lo schermo in full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         DisplayMetrics ds = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(ds);
+        //si settano l'altezza e la grandezza dello schermo
         Constants.SCREEN_WIDTH = ds.widthPixels;
         Constants.SCREEN_HEIGHT = ds.heightPixels;
 
+        //viene creato il media player per la riproduzione dell'audio
         mMediaPlayer= MediaPlayer.create(MainActivityrun.this, R.raw.doodlejumpsong);
         mMediaPlayer.start();
         mMediaPlayer.setLooping(true);
