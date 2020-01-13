@@ -17,6 +17,8 @@ import it.uniba.di.sms1920.giochiapp.R;
 
 public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,TitleChildViewHolder> {
 
+    //TODO Cambiare green e gli altri colori di sfondo. Il WHITE è il colore di default
+
     LayoutInflater inflater;
 
     public MyAdapter(Context context, List<ParentObject> parentItemList) {
@@ -41,8 +43,6 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         TitleParent title = (TitleParent)o;
         titleParentViewHolder._textView.setText(title.getTitle());
         titleParentViewHolder._score.setText(title.getGlobalScore());
-
-        Log.i("posizione", String.valueOf(i) + titleParentViewHolder._textView.getText());
 
         if(title.isCurrentUser()){
             titleParentViewHolder._textView.setTextColor(Color.GREEN);

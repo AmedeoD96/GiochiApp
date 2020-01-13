@@ -105,56 +105,84 @@ public class GameScoreboard extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         int value = bundle.getInt("game");
 
+        User currentUser = UsersManager.getInstance().getCurrentUser();
+        boolean flag;
         switch (value){
             case 0:
+                flag = false;
                 Collection<User> allUserTetris = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_TETRIS, false);
 
                 for(User user: allUserTetris){
-                    Parent parent = new Parent(user.name, user.scoreTetris);
+                    if(user.equals(currentUser)){
+                        flag = true;
+                    }
+                    Parent parent = new Parent(user.name, user.scoreTetris, flag);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
+                    flag = false;
                 }
 
                 gameName.setText("Tetris");
                 break;
             case 1:
+                flag = false;
                 Collection<User> allUser2048 = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_2048, false);
 
                 for (User user : allUser2048) {
-                    Parent parent = new Parent(user.name, user.score2048);
+                    if(user.equals(currentUser)){
+                        flag = true;
+                    }
+                    Parent parent = new Parent(user.name, user.score2048, flag);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
+                    flag = false;
                 }
                 gameName.setText("2048");
                 break;
             case 2:
+                flag = false;
                 Collection<User> allUserAlienRun = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_ALIENRUN, false);
 
                 for (User user : allUserAlienRun) {
-                    Parent parent = new Parent(user.name, user.scoreAlienrun);
+                    if (user.equals(currentUser)){
+                        flag = true;
+                    }
+                    Parent parent = new Parent(user.name, user.scoreAlienrun, flag);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
+                    flag = false;
                 }
                 gameName.setText("Alien Run");
                 break;
             case 3:
+                flag = false;
                 Collection<User> allUserRocket = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_HELICOPTER, false);
 
                 for (User user : allUserRocket) {
-                    Parent parent = new Parent(user.name, user.scoreHelicopter);
+                    if(user.equals(currentUser)){
+                        flag = true;
+                    }
+                    Parent parent = new Parent(user.name, user.scoreHelicopter, flag);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
+                    flag = false;
                 }
                 gameName.setText("Rocket");
                 break;
             case 4:
+                flag = false;
                 Collection<User> allUserFrogger = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_FROGGER, false);
 
                 for (User user : allUserFrogger) {
-                    Parent parent = new Parent(user.name, user.scoreFrogger);
+                    if(user.equals(currentUser)){
+                        flag = true;
+                    }
+                    Parent parent = new Parent(user.name, user.scoreFrogger, flag);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
+                    flag = false;
                 }
+
                 gameName.setText("Frogger");
                 break;
 
