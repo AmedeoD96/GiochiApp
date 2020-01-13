@@ -115,7 +115,7 @@ public class GameList extends AppCompatActivity {
         rocket = new Game("Rocket", getRocketScore(), R.drawable.helicopterrun);
         gameList.add(rocket);
 
-        frogger = new Game("Frogger", getScoreFrogger(), R.drawable.frog);
+        frogger = new Game("Frogger", getScoreFrogger(), R.drawable.frogger);
         gameList.add(frogger);
     }
 
