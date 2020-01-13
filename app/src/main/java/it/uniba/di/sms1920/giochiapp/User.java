@@ -2,7 +2,6 @@ package it.uniba.di.sms1920.giochiapp;
 
 import java.util.Objects;
 
-
 public class User {
 
     public String name;
@@ -93,26 +92,29 @@ public class User {
                 scoreHelicopter == user.scoreHelicopter &&
                 scoreAlienrun == user.scoreAlienrun &&
                 score2048 == user.score2048 &&
+                totalScore == user.totalScore &&
+                updatesCounter == user.updatesCounter &&
                 name.equals(user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, scoreTetris, scoreFrogger, scoreHelicopter, scoreAlienrun, score2048);
+        return Objects.hash(name, scoreTetris, scoreFrogger, scoreHelicopter, scoreAlienrun, score2048, totalScore, updatesCounter);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", scoreTetris=" + scoreTetris +
                 ", scoreFrogger=" + scoreFrogger +
                 ", scoreHelicopter=" + scoreHelicopter +
                 ", scoreAlienrun=" + scoreAlienrun +
                 ", score2048=" + score2048 +
+                ", totalScore=" + totalScore +
+                ", updatesCounter=" + updatesCounter +
                 '}';
     }
-
 
     public interface UserListener {
         void onValueChange();
