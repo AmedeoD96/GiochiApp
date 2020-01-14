@@ -13,6 +13,7 @@ public class LogObj {
      private float y;
      private float yVel;
      private float xVel;
+     int direction;
 
     public Rect getBox() {
         return box;
@@ -32,7 +33,7 @@ public class LogObj {
         this.direction = direction;
     }
 
-    int direction;
+
 
      public Bitmap getBitmap() {
          return bitmap;
@@ -74,6 +75,9 @@ public class LogObj {
      }
 
 
+     /*Costruttore della classe LogObj
+     parameters: riceve in input la Bitmap del log, la velocità del log e la posizione rispetto agli assi
+      */
      public LogObj(Bitmap bitmap, int speed, float y, float x) {
          this.bitmap = bitmap;
          this.x = x;
@@ -81,7 +85,9 @@ public class LogObj {
          xVel = speed;
      }
 
-
+    /*funzione che disegna il rettangolo in cui il log è contenuto, avendo in input un Canvas.
+     Viene creato un rettangolo prendendo in input i parametri della Bitmap di riferimento e le posizioni del log rispetto ai vari assi.
+     */
      public void draw(Canvas canvas) {
          box = new Rect((int)getX(), (int)getY(),(int)(getX()+getBitmap().getWidth()), (int)(getY()+getBitmap().getHeight()));
          canvas.drawBitmap(bitmap, x, y, null);

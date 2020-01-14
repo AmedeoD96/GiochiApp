@@ -49,7 +49,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     ArrayList<Integer> remove[];
     Heart heart;
     boolean started;
-    //SharedPreferences mPref=null;
     Animation water_anim, grass_anim;
     AnimationManager animationManagerWater, animationManagerGrass;
     SoundPool soundPool_hit, soundPool_walking;
@@ -63,18 +62,19 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     boolean wasRunning;
 
-
+/*Costruttore della classe GameView, accetta come parametro il contesto dell'activity in cui viene chiamato.
+  Vengono inizializzate le immagini di sfondo, le animazioni e gli audio di gioco
+*/
     public GameView(Context context) {
         super(context);
         getHolder().addCallback(this);
 
         logBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.log);
 
-        //water=BitmapFactory.decodeResource(getResources(), R.drawable.water);
         waterAnim();
         grassAnim();
 
-        frog = new Frog(BitmapFactory.decodeResource(getResources(), R.drawable.frog), logBitmap.getHeight());
+        frog = new Frog(BitmapFactory.decodeResource(getResources(), R.drawable.frog),logBitmap.getHeight() );
         thread = new GameThread(getHolder(), this);
         heart = new Heart(logBitmap.getHeight(),
                 BitmapFactory.decodeResource(getResources(), R.drawable.heart3),
@@ -94,10 +94,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
+
+    /*Override del metodo surfaceCreated, imposta
+
+     */
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
-
 
         LOGSTRIP = (int)Math.ceil(getHeight()/logBitmap.getHeight()); //LOGSTRIP=15 perchè 15 sono le "caselle" da dove si trova la rana fino all fine dello scenario
         logRows = new ArrayList[LOGSTRIP-4]; //4 sono le caselle dove i log non devono essere generati
@@ -191,7 +194,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             if(inWater)hit();
         }
 
-        //todo fare in modo che Bulbasaur non cammini sull'acqua quando vado a dx o sx sul log
     }
 
     boolean getFrogIntersect(Rect frog, Rect log) {

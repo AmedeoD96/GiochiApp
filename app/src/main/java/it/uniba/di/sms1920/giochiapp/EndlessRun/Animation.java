@@ -29,7 +29,7 @@ public class Animation {
 
     //Costruttore della classe
     //Params
-    //framses: vettore di Bitmap dal quale si ottengono le immagini delle animazioni
+    //frames: vettore di Bitmap dal quale si ottengono le immagini delle animazioni
     //animTime: float indicante il tempo di durata prevista dell'animazione
     //scale: boolean indicante se l'animazione sia da scalare nelle proporzioni
     public Animation(Bitmap[] frames, float animTime, boolean scale) {

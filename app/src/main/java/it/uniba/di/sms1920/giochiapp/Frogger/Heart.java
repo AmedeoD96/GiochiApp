@@ -6,13 +6,6 @@ import android.graphics.Canvas;
 import android.util.Log;
 
 public class Heart {
-    public int getLives() {
-        return lives;
-    }
-
-    public void setLives(int lives) {
-        this.lives = lives;
-    }
 
     private int lives;
     private Bitmap bitmap;
@@ -22,12 +15,28 @@ public class Heart {
     private final float X;
     private final float Y;
 
+    //metodo che ritorna il numero di vite
+    public int getLives() {
+        return lives;
+    }
+
+    //metodo che imposta il numero di vite
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    //metodo che imposta ,tramite il parametro booleano, lo stato del cuore
+    // se la vita esiste oppure è stata eliminata
     public void setDead(boolean dead) {
+
         this.dead = dead;
     }
 
     private boolean dead = false;
 
+    /*Costruttore della classe Heart
+    parameters: riceve in input un float che indica l'altezza dell'oggetti Heart e le immagini che rappresentano gli oggetti Heart
+     */
     public Heart(float logHeight, Bitmap bitmap3, Bitmap bitmap2, Bitmap bitmap1){
         X = 15;
         lives = 3;
@@ -38,6 +47,10 @@ public class Heart {
         Y = logHeight - bitmap.getHeight()+50;
     }
 
+    /*Metodo che cambia il valore delle vite totali.
+    parameters: riceve in input un intero che va ad aggiungere quel preciso numero di vite
+    a quelle già esistenti
+     */
     public void lifeChange(int i){
         lives += i;
         switch (lives){
@@ -58,12 +71,16 @@ public class Heart {
         Log.d("Lives: ", lives+"");
     }
 
+    /*Metodo che disegna gli oggetti di tipo Heart
+    parameters: riceve in input un Canvas
+     */
     public void draw(Canvas canvas){
         if(lives != 0){
             canvas.drawBitmap(bitmap,X, Y, null);
         }
     }
 
+    //metodo che ritorna lo stato del booleano dead
     public boolean getdead() {
         return dead;
     }

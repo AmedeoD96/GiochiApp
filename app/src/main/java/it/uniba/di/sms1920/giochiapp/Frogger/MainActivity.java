@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(gv);
 
+        //impostazione musica di gioco
         mediaPlayerFrogger= MediaPlayer.create(MainActivity.this, R.raw.route1);
         mediaPlayerFrogger.start();
         mediaPlayerFrogger.setLooping(true);
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mediaPlayerFrogger.stop();
-        //chiamare il metodo di salvataggio su database
+
 
     }
 

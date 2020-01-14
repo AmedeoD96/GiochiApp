@@ -12,6 +12,8 @@ public class AnimationManager {
         this.animations = animations;
     }
 
+    //riceve in input un indice e, applicandosi ad un vettore di Animation avvia la funzione play per l'animazione posta
+    //nella posizione specificatta dall'indice. Vengono poste in stato di stop tutti gli altri elementi del vettore
     public void playAnim(int index) {
         for(int i = 0; i<animations.length; i++) {
             if (i == index) {
@@ -25,7 +27,8 @@ public class AnimationManager {
         animationIndex = index;
     }
 
-
+    //la funzione disegna una Animation a partire da un Rect
+    //viene disegnata solamente la animazione in esecuzione
     public void draw(Canvas canvas, Rect rect) {
         Log.i("isplaying", String.valueOf(animations[animationIndex].isPlaying()));
         if (animations[animationIndex].isPlaying()) {
