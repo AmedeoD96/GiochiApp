@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 public class Player extends GameObject {
-    private Bitmap spritesheet;
     private int score;
     private boolean up;
     private boolean playing;
@@ -12,19 +11,20 @@ public class Player extends GameObject {
     private long startTime;
 
 
-    public Player(Bitmap res, int w, int h, int numFrames){
+    Player(Bitmap res, int w, int h, int numFrames){
         x=100;
+        //il giocatore è creato a metà schermo
         y=GamePanel.HEIGHT/2;
         dy=0;
         score=0;
         height=h;
         width=w;
 
+        //creazione dell'immagine e dell'animazione
         Bitmap[] image=new Bitmap[numFrames];
-        spritesheet=res;
 
         for (int i=0;i<image.length;i++){
-            image[i]= Bitmap.createBitmap(spritesheet,i*width,0,width,height);
+            image[i]= Bitmap.createBitmap(res,i*width,0,width,height);
         }
         animation.setFrames(image);
         animation.setDelay(10);
@@ -40,10 +40,12 @@ public class Player extends GameObject {
     public void update(){
         long elapsed=(System.nanoTime()-startTime)/1000000;
         if (elapsed>100){
+            //si aumenta lo score in base al tempo in cui si è in gioco
             score++;
             startTime= System.nanoTime();
         }
         animation.update();
+        //si controlla che l'elicottero non vada oltre i bordi sia dall'alto che dal basso
         if (up){
             dy-=1;
         }
@@ -66,14 +68,14 @@ public class Player extends GameObject {
     public int getScore(){return score;}
 
 
-    public boolean getPlaying(){return playing;}
+    boolean getPlaying(){return playing;}
 
 
-    public void setPlaying(boolean b){playing=b;}
+    void setPlaying(boolean b){playing=b;}
 
 
-    public void resetDY(){dy=0;}
+    void resetDY(){dy=0;}
 
 
-    public void resetScore(){score=0;}
+    void resetScore(){score=0;}
 }
