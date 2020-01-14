@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
@@ -14,6 +16,7 @@ import java.util.List;
 import it.uniba.di.sms1920.giochiapp.Leaderboard.TitleChildViewHolder;
 import it.uniba.di.sms1920.giochiapp.R;
 
+/*Adapter della recycler view che è contenuta all'interno della scoreboard relativa al singolo gioco*/
 public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, TitleChildViewHolder> {
 
     //TODO cambiare il colore green

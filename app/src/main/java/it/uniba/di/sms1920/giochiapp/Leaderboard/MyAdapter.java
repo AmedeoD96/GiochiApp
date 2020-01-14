@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
@@ -20,10 +22,12 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
     //TODO Cambiare green e gli altri colori di sfondo. Il WHITE è il colore di default
 
     LayoutInflater inflater;
+    RecyclerView recyclerView;
 
     public MyAdapter(Context context, List<ParentObject> parentItemList) {
         super(context, parentItemList);
         inflater = LayoutInflater.from(context);
+
     }
 
     @Override

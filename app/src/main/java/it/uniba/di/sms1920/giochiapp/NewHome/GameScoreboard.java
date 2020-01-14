@@ -6,9 +6,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,6 +29,8 @@ public class GameScoreboard extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private BottomNavigationView navigation;
+    private ImageButton imageButton;
+    private int find;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,13 @@ public class GameScoreboard extends AppCompatActivity {
         scoreAdapter.setParentAndIconExpandOnClick(false);
 
         recyclerView.setAdapter(scoreAdapter);
+
+        imageButton.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.scrollToPosition(find);
+            }
+        });
 
 
 
@@ -87,6 +99,7 @@ public class GameScoreboard extends AppCompatActivity {
         recyclerView = findViewById(R.id.rvSingleGameScoreboard);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         navigation = findViewById(R.id.navigation);
+        imageButton = findViewById(R.id.ibFind);
     }
 
     private List<ParentObject> initData(){
@@ -112,6 +125,7 @@ public class GameScoreboard extends AppCompatActivity {
                 for(User user: allUserTetris){
                     if(user.equals(currentUser)){
                         flag = true;
+                        find = position;
                     }
                     Parent parent = new Parent(user.name, user.scoreTetris, flag, position);
                     elementCreator.addElement(parent);
@@ -130,6 +144,7 @@ public class GameScoreboard extends AppCompatActivity {
                 for (User user : allUser2048) {
                     if(user.equals(currentUser)){
                         flag = true;
+                        find = position;
                     }
                     Parent parent = new Parent(user.name, user.score2048, flag, position);
                     elementCreator.addElement(parent);
@@ -147,6 +162,7 @@ public class GameScoreboard extends AppCompatActivity {
                 for (User user : allUserAlienRun) {
                     if (user.equals(currentUser)){
                         flag = true;
+                        find = position;
                     }
                     Parent parent = new Parent(user.name, user.scoreAlienrun, flag, position);
                     elementCreator.addElement(parent);
@@ -164,6 +180,7 @@ public class GameScoreboard extends AppCompatActivity {
                 for (User user : allUserRocket) {
                     if(user.equals(currentUser)){
                         flag = true;
+                        find = position;
                     }
                     Parent parent = new Parent(user.name, user.scoreHelicopter, flag, position);
                     elementCreator.addElement(parent);
@@ -181,6 +198,7 @@ public class GameScoreboard extends AppCompatActivity {
                 for (User user : allUserFrogger) {
                     if(user.equals(currentUser)){
                         flag = true;
+                        find = position;
                     }
                     Parent parent = new Parent(user.name, user.scoreFrogger, flag, position);
                     elementCreator.addElement(parent);

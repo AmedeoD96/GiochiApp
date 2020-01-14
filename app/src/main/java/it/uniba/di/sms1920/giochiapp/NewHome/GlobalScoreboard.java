@@ -1,10 +1,14 @@
 package it.uniba.di.sms1920.giochiapp.NewHome;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,16 +36,8 @@ import it.uniba.di.sms1920.giochiapp.UsersManager;
 public class GlobalScoreboard extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private int position = 0;
-    private boolean isCurrentUser;
-
-    public int getPosition() {
-        return position;
-    }
-
-    public GlobalScoreboard(){
-
-    }
+    private ImageButton button;
+    private int find;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +49,13 @@ public class GlobalScoreboard extends AppCompatActivity {
 
         initializeElement();
 
+        button.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.scrollToPosition(find);
+            }
+        });
+
         UsersManager.getInstance().getAllUsers(new UsersManager.IUsersLoadedCallback() {
             @Override
             public void OnAllUsersLoaded(Map<String, User> users) {
@@ -62,8 +65,6 @@ public class GlobalScoreboard extends AppCompatActivity {
 
                 recyclerView.setAdapter(myAdapter);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-
             }
         });
 
@@ -102,11 +103,13 @@ public class GlobalScoreboard extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void initializeElement(){
         recyclerView = findViewById(R.id.rvGlobalScoreboard);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        button = findViewById(R.id.findButton);
     }
 
     private List<ParentObject> initData() {
@@ -124,7 +127,7 @@ public class GlobalScoreboard extends AppCompatActivity {
             if(user.equals(currentUser)){
                 //position = count-1;
                 isCurrentUser = true;
-                Log.i("UTENTE", "UTENTE CORRENTE" + currentUser.toString() + "\nUTENTE CORRENTE DEL FOR" + user.toString());
+                find = position;
             }
             TitleParent title = new TitleParent("#" + count + "   "  + user.name, user.getTotalScore(), isCurrentUser, position);
             position++;
