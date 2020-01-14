@@ -2,15 +2,16 @@ package it.uniba.di.sms1920.giochiapp.Game2048;
 
 import java.util.ArrayList;
 
-public class AnimationGrid {
-    public final ArrayList<AnimationCell> globalAnimation = new ArrayList<>();
-    private final ArrayList<AnimationCell>[][] field;
+class AnimationGrid {
+    final ArrayList<AnimationCell> globalAnimation = new ArrayList<>();
+    private final ArrayList[][] field;
     private int activeAnimations = 0;
     private boolean oneMoreFrame = false;
 
-    public AnimationGrid(int x, int y) {
+    AnimationGrid(int x, int y) {
         field = new ArrayList[x][y];
 
+        //viene creata un'ArrayList per ogni elemento in field
         for (int xx = 0; xx < x; xx++) {
             for (int yy = 0; yy < y; yy++) {
                 field[xx][yy] = new ArrayList<>();
@@ -18,7 +19,7 @@ public class AnimationGrid {
         }
     }
 
-    public void startAnimation(int x, int y, int animationType, long length, long delay, int[] extras) {
+    void startAnimation(int x, int y, int animationType, long length, long delay, int[] extras) {
         AnimationCell animationToAdd = new AnimationCell(x, y, animationType, length, delay, extras);
         if (x == -1 && y == -1) {
             globalAnimation.add(animationToAdd);
@@ -28,7 +29,7 @@ public class AnimationGrid {
         activeAnimations = activeAnimations + 1;
     }
 
-    public void tickAll(long timeElapsed) {
+    void tickAll(long timeElapsed) {
         ArrayList<AnimationCell> cancelledAnimations = new ArrayList<>();
         for (AnimationCell animation : globalAnimation) {
             animation.tick(timeElapsed);
@@ -38,7 +39,7 @@ public class AnimationGrid {
             }
         }
 
-        for (ArrayList<AnimationCell>[] array : field) {
+        for (ArrayList[] array : field) {
             for (ArrayList<AnimationCell> list : array) {
                 for (AnimationCell animation : list) {
                     animation.tick(timeElapsed);
@@ -55,7 +56,7 @@ public class AnimationGrid {
         }
     }
 
-    public boolean isAnimationActive() {
+    boolean isAnimationActive() {
         if (activeAnimations != 0) {
             oneMoreFrame = true;
             return true;
@@ -67,13 +68,13 @@ public class AnimationGrid {
         }
     }
 
-    public ArrayList<AnimationCell> getAnimationCell(int x, int y) {
+    ArrayList getAnimationCell(int x, int y) {
         return field[x][y];
     }
 
-    public void cancelAnimations() {
-        for (ArrayList<AnimationCell>[] array : field) {
-            for (ArrayList<AnimationCell> list : array) {
+    void cancelAnimations() {
+        for (ArrayList[] array : field) {
+            for (ArrayList list : array) {
                 list.clear();
             }
         }

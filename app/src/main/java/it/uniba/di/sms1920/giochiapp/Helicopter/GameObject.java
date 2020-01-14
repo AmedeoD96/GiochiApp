@@ -7,7 +7,7 @@ public class GameObject {
     protected int x;
     protected int y;
     protected int dx;
-    protected int dy;
+    int dy;
     protected int width;
     protected int height;
     public void setX(int x){

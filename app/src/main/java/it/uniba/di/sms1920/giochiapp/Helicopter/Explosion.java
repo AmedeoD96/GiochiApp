@@ -1,42 +1,41 @@
 package it.uniba.di.sms1920.giochiapp.Helicopter;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 
 public class Explosion {
     private int x;
     private int y;
-    private int width;
     private int height;
     private int row;
     private Animation animation=new Animation();
-    private Bitmap spritesheet;
 
-    public Explosion(Bitmap res, int x, int y, int w, int h, int numFrames){
+    Explosion(Bitmap res, int x, int y, int w, int h, int numFrames){
         this.x=x;
         this.y=y;
-        this.width=w;
         this.height=h;
 
+        //si ottengono i frame che comporrano l'animazione
         Bitmap[] image= new Bitmap[numFrames];
-        spritesheet=res;
+        //viene sezionata l'immagine contenente i frame dell'esplosione per ottenenre il singolo frame
         for (int i=0;i<image.length;i++){
             if (i%5==0&&i>0)row++;
-            image[i]= Bitmap.createBitmap(spritesheet,(i-(5*row))*width,row*height,width,height);
+            //viene creata una bitmap per ogni frame
+            image[i]= Bitmap.createBitmap(res,(i-(5*row))* w,row*height, w,height);
         }
         animation.setFrames(image);
         animation.setDelay(10);
     }
     public void draw(Canvas canvas){
         if (!animation.playedOnce()){
+            //si disegna la bitmap dell'esplosione
             canvas.drawBitmap(animation.getImage(),x,y,null);
         }
     }
     public void update(){
         if(!animation.playedOnce()){
+            //si passa al frame successivo
             animation.update();
         }
     }

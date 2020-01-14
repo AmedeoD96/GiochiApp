@@ -13,12 +13,13 @@ public class Game extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //No title bar
+        //Non si mostra la title bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //Set to fullscreen
+        //Si ottiene lo schermo interno
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(new GamePanel(this));
 
+        //per la riproduzione musicale
         mMediaPlayer= MediaPlayer.create(Game.this, R.raw.jetpacktheme);
         mMediaPlayer.start();
         mMediaPlayer.setLooping(true);
