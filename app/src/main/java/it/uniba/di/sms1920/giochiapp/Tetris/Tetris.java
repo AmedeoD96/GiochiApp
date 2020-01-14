@@ -25,22 +25,23 @@ public class Tetris extends AppCompatActivity {
     int mCellSize = 0;
     boolean mIsTouchMove = false;
     MediaPlayer mMediaPlayer;
-    Button Rotate;
+    Button rotate, left, right, down;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_tetris);
+        initilizeUI();
+        listener();
 
-        Rotate = (Button) findViewById(R.id.btnRotate);
+
 
         DisplayMetrics dm = this.getApplicationContext().getResources().getDisplayMetrics();
         mScreenSize.x = dm.widthPixels;
         mScreenSize.y = dm.heightPixels;
-        mCellSize = (int)(mScreenSize.x / 8);
+        mCellSize = (mScreenSize.x / 8);
 
         mMediaPlayer= MediaPlayer.create(Tetris.this,R.raw.tetris);
         mMediaPlayer.start();
@@ -48,10 +49,41 @@ public class Tetris extends AppCompatActivity {
 
         initTetrisCtrl();
 
-        Rotate.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void initilizeUI(){
+        left = findViewById(R.id.btnLeft);
+        right = findViewById(R.id.btnRight);
+        down = findViewById(R.id.btnBottom);
+        rotate = findViewById(R.id.btnRotate);
+    }
+
+    private void listener(){
+        rotate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mTetrisCtrl.block2Rotate();
+            }
+        });
+
+        left.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTetrisCtrl.block2Left();
+            }
+        });
+
+        right.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTetrisCtrl.block2Right();
+            }
+        });
+
+        down.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTetrisCtrl.block2Bottom();
             }
         });
 
@@ -112,24 +144,6 @@ public class Tetris extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         mTetrisCtrl.restartGame();
-    }
-
-    public void onClick(View view) {
-        switch( view.getId() ) {
-            case R.id.btnLeft :
-                mTetrisCtrl.block2Left();
-                break;
-            case R.id.btnRight :
-                mTetrisCtrl.block2Right();
-                break;
-            case R.id.btnBottom :
-                mTetrisCtrl.block2Bottom();
-                break;
-            case R.id.btnRotate :
-                mTetrisCtrl.block2Rotate();
-                mMousePos.set(-1, -1);
-                break;
-        }
     }
 
     @Override

@@ -22,34 +22,35 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:onClick="onClick"
             android:background="@drawable/btn_arrow_left"
-            android:text="" />
+            android:text=""
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:id="@+id/btnBottom"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:onClick="onClick"
             android:background="@drawable/btn_arrow_down"
-            android:text="" />
+            android:text=""
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:id="@+id/btnRight"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:onClick="onClick"
             android:background="@drawable/btn_arrow_right"
-            android:text="" />
+            android:text=""
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:id="@+id/btnRotate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/btn_arrow_replay" />
+            android:background="@drawable/btn_arrow_replay"
+            style="?android:attr/buttonBarButtonStyle"/>
 
     </LinearLayout>
 

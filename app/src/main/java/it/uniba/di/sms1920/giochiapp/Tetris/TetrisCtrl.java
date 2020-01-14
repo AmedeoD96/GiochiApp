@@ -305,7 +305,7 @@ public class TetrisCtrl extends View {
         canvas.drawText(getContext().getString(R.string.scoreMin) + mScore, posX, poxY, pnt);
 
         poxY += (int)(fontSize * 1.5);
-        canvas.drawText(getContext().getString(R.string.topScore) + UsersManager.getInstance().getCurrentUser().scoreTetris, posX, poxY, pnt);
+        canvas.drawText(getContext().getString(R.string.topScore) + " " + UsersManager.getInstance().getCurrentUser().scoreTetris, posX, poxY, pnt);
     }
 
     void showMatrix(Canvas canvas, int[][] arMatrix, boolean drawEmpth) {
