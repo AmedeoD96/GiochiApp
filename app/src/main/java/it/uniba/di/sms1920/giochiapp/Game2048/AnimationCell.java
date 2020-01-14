@@ -1,13 +1,13 @@
 package it.uniba.di.sms1920.giochiapp.Game2048;
 
-public class AnimationCell extends Cell {
-    public final int[] extras;
+class AnimationCell extends Cell {
+    final int[] extras;
     private final int animationType;
     private final long animationTime;
     private final long delayTime;
     private long timeElapsed;
 
-    public AnimationCell(int x, int y, int animationType, long length, long delay, int[] extras) {
+    AnimationCell(int x, int y, int animationType, long length, long delay, int[] extras) {
         super(x, y);
         this.animationType = animationType;
         animationTime = length;
@@ -15,23 +15,25 @@ public class AnimationCell extends Cell {
         this.extras = extras;
     }
 
-    public int getAnimationType() {
+    int getAnimationType() {
         return animationType;
     }
 
-    public void tick(long timeElapsed) {
+    //crea l'effettivo tempo trascorso
+    void tick(long timeElapsed) {
         this.timeElapsed = this.timeElapsed + timeElapsed;
     }
 
-    public boolean animationDone() {
+    boolean animationDone() {
         return animationTime + delayTime < timeElapsed;
     }
 
-    public double getPercentageDone() {
+    //ritorna la percentuale legata alla quantità di animazione effettuata
+    double getPercentageDone() {
         return Math.max(0, 1.0 * (timeElapsed - delayTime) / animationTime);
     }
 
-    public boolean isActive() {
+    boolean isActive() {
         return (timeElapsed >= delayTime);
     }
 }

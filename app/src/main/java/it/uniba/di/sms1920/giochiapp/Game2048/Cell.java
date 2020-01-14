@@ -1,10 +1,11 @@
 package it.uniba.di.sms1920.giochiapp.Game2048;
 
+//classe di riferimento per le coordinate di una singola cella
 public class Cell {
     private int x;
     private int y;
 
-    public Cell(int x, int y) {
+    Cell(int x, int y) {
         this.x = x;
         this.y = y;
     }
