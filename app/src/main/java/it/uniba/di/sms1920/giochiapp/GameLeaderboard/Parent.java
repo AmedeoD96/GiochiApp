@@ -9,13 +9,15 @@ public class Parent implements ParentObject {
     private String userName;
     private int score;
     private boolean isCurrentUser;
+    private int position;
 
 
 
-    public Parent (String userName, int score, boolean isCurrentUser){
+    public Parent (String userName, int score, boolean isCurrentUser, int position){
         this.userName = userName;
         this.score = score;
         this.isCurrentUser = isCurrentUser;
+        this.position = position;
     }
 
     public String getScore(){
@@ -28,6 +30,10 @@ public class Parent implements ParentObject {
 
     public boolean isCurrentUser() {
         return isCurrentUser;
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     @Override

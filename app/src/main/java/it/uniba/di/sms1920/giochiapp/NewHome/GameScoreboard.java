@@ -5,21 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import it.uniba.di.sms1920.giochiapp.GameLeaderboard.ElementCreator;
 import it.uniba.di.sms1920.giochiapp.GameLeaderboard.Parent;
 import it.uniba.di.sms1920.giochiapp.GameLeaderboard.ScoreAdapter;
@@ -107,80 +102,91 @@ public class GameScoreboard extends AppCompatActivity {
 
         User currentUser = UsersManager.getInstance().getCurrentUser();
         boolean flag;
+        int position;
         switch (value){
             case 0:
                 flag = false;
+                position = 0;
                 Collection<User> allUserTetris = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_TETRIS, false);
 
                 for(User user: allUserTetris){
                     if(user.equals(currentUser)){
                         flag = true;
                     }
-                    Parent parent = new Parent(user.name, user.scoreTetris, flag);
+                    Parent parent = new Parent(user.name, user.scoreTetris, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
+                    position++;
                 }
 
                 gameName.setText("Tetris");
                 break;
             case 1:
                 flag = false;
+                position = 0;
                 Collection<User> allUser2048 = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_2048, false);
 
                 for (User user : allUser2048) {
                     if(user.equals(currentUser)){
                         flag = true;
                     }
-                    Parent parent = new Parent(user.name, user.score2048, flag);
+                    Parent parent = new Parent(user.name, user.score2048, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
+                    position++;
                 }
                 gameName.setText("2048");
                 break;
             case 2:
                 flag = false;
+                position = 0;
                 Collection<User> allUserAlienRun = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_ALIENRUN, false);
 
                 for (User user : allUserAlienRun) {
                     if (user.equals(currentUser)){
                         flag = true;
                     }
-                    Parent parent = new Parent(user.name, user.scoreAlienrun, flag);
+                    Parent parent = new Parent(user.name, user.scoreAlienrun, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
+                    position++;
                 }
                 gameName.setText("Alien Run");
                 break;
             case 3:
                 flag = false;
+                position = 0;
                 Collection<User> allUserRocket = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_HELICOPTER, false);
 
                 for (User user : allUserRocket) {
                     if(user.equals(currentUser)){
                         flag = true;
                     }
-                    Parent parent = new Parent(user.name, user.scoreHelicopter, flag);
+                    Parent parent = new Parent(user.name, user.scoreHelicopter, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
+                    position++;
                 }
                 gameName.setText("Rocket");
                 break;
             case 4:
                 flag = false;
+                position = 0;
                 Collection<User> allUserFrogger = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_FROGGER, false);
 
                 for (User user : allUserFrogger) {
                     if(user.equals(currentUser)){
                         flag = true;
                     }
-                    Parent parent = new Parent(user.name, user.scoreFrogger, flag);
+                    Parent parent = new Parent(user.name, user.scoreFrogger, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
+                    position++;
                 }
 
                 gameName.setText("Frogger");
@@ -190,19 +196,9 @@ public class GameScoreboard extends AppCompatActivity {
         return parentObject;
     }
 
-    /*
-    public void setRecyclerView(GameList.GameLeaderboard gameLeaderboard){
-        ScoreAdapter scoreAdapter = new ScoreAdapter(getApplicationContext(), initData(gameLeaderboard));
-        scoreAdapter.setParentAndIconExpandOnClick(false);
-
-        recyclerView.setAdapter(scoreAdapter);
-    }
-     */
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("Gamescoreboard", "ondestroy");
         UsersManager.getInstance().saveCurrentUser();
     }
 

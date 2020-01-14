@@ -42,6 +42,18 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
         viewHolderTitle._userName.setText(parent.getUserName());
         viewHolderTitle._score.setText(parent.getScore());
 
+        int position = parent.getPosition();
+
+        if(position == 0){
+            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#FFCA28"));
+        }else if(position == 1){
+            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#B0BEC5"));
+        }else if(position == 2){
+            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#CC6633"));
+        }else {
+            viewHolderTitle.itemView.setBackgroundColor(Color.WHITE);
+        }
+
         if(parent.isCurrentUser()){
             viewHolderTitle._userName.setTextColor(Color.GREEN);
             viewHolderTitle._score.setTextColor(Color.GREEN);
