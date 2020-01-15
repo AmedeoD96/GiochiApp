@@ -95,14 +95,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
-    /*Override del metodo surfaceCreated, imposta
+    /*Override del metodo surfaceCreated, imposta lo scenario di gioco: i tronchi, le velocità, il numero di tentativi.
+    parameters: SurfaceHolder
 
      */
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread.setRunning(true);
 
-        LOGSTRIP = (int)Math.ceil(getHeight()/logBitmap.getHeight()); //LOGSTRIP=15 perchè 15 sono le "caselle" da dove si trova la rana fino all fine dello scenario
+        //LOGSTRIP indica il numero di array di tronchi che andranno generati, uno per ogni "fila", sono le caselle da sove si trova la rana fino alla fine dello scenario
+        LOGSTRIP = (int)Math.ceil(getHeight()/logBitmap.getHeight());
         logRows = new ArrayList[LOGSTRIP-4]; //4 sono le caselle dove i log non devono essere generati
         remove = new ArrayList[LOGSTRIP-4];
         for (int i = 0; i < remove.length; i++){
@@ -123,12 +125,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             l = System.currentTimeMillis();
         }
 
-        //Made by Lillo: la velocità dei pezzi di legno è generata randomicamente.
-        //Quindi può capitare che il primo "rigo" sia quello più veloce (nello scorrimento)
+        //Generazione randomica delle velocità per ogni singola fila di tronchi. Infatti può anche capitare che la prima fila sia la più veloce.
         for (int i = 0; i < speeds.length; i++){
             Random ran = new Random();
             speeds[i]=ran.nextInt(10)+3;
-            //speeds[i] *= Math.signum(ran.nextFloat()-0.5);
         }
         for (int i = 0; i < speeds.length; i+=2){ //le velocità pari vanno in un senso (moltiplicate per 1)
             speeds[i] *= 1;
@@ -142,14 +142,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             Random ran = new Random();
             times[i]=ran.nextInt(2000)+1000;
         }
-        t = new Timer(); //NON VIENE PIU' USATA
-
 
         if(!wasRunning)
             thread.start();
         started = true;
     }
 
+    /*Questo metodo disegna i tronchi sulla superficie di gioco, creando degli oggetti di tipo LogObj in base alle necessità.
+      Times indica un'array di tempi generati randomicamente.
+      parameters: un long e un Canvas.
+     */
     public void spawnLogs(long now, Canvas canvas){
         if(times != null) {
             for (int i = 0; i < times.length; i++) {
@@ -160,6 +162,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                         logRows[i].add(new LogObj(logBitmap, speeds[i], (i + 2) * logBitmap.getHeight(), 0 - logBitmap.getWidth()));
                     }
                 }
+
+                //se il tempo attuale meno l'ultimo tempo registrato è maggiore di un tempo in millisecondi generato randomicamente (nell'array di tempi generati randomicamente), allora...
+
                 else if (now - lastMils[i] > times[i]) {
                     Random ran = new Random();
                     if (speeds[i] < 0) {
@@ -175,11 +180,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    /*E' un metodo che analizza cosa succede quando la scatola della rana interseca una certa posizione.
+     */
     public void collision(){
-        if(!frog.getBox().intersect(0,0,getWidth(),getHeight()))hit();
 
-        if(frog.getBox().intersect(0,0,getWidth(),logBitmap.getHeight()*2))score(); //left top è il punto in alto a sinistra
+        //se la rana non interseca l'erba, viene colpita
+        if(!frog.getBox().intersect(0,0,getWidth(),getHeight())){
+            hit();
+        }
 
+        //se la rana raggiunge l'estremo superiore dello scenario, vengono aggiunti i punti
+        if(frog.getBox().intersect(0,0,getWidth(),logBitmap.getHeight()*2)){
+            score();
+        }
+
+        //se la rana interseca il box dell'acqua...
         if(frog.getBox().intersect(waterBox)){
             inWater = true;
 
@@ -191,16 +206,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     }
                 }
             }
-            if(inWater)hit();
+            if(inWater){
+                hit();
+            }
         }
 
     }
 
     boolean getFrogIntersect(Rect frog, Rect log) {
-        //return frog.contains(log.centerX(), log.centerY());
         return frog.intersect(log);
     }
 
+
+    /*E' il metodo che descrive cosa succede quando la rana viene colpita.
+    */
     public  void hit(){
 
         heart.lifeChange(-1);
@@ -213,49 +232,24 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         soundPool_hit.play(hitId,1,1,1,0,1);
     }
 
+    /*
+     E' il metodo che determina l'aumento del punteggio quando si completa un livello. Viene chiamato quando la rana arriva alla superficie superiore di erba
+     */
     public void score(){
         points ++;
         if(points<0)points=0;
 
-        //salva dati
-       /* int highscore_stored_frogger;
-        highscore_stored_frogger=loadScore(GlobalApplicationContext.getAppContext());
-        */
         User user = UsersManager.getInstance().getCurrentUser();
         if(points>=user.scoreFrogger){
             user.setScoreFrogger(points);
         }
+        reset();
 
-        //reset gioco, usare la funzione di reset
-        speeds = new int[logRows.length];
-        times = new long[speeds.length];
-        lastMils = new long[times.length];
-        frog.setY(frog.getyStart());
-        frog.setX(frog.getxStart());
-        frog.setxVel(0);
-        for(long l : lastMils){ //inutile
-            l = System.currentTimeMillis();
-        }
+    }
 
-        for (int i = 0; i < speeds.length; i++){
-            Random ran = new Random();
-            speeds[i]=ran.nextInt(10)+3;
-            //speeds[i] *= Math.signum(ran.nextFloat()-0.5);
-        }
-        for (int i = 0; i < speeds.length; i+=2){
-            speeds[i] *= 1;
-        }
-        for (int i = 1; i < speeds.length; i+=2){
-            speeds[i] *= -1;
-        }
-
-
-        for (int i = 0; i < speeds.length; i++){
-            Random ran = new Random();
-            times[i]=ran.nextInt(2000)+1000;
-        }
-
-    }//cancellare e usare metodo reset
+    /*
+    Questo metodo reimposta il gioco dopo il Game Over, reimpostando tutti i valori al valore iniziale
+     */
 
     public void reset(){
         points=0;
@@ -293,21 +287,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
     }
 
-    public float distance(float[] s, float[]e){
+
+    //calcola la distanza tra due punti
+    public float distance(float[] s, float[] e){
         return (float)Math.sqrt(Math.pow(e[0]-s[0],2)+Math.pow(e[1]-s[1],2));
     }
 
+    /*Questo metodo descrive cosa succede quando si clicca sulla rana per farle compiere dei movimenti.
+      Sono descritti i vari movimenti possibili che essa può compiere e cosa succede lungo gli assi, come conseguenza del movimento.
+      parameters: Riceve in input un evento di tipo MotionEvent
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event){
 
         if (event.getAction() == MotionEvent.ACTION_DOWN){
-            if(heart.getdead())reset();
+            if(heart.getdead()){
+                reset();
+            }
             start[0] = event.getX();
             start[1] = event.getY();
         }
         if(event.getAction() == MotionEvent.ACTION_MOVE){
             end[0] = event.getX();
             end[1] = event.getY();
+
+            //se la rana non si è ancora mossa e la distanza tra i due punti è maggiore di un certo parametro, il movimento avviene
             if(!haveMoved && distance(start, end) >= dis){
                 // move
                 double angle = Math.toDegrees(Math.atan2((double)(end[1]-start[1]),(double)(end[0]-start[0])));
@@ -361,6 +365,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         return true;
     }
 
+    /*Questo metodo è chiamato immediatamente prima che una superficie venga distrutta.
+    parameters: prende in input una variabile di tipo SurfaceHolder.
+    */
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
@@ -373,17 +380,28 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+
+    /*Questo metodo disegna e rimuove i logs dallo schermo, in base a determinate condizioni.
+    Aggiunge i log da togliere alla lista all'array remove[]
+    parameters: riceve in input un Canvas
+     */
     public void drawLogs(Canvas canvas){
         for (int i = 0; i < logRows.length; i++){
             for (int ii = 0; ii < logRows[i].size(); ii++){
                 logRows[i].get(ii).draw(canvas);
+
+                //se un log va a velocità -1 ed è fuori dallo schermo(verso un estremo), rimuovi il log dalla lista
                 if ((Math.signum(logRows[i].get(ii).getxVel())==-1)&&((logRows[i].get(ii).getX()<0-logBitmap.getWidth()))){
                     remove[i].add(ii);
                 }
+
+                //se un log va a velocità 1 ed è fuori dallo schermo (dall'altro estremo), rimuovi il log dalla lista
                 else if ((Math.signum(logRows[i].get(ii).getxVel())==1)&&((logRows[i].get(ii).getX()>canvas.getWidth()))){
                     remove[i].add(ii);
                 }
             }
+
+            //pulisce l'array remove
             for(int ii = 0; ii < remove[i].size(); ii++){
                 try {
                 logRows[i].remove((int)remove[i].get(ii));
@@ -396,9 +414,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
+    /*Questo metodo imposta le animazioni, gli sfondi, gli scenari, gli elementi, i colori e dimensioni dei testi.
+    parameters: prende in input un Canvas
+    */
     @Override
     public void onDraw(Canvas canvas){
-
 
         if (!started) {
             return;
@@ -428,20 +448,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText(points + "", canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight()+50, textPaint);
 
 
-        //qui cambia il colore nel caso di morte
+        //qui cambia il colore nel caso di morte e imposta il game over
         if(heart.getdead()==true){
-            /*
-            paint.setARGB(140, 70, 70, 70);
-            canvas.drawRect(0,0,canvas.getWidth(),canvas.getHeight(),paint);
-            paint.setARGB(225,99, 65, 65);
-            canvas.drawText("score", canvas.getWidth()-logBitmap.getWidth(),0, paint);
-             */
 
-            //HO IMPARATO COME SI METTONO I FONT. GUARDA MAMMA
             Context context = GlobalApplicationContext.getAppContext();
             Typeface customTypeface = ResourcesCompat.getFont(context, R.font.montserratalternatesblack);
             Bitmap gameOverImg = BitmapFactory.decodeResource(getResources(), R.drawable.gameover);
             Matrix m = new Matrix();
+
+            //imposta i parametri per il posizionamento della scritta Game Over
             int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
             int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
             gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
@@ -453,7 +468,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             User user = UsersManager.getInstance().getCurrentUser();
             int xPos = (canvas.getWidth() / 2);
             int yPos = (int) ((canvas.getHeight() / 2) - ((paintDeath.descent() + paintDeath.ascent()) / 2)) ;
-            //canvas.drawText("Game Over", xPos, yPos, paintDeath);
             canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
             Resources res = getResources();
             String numberScore = res.getQuantityString(R.plurals.numberOfRiversSurpassed, user.scoreFrogger, user.scoreFrogger);
@@ -463,6 +477,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         collision();
     }
+
+    //Questo metodo inizializza le Bitmap per le animazioni dell'acqua, l'animazione stessa e l'animation manager che la gestisce.
 
     public void waterAnim(){
         Bitmap water = BitmapFactory.decodeResource(getResources(), R.drawable.water);
@@ -474,6 +490,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         animationManagerWater= new AnimationManager(new Animation[]{water_anim});
     }
 
+    //Questo metodo inizializza le Bitmap per le animazioni dell'acqua, l'animazione stessa e l'animation manager che la gestisce.
     public void grassAnim(){
         Bitmap grass = BitmapFactory.decodeResource(getResources(), R.drawable.grass);
         Bitmap grassflip = BitmapFactory.decodeResource(getResources(), R.drawable.grassflip);
