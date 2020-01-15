@@ -250,7 +250,7 @@ public class MainGame {
     }
 
     private void endGame() {
-        aGrid.startAnimation(-1, -1, FADE_GLOBAL_ANIMATION, NOTIFICATION_ANIMATION_TIME, NOTIFICATION_DELAY_TIME, null);
+        aGrid.startAnimation(AnimationGrid.GLOBAL_ANIMATION_INDEX, AnimationGrid.GLOBAL_ANIMATION_INDEX, FADE_GLOBAL_ANIMATION, NOTIFICATION_ANIMATION_TIME, NOTIFICATION_DELAY_TIME, null);
         if (score >= highScore) {
             highScore = score;
             recordHighScore();

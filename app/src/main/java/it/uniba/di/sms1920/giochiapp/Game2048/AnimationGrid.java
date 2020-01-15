@@ -8,6 +8,8 @@ class AnimationGrid {
     private int activeAnimations = 0;
     private boolean oneMoreFrame = false;
 
+    public static final int GLOBAL_ANIMATION_INDEX = -1;
+
     AnimationGrid(int x, int y) {
         field = new ArrayList[x][y];
 
@@ -21,7 +23,7 @@ class AnimationGrid {
 
     void startAnimation(int x, int y, int animationType, long length, long delay, int[] extras) {
         AnimationCell animationToAdd = new AnimationCell(x, y, animationType, length, delay, extras);
-        if (x == -1 && y == -1) {
+        if (x == GLOBAL_ANIMATION_INDEX && y == GLOBAL_ANIMATION_INDEX) {
             globalAnimation.add(animationToAdd);
         } else {
             field[x][y].add(animationToAdd);
@@ -83,7 +85,7 @@ class AnimationGrid {
     }
 
     private void cancelAnimation(AnimationCell animation) {
-        if (animation.getX() == -1 && animation.getY() == -1) {
+        if (animation.getX() == GLOBAL_ANIMATION_INDEX && animation.getY() == GLOBAL_ANIMATION_INDEX) {
             globalAnimation.remove(animation);
         } else {
             field[animation.getX()][animation.getY()].remove(animation);
