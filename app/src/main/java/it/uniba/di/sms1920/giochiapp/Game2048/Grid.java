@@ -54,6 +54,7 @@ class Grid {
         return (getCellContent(cell) != null);
     }
 
+    //se la cella non fosse vuota
     Tile getCellContent(Cell cell) {
         if (cell != null && isCellWithinBounds(cell)) {
             return field[cell.getX()][cell.getY()];
@@ -70,6 +71,7 @@ class Grid {
         }
     }
 
+    //controlla se 
     boolean isCellWithinBounds(Cell cell) {
         return 0 <= cell.getX() && cell.getX() < field.length
                 && 0 <= cell.getY() && cell.getY() < field[0].length;

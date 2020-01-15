@@ -1,33 +1,38 @@
 package it.uniba.di.sms1920.giochiapp.Game2048;
 
-public class Tile extends Cell {
+class Tile extends Cell {
     private final int value;
     private Tile[] mergedFrom = null;
 
-    public Tile(int x, int y, int value) {
+    //costruttore in base alla posizione
+    Tile(int x, int y, int value) {
         super(x, y);
         this.value = value;
     }
 
-    public Tile(Cell cell, int value) {
+    //costruttore in base alla cella
+    Tile(Cell cell, int value) {
         super(cell.getX(), cell.getY());
         this.value = value;
     }
 
-    public void updatePosition(Cell cell) {
+    //aggiorna la posizione
+    void updatePosition(Cell cell) {
         this.setX(cell.getX());
         this.setY(cell.getY());
     }
 
-    public int getValue() {
+    int getValue() {
         return this.value;
     }
 
-    public Tile[] getMergedFrom() {
+    //ritorna la Tile di provenienza
+    Tile[] getMergedFrom() {
         return mergedFrom;
     }
 
-    public void setMergedFrom(Tile[] tile) {
+    //setta la Tile di provenienza
+    void setMergedFrom(Tile[] tile) {
         mergedFrom = tile;
     }
 }
