@@ -1,9 +1,7 @@
 package it.uniba.di.sms1920.giochiapp.NewHome;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,7 +50,7 @@ public class GlobalScoreboard extends AppCompatActivity {
         button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.scrollToPosition(find);
+                recyclerView.smoothScrollToPosition(find);
             }
         });
 
@@ -108,7 +106,7 @@ public class GlobalScoreboard extends AppCompatActivity {
 
     private void initializeElement(){
         recyclerView = findViewById(R.id.rvGlobalScoreboard);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new CenterLayoutManager(this));
         button = findViewById(R.id.findButton);
     }
 
