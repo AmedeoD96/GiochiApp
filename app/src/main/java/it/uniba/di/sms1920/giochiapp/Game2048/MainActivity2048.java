@@ -33,10 +33,12 @@ public class MainActivity2048 extends AppCompatActivity {
         SharedPreferences settings = this.getSharedPreferences("info", MODE_PRIVATE);
         view.hasSaveState = settings.getBoolean("save_state", false);
 
+        //avvio musica
         mMediaPlayer= MediaPlayer.create(MainActivity2048.this, R.raw.d2048sunrise);
         mMediaPlayer.start();
         mMediaPlayer.setLooping(true);
 
+        //si carica lo stato precedente di una partita in corso
         if (savedInstanceState != null) {
             if (savedInstanceState.getBoolean("hasState")) {
                 load();
@@ -45,10 +47,11 @@ public class MainActivity2048 extends AppCompatActivity {
         setContentView(view);
     }
 
+    //implementa lo swipe
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
-            //Do nothing
+            //Fa nulla
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
             view.game.move(2);
@@ -69,6 +72,7 @@ public class MainActivity2048 extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
+        //salva lo stato della partita in corso
         savedInstanceState.putBoolean("hasState", true);
         save();
     }
@@ -77,14 +81,17 @@ public class MainActivity2048 extends AppCompatActivity {
 
     private void save() {
 
-
+        // si salva lo stato della partita in corso
         SharedPreferences settings = this.getSharedPreferences("info", MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
+        //si creano le due Tile attuale e precedente
         Tile[][] field = view.game.grid.field;
         Tile[][] undoField = view.game.grid.undoField;
         editor.putInt(WIDTH, field.length);
         editor.putInt(HEIGHT, field.length);
+        //per ogni elemento del field
+        //setta i valori del field
         for (int xx = 0; xx < field.length; xx++) {
             for (int yy = 0; yy < field[0].length; yy++) {
                 if (field[xx][yy] != null) {
@@ -100,6 +107,7 @@ public class MainActivity2048 extends AppCompatActivity {
                 }
             }
         }
+        //aggiorna i valori degli score e delle possibilità di azione dell'utente
         editor.putLong(SCORE, view.game.score);
         editor.putLong(HIGH_SCORE, view.game.highScore);
         editor.putLong(UNDO_SCORE, view.game.lastScore);
@@ -108,7 +116,6 @@ public class MainActivity2048 extends AppCompatActivity {
         editor.putInt(UNDO_GAME_STATE, view.game.lastGameState);
         editor.apply();
 
-        //Stava qua
     }
 
     protected void onResume() {
@@ -117,9 +124,10 @@ public class MainActivity2048 extends AppCompatActivity {
     }
 
     private void load() {
-        //Stopping all animations
+        //Ferma ogni animazione
         view.game.aGrid.cancelAnimations();
 
+        //caricamento dei valori nella schermata
         SharedPreferences settings = getSharedPreferences("info", MODE_PRIVATE);
         for (int xx = 0; xx < view.game.grid.field.length; xx++) {
             for (int yy = 0; yy < view.game.grid.field[0].length; yy++) {
@@ -130,6 +138,7 @@ public class MainActivity2048 extends AppCompatActivity {
                     view.game.grid.field[xx][yy] = null;
                 }
 
+                //ottiene gli elementi della griglia Undo
                 int undoValue = settings.getInt(UNDO_GRID + xx + " " + yy, -1);
                 if (undoValue > 0) {
                     view.game.grid.undoField[xx][yy] = new Tile(xx, yy, undoValue);
@@ -139,6 +148,7 @@ public class MainActivity2048 extends AppCompatActivity {
             }
         }
 
+        //si ottengono gli elemenenti sui punteggi e sui bottoni
         view.game.score = settings.getLong(SCORE, view.game.score);
         view.game.highScore = settings.getLong(HIGH_SCORE, view.game.highScore);
         view.game.lastScore = settings.getLong(UNDO_SCORE, view.game.lastScore);
@@ -159,11 +169,10 @@ public class MainActivity2048 extends AppCompatActivity {
         super.onStop();
         save();
         User user = UsersManager.getInstance().getCurrentUser();
-        Long longHighScore = new Long(view.game.highScore);
-        int highScore = longHighScore.intValue();
-        //int highScore2 = Integer.parseInt(String.valueOf(view.game.highScore));
+        //si salvano i punteggi
+        long longHighScore = view.game.highScore;
+        int highScore = (int) longHighScore;
 
-        //Salvo sul db
         user.setScore2048(highScore);
         mMediaPlayer.stop();
     }

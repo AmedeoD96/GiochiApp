@@ -71,37 +71,47 @@ class Grid {
         }
     }
 
-    //controlla se 
+    //controlla se le celle rientrino effettivamente nella schermata
+    //si attua sia ricevendo una cella
     boolean isCellWithinBounds(Cell cell) {
         return 0 <= cell.getX() && cell.getX() < field.length
                 && 0 <= cell.getY() && cell.getY() < field[0].length;
     }
 
+    //sia ricevendo le coordinate
     private boolean isCellWithinBounds(int x, int y) {
         return 0 <= x && x < field.length
                 && 0 <= y && y < field[0].length;
     }
 
+    //inserimento della Tile nella posizione prevista
     void insertTile(Tile tile) {
         field[tile.getX()][tile.getY()] = tile;
     }
 
+    //rimozione della Tile nella posizione prevista
     void removeTile(Tile tile) {
         field[tile.getX()][tile.getY()] = null;
     }
 
+    //per ogni elemento nel field
     void saveTiles() {
         for (int xx = 0; xx < bufferField.length; xx++) {
             for (int yy = 0; yy < bufferField[0].length; yy++) {
+                //se gli elementi nel field fossero nulli
                 if (bufferField[xx][yy] == null) {
+                    //verrebbero mantenuti come tali
                     undoField[xx][yy] = null;
                 } else {
+                    //altrimenti verbbero salvati
                     undoField[xx][yy] = new Tile(xx, yy, bufferField[xx][yy].getValue());
                 }
             }
         }
     }
 
+    //controlla e modifica eventualmente il bufferField
+    //per effettuare dopo un salvataggio
     void prepareSaveTiles() {
         for (int xx = 0; xx < field.length; xx++) {
             for (int yy = 0; yy < field[0].length; yy++) {
@@ -114,6 +124,7 @@ class Grid {
         }
     }
 
+    //riporta la schermata alla situazione precedente riprendendo i valori contenuti in undoField
     void revertTiles() {
         for (int xx = 0; xx < undoField.length; xx++) {
             for (int yy = 0; yy < undoField[0].length; yy++) {
@@ -126,6 +137,7 @@ class Grid {
         }
     }
 
+    //ogni elemento della Grid viene posto uguale a null
     void clearGrid() {
         for (int xx = 0; xx < field.length; xx++) {
             for (int yy = 0; yy < field[0].length; yy++) {
@@ -134,6 +146,7 @@ class Grid {
         }
     }
 
+    //ogni elemento della griglia precedente viene posto uguale a null
     private void clearUndoGrid() {
         for (int xx = 0; xx < field.length; xx++) {
             for (int yy = 0; yy < field[0].length; yy++) {
