@@ -11,5 +11,10 @@
         android:icon="@drawable/trophy"
         android:title="Leaderboard" />
 
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="Profile" />
+
 
 </menu>

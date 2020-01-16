@@ -81,6 +81,11 @@ public class GlobalScoreboard extends AppCompatActivity {
                         break;
                     case R.id.navigation_leaderboard:
                         break;
+                    case R.id.navigation_profile:
+                        Intent profile = new Intent(getApplicationContext(), Profile.class);
+                        startActivity(profile);
+                        finish();
+
                 }
                 return false;
             }

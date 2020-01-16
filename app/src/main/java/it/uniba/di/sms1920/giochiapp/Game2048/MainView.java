@@ -75,18 +75,20 @@ public class MainView extends View {
         super(context);
 
         Resources resources = context.getResources();
-        //Loading resources
+        //caricamento risorse
         game = new MainGame(context, this);
         try {
-            //Getting assets
+            //ottenimento degli assets
             backgroundRectangle = resources.getDrawable(R.drawable.background_rectangle);
             lightUpRectangle = resources.getDrawable(R.drawable.light_up_rectangle);
             fadeRectangle = resources.getDrawable(R.drawable.fade_rectangle);
             this.setBackgroundColor(resources.getColor(R.color.background));
+            //si utilizzano gli assets
             paint.setAntiAlias(true);
         } catch (Exception e) {
             Log.e(TAG, "Error getting assets?", e);
         }
+        //si inizializza l'inputListener
         setOnTouchListener(new InputListener(this));
         game.newGame();
     }
@@ -98,37 +100,43 @@ public class MainView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
-        //Reset the transparency of the screen
-
+        //attua un reset della trasparenza dello schermo
         canvas.drawBitmap(background, 0, 0, paint);
 
+        //mostra il testo dello score
         drawScoreText(canvas);
 
+        //illumina il tasto di reset a fine partita
         if (!game.isActive() && !game.aGrid.isAnimationActive()) {
             drawNewGameButton(canvas, true);
         }
 
+        //mostra le celle
         drawCells(canvas);
 
+        //testo di game over
         if (!game.isActive()) {
             drawEndGameState(canvas);
         }
 
+        //testo di modalità infinita
         if (!game.canContinue()) {
             drawEndlessText(canvas);
         }
 
-        //Refresh the screen if there is still an animation running
+        //attuerebbe un refresh dello schermo se ci fosse ancora un animation in stato di run
         if (game.aGrid.isAnimationActive()) {
             invalidate(startingX, startingY, endingX, endingY);
             tick();
-            //Refresh one last time on game end.
+
+         //attuerebbe un refresh un'ultima volta in caso di fine del gioco
         } else if (!game.isActive() && refreshLastTime) {
             invalidate();
             refreshLastTime = false;
         }
     }
 
+    //cambia la taglia dello schermo, crea il background, crea le celle
     @Override
     protected void onSizeChanged(int width, int height, int oldW, int oldH) {
         super.onSizeChanged(width, height, oldW, oldH);
@@ -138,11 +146,13 @@ public class MainView extends View {
         createOverlays();
     }
 
+    //draw dei bordi
     private void drawDrawable(Canvas canvas, Drawable draw, int startingX, int startingY, int endingX, int endingY) {
         draw.setBounds(startingX, startingY, endingX, endingY);
         draw.draw(canvas);
     }
 
+    //draw delle caselle di testo
     private void drawCellText(Canvas canvas, int value) {
         int textShiftY = centerText();
         if (value >= 8) {
@@ -154,7 +164,7 @@ public class MainView extends View {
     }
 
     private void drawScoreText(Canvas canvas) {
-        //Drawing the score text: Ver 2
+        //Draw del testo del punteggio
         paint.setTextSize(bodyTextSize);
         paint.setTextAlign(Paint.Align.CENTER);
 
@@ -173,7 +183,8 @@ public class MainView extends View {
         int eXScore = sXHighScore - textPaddingSize;
         int sXScore = eXScore - textWidthScore;
 
-        //Outputting high-scores box
+        //Output della casella legata all'highscore
+        //set dei bordi
         backgroundRectangle.setBounds(sXHighScore, sYAll, eXHighScore, eYAll);
         backgroundRectangle.draw(canvas);
         paint.setTextSize(titleTextSize);
@@ -184,7 +195,7 @@ public class MainView extends View {
         canvas.drawText(String.valueOf(game.highScore), sXHighScore + textMiddleHighScore, bodyStartYAll, paint);
 
 
-        //Outputting scores box
+        //Output della casella di punteggio
         backgroundRectangle.setBounds(sXScore, sYAll, eXScore, eYAll);
         backgroundRectangle.draw(canvas);
         paint.setTextSize(titleTextSize);
@@ -241,6 +252,7 @@ public class MainView extends View {
         );
     }
 
+    //draw dell'header dell'app
     private void drawHeader(Canvas canvas) {
         paint.setTextSize(headerTextSize);
         paint.setColor(getResources().getColor(R.color.text_black));
@@ -250,6 +262,7 @@ public class MainView extends View {
         canvas.drawText(getResources().getString(R.string.header), startingX, headerStartY, paint);
     }
 
+    //draw delle istruzioni durante il primo utilizzo dell'app
     private void drawInstructions(Canvas canvas) {
         paint.setTextSize(instructionsTextSize);
         paint.setTextAlign(Paint.Align.LEFT);
@@ -258,15 +271,16 @@ public class MainView extends View {
                 startingX, endingY - textShiftY + textPaddingSize, paint);
     }
 
+    //draw del background
     private void drawBackground(Canvas canvas) {
         drawDrawable(canvas, backgroundRectangle, startingX, startingY, endingX, endingY);
     }
 
-    //Renders the set of 16 background squares.
+    //ottiene il drawable delle 16 celle del backgorund
     private void drawBackgroundGrid(Canvas canvas) {
         Resources resources = getResources();
         Drawable backgroundCell = resources.getDrawable(R.drawable.cell_rectangle);
-        // Outputting the game grid
+        // Mostra la griglia di gioco
         for (int xx = 0; xx < game.numSquaresX; xx++) {
             for (int yy = 0; yy < game.numSquaresY; yy++) {
                 int sX = startingX + gridWidth + (cellSize + gridWidth) * xx;
@@ -282,7 +296,7 @@ public class MainView extends View {
     private void drawCells(Canvas canvas) {
         paint.setTextSize(textSize);
         paint.setTextAlign(Paint.Align.CENTER);
-        // Outputting the individual cells
+        // Mostra le celle singole
         for (int xx = 0; xx < game.numSquaresX; xx++) {
             for (int yy = 0; yy < game.numSquaresY; yy++) {
                 int sX = startingX + gridWidth + (cellSize + gridWidth) * xx;
@@ -292,16 +306,16 @@ public class MainView extends View {
 
                 Tile currentTile = game.grid.getCellContent(xx, yy);
                 if (currentTile != null) {
-                    //Get and represent the value of the tile
+                    //Ottiene e rappresenta il valore della casella corrente
                     int value = currentTile.getValue();
                     int index = log2(value);
 
-                    //Check for any active animations
+                    //Controlla se ci siano animazioni attive
                     ArrayList<AnimationCell> aArray = game.aGrid.getAnimationCell(xx, yy);
                     boolean animated = false;
                     for (int i = aArray.size() - 1; i >= 0; i--) {
                         AnimationCell aCell = aArray.get(i);
-                        //If this animation is not active, skip it
+                        //se l'animazione non fosse attiva verrebbe saltata
                         if (aCell.getAnimationType() == MainGame.SPAWN_ANIMATION) {
                             animated = true;
                         }
@@ -309,16 +323,22 @@ public class MainView extends View {
                             continue;
                         }
 
-                        if (aCell.getAnimationType() == MainGame.SPAWN_ANIMATION) { // Spawning animation
+                        //le animazioni vengono mostrate
+                        if (aCell.getAnimationType() == MainGame.SPAWN_ANIMATION) {
+                            //viene effettuato uno scale del testo
                             double percentDone = aCell.getPercentageDone();
                             float textScaleSize = (float) (percentDone);
                             paint.setTextSize(textSize * textScaleSize);
 
-                            float cellScaleSize = cellSize / 2 * (1 - textScaleSize);
+                            //viene effettuato un resize delle celle
+                            float cellScaleSize = (cellSize / 2) * (1 - textScaleSize);
                             bitmapCell[index].setBounds((int) (sX + cellScaleSize), (int) (sY + cellScaleSize), (int) (eX - cellScaleSize), (int) (eY - cellScaleSize));
                             bitmapCell[index].draw(canvas);
-                        } else if (aCell.getAnimationType() == MainGame.MERGE_ANIMATION) { // Merging Animation
+                            //Animazioni di merge
+                        } else if (aCell.getAnimationType() == MainGame.MERGE_ANIMATION) {
                             double percentDone = aCell.getPercentageDone();
+                            // la grandezza del testo varia in base alla percentuale dell'animazione
+                            //all'inizio diminuisce e poi aumenta
                             float textScaleSize = (float) (1 + INITIAL_VELOCITY * percentDone
                                     + MERGING_ACCELERATION * percentDone * percentDone / 2);
                             paint.setTextSize(textSize * textScaleSize);
@@ -326,25 +346,29 @@ public class MainView extends View {
                             float cellScaleSize = cellSize / 2 * (1 - textScaleSize);
                             bitmapCell[index].setBounds((int) (sX + cellScaleSize), (int) (sY + cellScaleSize), (int) (eX - cellScaleSize), (int) (eY - cellScaleSize));
                             bitmapCell[index].draw(canvas);
-                        } else if (aCell.getAnimationType() == MainGame.MOVE_ANIMATION) {  // Moving animation
+                            //animazioni di movimento
+                        } else if (aCell.getAnimationType() == MainGame.MOVE_ANIMATION) {
                             double percentDone = aCell.getPercentageDone();
                             int tempIndex = index;
                             if (aArray.size() >= 2) {
                                 tempIndex = tempIndex - 1;
                             }
+                            //si ottengono le coordinate delle celle coinvolte nell'animazione
                             int previousX = aCell.extras[0];
                             int previousY = aCell.extras[1];
                             int currentX = currentTile.getX();
                             int currentY = currentTile.getY();
+                            //distanza percorsa
                             int dX = (int) ((currentX - previousX) * (cellSize + gridWidth) * (percentDone - 1) * 1.0);
                             int dY = (int) ((currentY - previousY) * (cellSize + gridWidth) * (percentDone - 1) * 1.0);
+                            //si settano i bordi e si attua un draw
                             bitmapCell[tempIndex].setBounds(sX + dX, sY + dY, eX + dX, eY + dY);
                             bitmapCell[tempIndex].draw(canvas);
                         }
                         animated = true;
                     }
 
-                    //No active animations? Just draw the cell
+                    //Se nono ci fossero animazioni attive si attuerebbe solo un draw della cella
                     if (!animated) {
                         bitmapCell[index].setBounds(sX, sY, eX, eY);
                         bitmapCell[index].draw(canvas);
@@ -354,9 +378,12 @@ public class MainView extends View {
         }
     }
 
+    //mostra lo stato di fine partita
     private void drawEndGameState(Canvas canvas) {
         double alphaChange = 1;
+        //viene abilitato il bottone di continue
         continueButtonEnabled = false;
+        //per ogni animazione controlla le percentuali delle animazioni di fading tipiche delle schermate di vittoria o game over
         for (AnimationCell animation : game.aGrid.globalAnimation) {
             if (animation.getAnimationType() == MainGame.FADE_GLOBAL_ANIMATION) {
                 alphaChange = animation.getPercentageDone();
@@ -366,15 +393,19 @@ public class MainView extends View {
         if (game.gameWon()) {
             if (game.canContinue()) {
                 continueButtonEnabled = true;
+                //si mostra la schermata di vittoria e di possibilità di continuare
                 displayOverlay = winGameContinueOverlay;
             } else {
+                //si mostra la schermata di vittoria definitiva
                 displayOverlay = winGameFinalOverlay;
             }
         } else if (game.gameLost()) {
+            //si mostra la schermata di game over
             displayOverlay = loseGameOverlay;
         }
 
         if (displayOverlay != null) {
+            //vengono settate le misure delle schermate
             displayOverlay.setBounds(startingX, startingY, endingX, endingY);
             displayOverlay.setAlpha((int) (255 * alphaChange));
             displayOverlay.draw(canvas);
@@ -382,6 +413,7 @@ public class MainView extends View {
     }
 
     private void drawEndlessText(Canvas canvas) {
+        //si mostra il testo della modalità senza fine
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setTextSize(bodyTextSize);
         paint.setColor(getResources().getColor(R.color.text_black));
@@ -389,6 +421,7 @@ public class MainView extends View {
     }
 
     private void createEndGameStates(Canvas canvas, boolean win, boolean showButton) {
+        //crea la schermata di fine gioco, sia in caso di completamento che di game over
         int width = endingX - startingX;
         int length = endingY - startingY;
         int middleX = width / 2;
@@ -419,6 +452,7 @@ public class MainView extends View {
         }
     }
 
+    //si crea la bitmap del background
     private void createBackgroundBitmap(int width, int height) {
         background = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(background);
@@ -431,10 +465,12 @@ public class MainView extends View {
 
     }
 
+    //si crea la bitmap delle celle
     private void createBitmapCells() {
         Resources resources = getResources();
         int[] cellRectangleIds = getCellRectangleIds();
         paint.setTextAlign(Paint.Align.CENTER);
+        //per ogni cella vengono settati i parametri
         for (int xx = 1; xx < bitmapCell.length; xx++) {
             int value = (int) Math.pow(2, xx);
             paint.setTextSize(cellTextSize);
@@ -442,12 +478,14 @@ public class MainView extends View {
             paint.setTextSize(tempTextSize);
             Bitmap bitmap = Bitmap.createBitmap(cellSize, cellSize, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
+            //si attua il draw
             drawDrawable(canvas, resources.getDrawable(cellRectangleIds[xx]), 0, 0, cellSize, cellSize);
             drawCellText(canvas, value);
             bitmapCell[xx] = new BitmapDrawable(resources, bitmap);
         }
     }
 
+    //si ottengono i colori delle celle
     private int[] getCellRectangleIds() {
         int[] cellRectangleIds = new int[numCellTypes];
         cellRectangleIds[0] = R.drawable.cell_rectangle;
@@ -470,7 +508,8 @@ public class MainView extends View {
 
     private void createOverlays() {
         Resources resources = getResources();
-        //Initialize overlays
+        //Inizializza l'overlay in caso di vittoria continua, vittoria definitiva, sconfitta
+        //Vengono creati gli stati
         Bitmap bitmap = Bitmap.createBitmap(endingX - startingX, endingY - startingY, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         createEndGameStates(canvas, true, true);
@@ -486,6 +525,7 @@ public class MainView extends View {
     }
 
     private void tick() {
+        //si attua un tick di tutte le animazioni per passare all'animazione successiva
         long currentTime = System.nanoTime();
         game.aGrid.tickAll(currentTime - lastFPSTime);
         lastFPSTime = currentTime;
@@ -503,7 +543,7 @@ public class MainView extends View {
         int boardMiddleY = screenMiddleY + cellSize / 2;
         iconSize = cellSize / 2;
 
-        //Grid Dimensions
+        //Dimensione della griglia
         double halfNumSquaresX = game.numSquaresX / 2d;
         double halfNumSquaresY = game.numSquaresY / 2d;
         startingX = (int) (screenMiddleX - (cellSize + gridWidth) * halfNumSquaresX - gridWidth / 2);
@@ -513,7 +553,7 @@ public class MainView extends View {
 
         float widthWithPadding = endingX - startingX;
 
-        // Text Dimensions
+        // Dimensione del testo
         paint.setTextSize(cellSize);
         textSize = cellSize * cellSize / Math.max(cellSize, paint.measureText("0000"));
 
@@ -542,7 +582,7 @@ public class MainView extends View {
         paint.setTextSize(titleTextSize);
 
         int textShiftYAll = centerText();
-        //static variables
+        //Variabili statiche di misura
         sYAll = (int) (startingY - cellSize * 1.5);
         titleStartYAll = (int) (sYAll + textPaddingSize + titleTextSize / 2 - textShiftYAll);
         bodyStartYAll = (int) (titleStartYAll + textPaddingSize + titleTextSize / 2 + bodyTextSize / 2);
@@ -559,6 +599,7 @@ public class MainView extends View {
         resyncTime();
     }
 
+    //fa in modo che ogni paint sia centrato
     private int centerText() {
         return (int) ((paint.descent() + paint.ascent()) / 2);
     }

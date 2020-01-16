@@ -24,19 +24,19 @@ public class InputListener implements View.OnTouchListener {
     private float startingY;
     private int previousDirection = 1;
     private int veryLastDirection = 1;
-    // Whether or not we have made a move, i.e. the blocks shifted or tried to shift.
+    // Se si è effettuato o meno una mossa
     private boolean hasMoved = false;
-    // Whether or not we began the press on an icon. This is to disable swipes if the user began
-    // the press on an icon.
+    // Disabilita gli swipe se l'utente inizia la pressione di un'icona
     private boolean beganOnIcon = false;
 
-    public InputListener(MainView view) {
+    InputListener(MainView view) {
         super();
         this.mView = view;
     }
 
     public boolean onTouch(View view, MotionEvent event) {
         switch (event.getAction()) {
+
 
             case MotionEvent.ACTION_DOWN:
                 x = event.getX();
