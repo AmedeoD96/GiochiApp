@@ -42,11 +42,14 @@ public class GlobalScoreboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_global_scoreboard);
 
+        /*Set toolbar*/
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
 
         initializeElement();
 
+        /*Cliccando il bottone di ricerca, la recyclerView scolla in automatico alla posizione
+        * in cui c'è l'utente corrente*/
         button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +57,7 @@ public class GlobalScoreboard extends AppCompatActivity {
             }
         });
 
+        /*Dopo il caricamento di tutti gli utenti, viene creata la classifica.*/
         UsersManager.getInstance().getAllUsers(new UsersManager.IUsersLoadedCallback() {
             @Override
             public void OnAllUsersLoaded(Map<String, User> users) {
@@ -67,9 +71,11 @@ public class GlobalScoreboard extends AppCompatActivity {
         });
 
 
+        /*Inizializzazione della BottomNavigationView*/
         final BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.navigation_leaderboard);
 
+        /*Azioni che ogni bottone della BottomNavigationVIew deve compiere*/
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -91,6 +97,8 @@ public class GlobalScoreboard extends AppCompatActivity {
             }
         });
 
+        /*Viene nascosta la BottomNavigationView quando si scorlla verso il basso e viene
+        * mostrata nuovamente quando si scrolla verso l'alto.*/
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -109,33 +117,45 @@ public class GlobalScoreboard extends AppCompatActivity {
 
     }
 
+    /*Inizializzazione degli elementi del layout*/
     private void initializeElement(){
         recyclerView = findViewById(R.id.rvGlobalScoreboard);
         recyclerView.setLayoutManager(new CenterLayoutManager(this));
         button = findViewById(R.id.findButton);
     }
 
+
+    /*Metodo che ritorna la lista degli elementi che compongono la scoreboard*/
     private List<ParentObject> initData() {
         TitleCreator titleCreator = TitleCreator.get(this);
         List<ParentObject> parentObject = new ArrayList<>();
         titleCreator.clearTitles();
 
+        /*Get di tutti gli utenti ordinati per punteggio (dal maggiore al minore)*/
         Collection<User> allUser = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.TOTAL_SCORE, false);
 
-        int count = 1;
-        User currentUser = UsersManager.getInstance().getCurrentUser();
+        int count = 1; /*Variabile usata per mostrare la posizione in classifica*/
+        User currentUser = UsersManager.getInstance().getCurrentUser();/*Caricamento utente corrente*/
         int position = 0;
         for (User user : allUser) {
+
             boolean isCurrentUser = false;
+
+            /*Cerco l'utente corrente*/
             if(user.equals(currentUser)){
-                //position = count-1;
                 isCurrentUser = true;
                 find = position;
             }
+
+            /*Set del titolo dell'elemento della leaderboard. Contiene la posizione in classifica, il nome utente, il suo punteggio
+            * una variabile boolean che viene usata per evidenziare il testo solo se si tratta dell'utente corrente e l'indice
+            * dell'elemento della recyclerView che viene usato per lo scorll automatico della recyclerView quando si clicca sul bottone*/
             TitleParent title = new TitleParent("#" + count + "   "  + user.name, user.getTotalScore(), isCurrentUser, position);
+
             position++;
             count++;
 
+            /*Aggiunta degli score del singolo gioco*/
             List<Object> childList = new ArrayList<>();
 
             childList.add(new TitleChild(
@@ -160,6 +180,7 @@ public class GlobalScoreboard extends AppCompatActivity {
         return parentObject;
     }
 
+    /*Aggiornamento dei dati quando si ritorna all'activity*/
     @Override
     protected void onResume() {
         super.onResume();
@@ -171,13 +192,14 @@ public class GlobalScoreboard extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
+    /*Salvataggio dell'utente quando l'activity va in onDestroy*/
     @Override
     protected void onDestroy() {
         super.onDestroy();
         UsersManager.getInstance().saveCurrentUser();
     }
 
-    //Metodi per la toolbar superiore
+    /*Metodi per la toolbar superiore*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);

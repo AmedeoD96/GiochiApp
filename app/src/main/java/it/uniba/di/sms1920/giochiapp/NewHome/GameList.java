@@ -43,8 +43,11 @@ public class GameList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_list);
         initializeElement();
+        /*Set up della toolbar*/
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
+
+
         createGameList();
 
         /*Set adapter*/
@@ -60,6 +63,7 @@ public class GameList extends AppCompatActivity {
         alienRun.setHighScore(getScoreAlienRun());
         frogger.setHighScore(getScoreFrogger());
 
+        /*Set up della bottomNavigationView*/
         final BottomNavigationView navigationView = findViewById(R.id.navigation);
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -81,6 +85,7 @@ public class GameList extends AppCompatActivity {
             }
         });
 
+        /*Mostra e nasconde la bottomNavigationView durante lo scroll della recycler view*/
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -89,23 +94,25 @@ public class GameList extends AppCompatActivity {
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                /*Scroll verso il basso = nasconde la bottomNavigationView*/
                 if(dy > 0 && navigationView.isShown()){
                     navigationView.animate().translationY(navigationView.getHeight()).alpha(1.0f).setListener(null);
-                    //navigationView.setVisibility(View.GONE);
                 }else if(dy<0){
-                    //navigationView.setVisibility(View.VISIBLE);
+                    /*Scroll verso l'alto = mostra la bottom navigation view*/
                     navigationView.animate().translationY(0).setDuration(200).alpha(1.0f).setListener(null);
                 }
             }
         });
     }
 
+    /*Inizializzazione degli elementi del layout*/
     private void initializeElement(){
         gameList = new ArrayList<>();
         recyclerView = findViewById(R.id.rvGameList);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    /*Creazione della lista giochi*/
     private void createGameList(){
         tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.tetris_launch_app);
         gameList.add(tetris);
@@ -123,6 +130,8 @@ public class GameList extends AppCompatActivity {
         gameList.add(frogger);
     }
 
+
+    /*Get dei punteggi che l'utente ha totalizzato per ogni singolo gioco*/
     private int getTetrisHighScore(){
         return UsersManager.getInstance().getCurrentUser().scoreTetris;
     }
@@ -143,6 +152,7 @@ public class GameList extends AppCompatActivity {
         return UsersManager.getInstance().getCurrentUser().scoreFrogger;
     }
 
+    /*Aggiornamento dei dati contenuti nella recycler view*/
     @Override
     public void onResume() {
         //serve per avere il best score nella home premendo il tasto indietro di android.
@@ -194,6 +204,8 @@ public class GameList extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*Salvataggio dei dati dell'utente corrente alla distruzione
+    * dell'activity*/
     @Override
     protected void onDestroy() {
         super.onDestroy();

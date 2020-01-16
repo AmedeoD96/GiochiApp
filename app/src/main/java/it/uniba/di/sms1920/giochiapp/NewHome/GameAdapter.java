@@ -28,6 +28,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     }
 
 
+
+    /*Creazione del layout*/
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,10 +37,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         return new MyViewHolder(itemView);
     }
 
+    /*Metodo per settare specifiche azioni a specifici elementi della recyclerView*/
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Game game = gameList.get(position);
 
+        Game game = gameList.get(position);
         holder.name.setText(game.getName());
         holder.highScore.setText("High Score : " + game.getHighScore());
         holder.image.setImageResource(game.getImage());
@@ -65,7 +68,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.TETRIS);
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameScoreboard.class);
                         intent.putExtra("game", 0);
@@ -95,7 +97,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.GAME2048);
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameScoreboard.class);
                         intent.putExtra("game", 1);
@@ -124,7 +125,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.ALIEN_RUN);
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameScoreboard.class);
                         intent.putExtra("game", 2);
@@ -153,7 +153,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.ROCKET);
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameScoreboard.class);
                         intent.putExtra("game", 3);
@@ -182,7 +181,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.FROGGER);
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameScoreboard.class);
                         intent.putExtra("game", 4);
@@ -195,11 +193,14 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     }
 
 
+    /*Metodo che ritorna il numero di elmenti contenuti nella recyclerView*/
     @Override
     public int getItemCount() {
         return gameList.size();
     }
 
+
+    /*Iniziazlizzazione degli elementi contenuti nel layout*/
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView highScore;
