@@ -11,7 +11,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 
 import it.uniba.di.sms1920.giochiapp.R;
@@ -40,10 +39,9 @@ public class TetrisCtrl extends View {
     Point mNewBlockPos = new Point(0, 0);
     Bitmap[] mArBmpCell = new Bitmap[8];
     AlertDialog mDlgMsg = null;
-    // SharedPreferences mPref = null;
     int mScore = 0;
-    // int mTopScore = 0;
 
+    //ottiene l'area di un blocco
     Rect getBlockArea(int x, int y) {
         Rect rtBlock = new Rect();
         rtBlock.left = (int)(x * mBlockSize);
@@ -53,36 +51,42 @@ public class TetrisCtrl extends View {
         return rtBlock;
     }
 
-    int random(int min, int max) {
-        int rand = (int)(Math.random() * (max - min + 1)) + min;
-        return rand;
+    //sceglie un numero tra 0 e 7 per la generazione dei blocchi
+    int random() {
+        return (int)(Math.random() * (7 - 1 + 1)) + 1;
     }
 
+    //costruttore
     public TetrisCtrl(Context context) {
         super(context);
         this.context = context;
-        // mPref = context.getSharedPreferences("info",MODE_PRIVATE);
-        // mTopScore = mPref.getInt("TopScoreTetris", 0);
     }
 
+    //inizializza le variabili della grandezza dello schermo
     void initVariables(Canvas canvas) {
         mScreenSize.x = canvas.getWidth();
         mScreenSize.y = canvas.getHeight();
         mBlockSize = mScreenSize.x / MatrixSizeH;
 
+        //avvio il gioco
         startGame();
     }
 
+    //genera le coordinate di spawn dei nuovi blocchi
+    //scorre in orizzontale e in verticale l'area di spawn
+    //si assegna a 0 tutta la p'area
     void addNewBlock(int[][] arBlock) {
         for(int i=0; i < mNewBlockArea; i++) {
             for(int j=0; j < mNewBlockArea; j++) {
                 arBlock[i][j] = 0;
             }
         }
+
+        //si aggiorna la posizione di spawn del nuovo blocco
         mNewBlockPos.x = (MatrixSizeH - mNewBlockArea) / 2;
         mNewBlockPos.y = MatrixSizeV - mNewBlockArea;
 
-        int blockType = random(1, 7);
+        int blockType = random();
         //blockType = 6;
 
         switch(blockType) {
@@ -139,10 +143,12 @@ public class TetrisCtrl extends View {
         redraw();
     }
 
+    //invalida l'intera view
     public void redraw() {
         this.invalidate();
     }
 
+    //controlla se un'area di schermo sia libera
     boolean checkBlockSafe(int[][] arNewBlock, Point posBlock) {
         for(int i=0; i < mNewBlockArea ; i++) {
             for(int j=0; j < mNewBlockArea ; j++) {
@@ -150,14 +156,17 @@ public class TetrisCtrl extends View {
                     continue;
                 int x = posBlock.x + j;
                 int y = posBlock.y + i;
-                if( checkCellSafe(x, y) == false )
+                //se la cella non fosse libera
+                if(!checkCellSafe(x, y))
                     return false;
             }
         }
         return true;
     }
 
+    //controlla se la singola cella sia vuota
     boolean checkCellSafe(int x, int y) {
+        //si controlla se la cella sia in una zona della schermata realmente utilizzabile
         if( x < 0 )
             return false;
         if( x >= MatrixSizeH )
@@ -166,32 +175,34 @@ public class TetrisCtrl extends View {
             return false;
         if( y >= MatrixSizeV )
             return true;
-        if( mArMatrix[y][x] > 0 )
-            return false;
-        return true;
+        //se la schermata sia libera o meno
+        return mArMatrix[y][x] <= 0;
     }
 
     void moveNewBlock(int dir, int[][] arNewBlock, Point posBlock) {
         switch( dir ) {
             case DirRotate :
+                //in caso di rotazione
                 int[][] arRotate = new int[mNewBlockArea ][mNewBlockArea ];
                 for(int i=0; i < mNewBlockArea ; i++) {
                     for(int j=0; j < mNewBlockArea ; j++) {
+                        //per ogni elemento della matrice si sposta nella casella reciproca rispetto a quella di appartenenza
                         arRotate[mNewBlockArea - j - 1][i] = arNewBlock[i][j];
                     }
                 }
                 for(int i=0; i < mNewBlockArea ; i++) {
-                    for(int j=0; j < mNewBlockArea ; j++) {
-                        arNewBlock[i][j] = arRotate[i][j];
-                    }
+                    System.arraycopy(arRotate[i], 0, arNewBlock[i], 0, mNewBlockArea);
                 }
                 break;
+                //in caso di spostamento verso sinistra
             case DirLeft :
                 posBlock.x --;
                 break;
+            //in caso di spostamento verso destra
             case DirRight :
                 posBlock.x ++;
                 break;
+            //in caso di spostamento verso il basso
             case DirDown :
                 posBlock.y --;
                 break;
@@ -199,17 +210,17 @@ public class TetrisCtrl extends View {
     }
 
 
+    //si clona una zona della schermata
     int[][] duplicateBlockArray(int[][] arBlock) {
         int size1 = mNewBlockArea , size2 = mNewBlockArea ;
         int[][] arClone = new int[size1][size2];
         for(int i=0; i < size1; i++) {
-            for(int j=0; j < size2; j++) {
-                arClone[i][j] = arBlock[i][j];
-            }
+            System.arraycopy(arBlock[i], 0, arClone[i], 0, size2);
         }
         return arClone;
     }
 
+    //copia tutti i blocchi in una seconda matrice
     void copyBlock2Matrix(int[][] arBlock, Point posBlock) {
         for(int i=0; i < mNewBlockArea ; i++) {
             for(int j=0; j < mNewBlockArea ; j++) {
@@ -221,51 +232,44 @@ public class TetrisCtrl extends View {
         }
     }
 
-    int checkLineFilled() {
+    //controllo se una riga sia completta
+    void checkLineFilled() {
         int filledCount = 0;
         boolean bFilled;
 
         for(int i=0; i < MatrixSizeV; i++) {
             bFilled = true;
             for(int j=0; j < MatrixSizeH; j++) {
+                //se ci fosse una casella vuota al boolean si assegna false
                 if( mArMatrix[i][j] == 0 ) {
                     bFilled = false;
                     break;
                 }
             }
-            if( bFilled == false )
+            if(!bFilled)
                 continue;
 
+            //conto di righe completate
             filledCount ++;
+            //copia della schermata tranne la riga completata
             for(int k=i+1; k < MatrixSizeV; k++) {
-                for (int j = 0; j < MatrixSizeH; j++) {
-                    mArMatrix[k-1][j] = mArMatrix[k][j];
-                }
+                System.arraycopy(mArMatrix[k], 0, mArMatrix[k - 1], 0, MatrixSizeH);
             }
+            //si annullano gli elementi della riga completata
             for (int j = 0; j < MatrixSizeH; j++) {
                 mArMatrix[MatrixSizeV - 1][j] = 0;
             }
             i--;
         }
 
-
+        //si aggiorna il punteggio
         mScore += filledCount * filledCount;
-        /*if(mTopScore < mScore ) {
-            mTopScore = mScore;
-            SharedPreferences.Editor edit = mPref.edit();
-            edit.putInt("TopScoreTetris", mTopScore);
-            edit.commit();
-        }*/
 
         User user = UsersManager.getInstance().getCurrentUser();
 
         if(user.scoreTetris < mScore) {
             user.setScoreTetris(mScore);
-            // SharedPreferences.Editor edit = mPref.edit();
-            // edit.putInt("TopScoreTetris", mTopScore);
-            // edit.commit();
         }
-        return filledCount;
     }
 
     boolean isGameOver() {
@@ -274,27 +278,32 @@ public class TetrisCtrl extends View {
     }
 
     boolean moveNewBlock(int dir) {
+        //si ottiene la posizione modificata ad ogni ciclo
+        //se la posizione non cambiasse si va avanti nel codice
         int[][] arBackup = duplicateBlockArray( mArNewBlock );
         Point posBackup = new Point(mNewBlockPos);
 
         moveNewBlock(dir, mArNewBlock, mNewBlockPos);
+        //si controlla se lo spostamento sia effettivamente consentito
         boolean canMove = checkBlockSafe(mArNewBlock, mNewBlockPos);
+        //se i movimenti fossero consentiti il blocco verrebbe ricreato
         if( canMove ) {
             redraw();
             return true;
         }
 
         for(int i=0; i < mNewBlockArea ; i++) {
-            for(int j=0; j < mNewBlockArea ; j++) {
-                mArNewBlock[i][j] = arBackup[i][j];
-            }
+            //viene copiato il blocco
+            System.arraycopy(arBackup[i], 0, mArNewBlock[i], 0, mNewBlockArea);
         }
 
+        //si salva la nuova posizione del blocco appena creato
         mNewBlockPos.set(posBackup.x, posBackup.y);
         return false;
     }
 
-    void showScore(Canvas canvas, int score) {
+    //si mostra il punteggio
+    void showScore(Canvas canvas) {
         int fontSize = mScreenSize.x / 20;
         Paint pnt = new Paint();
         pnt.setTextSize(fontSize);
@@ -308,16 +317,16 @@ public class TetrisCtrl extends View {
         canvas.drawText(getContext().getString(R.string.topScore) + " " + UsersManager.getInstance().getCurrentUser().scoreTetris, posX, poxY, pnt);
     }
 
-    void showMatrix(Canvas canvas, int[][] arMatrix, boolean drawEmpth) {
+    //si mostra la matrice tabella di gioco
+    void showMatrix(Canvas canvas, int[][] arMatrix) {
         for(int i=0; i < MatrixSizeV; i++) {
             for(int j=0; j < MatrixSizeH; j++) {
-                if( arMatrix[i][j] == 0 && drawEmpth == false )
-                    continue;
                 showBlockImage(canvas, j, i, arMatrix[i][j]);
             }
         }
     }
 
+    //Si crea l'immagine dei blocchi
     void showBlockImage(Canvas canvas, int blockX, int blockY, int blockType) {
         Rect rtBlock = getBlockArea(blockX, blockY);
 
@@ -326,28 +335,32 @@ public class TetrisCtrl extends View {
 
     /*** Interface start ***/
 
+    //si aggiunge l'immagine della cella
     public void addCellImage(int index, Bitmap bmp) {
         mArBmpCell[index] = bmp;
     }
 
-    public boolean block2Left() {
-        return moveNewBlock(DirLeft);
+    //spostamento a sinistra del blocco
+    public void block2Left() {
+        moveNewBlock(DirLeft);
     }
 
-    public boolean block2Right() {
-        return moveNewBlock(DirRight);
+    //spostamento a destra del blocco
+    public void block2Right() {
+        moveNewBlock(DirRight);
     }
 
-    public boolean block2Rotate() {
-        return moveNewBlock(DirRotate);
+    public void block2Rotate() {
+        moveNewBlock(DirRotate);
     }
 
-    public boolean block2Bottom() {
+    //si incrementa la velocità e si pone il blocco velocemente in basso
+    public void block2Bottom() {
         mTimerFrame.removeMessages(0);
         mTimerGap = TimerGapFast;
         mTimerFrame.sendEmptyMessageDelayed(0, 10);
-        return true;
     }
+
 
     public void pauseGame() {
         if( mDlgMsg != null )
@@ -366,22 +379,26 @@ public class TetrisCtrl extends View {
     public void startGame() {
         mScore = 0;
 
+        //ogni cella della zona di spawn dei blocchi viene posta a 0
         for(int i=0; i < MatrixSizeV; i++) {
             for(int j=0; j < MatrixSizeH; j++) {
                 mArMatrix[i][j] = 0;
             }
         }
 
+        //i nuovi blocchi vengono aggiunti
         addNewBlock(mArNewBlock);
         addNewBlock(mArNextBlock);
+        //si setta il timer
         TimerGapNormal = TimerGapStart;
+        //vengono mandati messaggi vuoti ad intervalli regolari
         mTimerFrame.sendEmptyMessageDelayed(0, 10);
     }
 
     /*** Interface end ***/
-    //qua
     void showDialog_GameOver() {
-        mDlgMsg = new AlertDialog.Builder(context, mDlgMsg.THEME_HOLO_DARK)
+        //viene mostrata il messaggio di game over
+        mDlgMsg = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_DARK)
                 .setTitle(R.string.notice)
                 .setMessage(getContext().getString(R.string.gameOverTetris) + mScore )
                 .setPositiveButton(R.string.again,
@@ -394,17 +411,21 @@ public class TetrisCtrl extends View {
                 .show();
     }
 
+    //attua il draw dei blocchi
     public void onDraw(Canvas canvas) {
         if( mBlockSize < 1 )
             initVariables(canvas);
         canvas.drawColor(Color.DKGRAY);
 
-        showMatrix(canvas, mArMatrix, true);
+        showMatrix(canvas, mArMatrix);
         showNewBlock(canvas);
-        showScore(canvas, mScore);
+        //mostra lo score
+        showScore(canvas);
+        //mostra il blocco successivo
         showNextBlock(canvas, mArNextBlock);
     }
 
+    //mostra l'immagine dei blocchi
     void showNewBlock(Canvas canvas) {
         for(int i=0; i < mNewBlockArea ; i++) {
             for(int j=0; j < mNewBlockArea ; j++) {
@@ -418,6 +439,7 @@ public class TetrisCtrl extends View {
     Handler mTimerFrame = new Handler() {
         public void handleMessage(Message msg) {
             boolean canMove = moveNewBlock(DirDown);
+            //se l'utente non potesse muoversi si effettuerebbero tutti i controlli per il punteggio e per il game over
             if( !canMove ) {
                 copyBlock2Matrix(mArNewBlock, mNewBlockPos);
                 checkLineFilled();
@@ -435,24 +457,24 @@ public class TetrisCtrl extends View {
         }
     };
 
+    //copia matrici dei blocchi
     void copyBlockArray(int[][] arFrom, int[][] arTo) {
         for(int i=0; i < mNewBlockArea; i++) {
-            for(int j=0; j < mNewBlockArea; j++) {
-                arTo[i][j] = arFrom[i][j];
-            }
+            System.arraycopy(arFrom[i], 0, arTo[i], 0, mNewBlockArea);
         }
     }
 
+    //mostra in alto a destra il blocco successivo che apparirà sulla schermata
     void showNextBlock(Canvas canvas, int[][] arBlock) {
         for(int i=0; i < mNewBlockArea; i++) {
             for(int j=0; j < mNewBlockArea; j++) {
-                int blockX = j;
                 int blockY = mNewBlockArea - i;
-                showBlockColor(canvas, blockX, blockY, arBlock[i][j]);
+                showBlockColor(canvas, j, blockY, arBlock[i][j]);
             }
         }
     }
 
+    //mostra i colori dei blocchi
     void showBlockColor(Canvas canvas, int blockX, int blockY, int blockType) {
         int[] arColor = {Color.argb(32,255,255,255),
                 Color.argb(128,255,0,0),
@@ -464,6 +486,7 @@ public class TetrisCtrl extends View {
                 Color.argb(128,100,100,255)};
         int previewBlockSize = mScreenSize.x / 20;
 
+        //si ottengono le misure del blocco
         Rect rtBlock = new Rect();
         rtBlock.top = (blockY - 1) * previewBlockSize;
         rtBlock.bottom = rtBlock.top + previewBlockSize;
@@ -471,6 +494,7 @@ public class TetrisCtrl extends View {
         rtBlock.right = rtBlock.left + previewBlockSize;
         int crBlock = arColor[ blockType ];
 
+        //si impostano le caratteristiche del blocco
         Paint pnt = new Paint();
         pnt.setStyle(Paint.Style.FILL);
         pnt.setColor(crBlock);
