@@ -44,6 +44,7 @@ public class FirebaseWrapper implements IGameDatabase {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     User value = data.getValue(User.class);
+                    value.setId(data.getKey());
                     onUserLoadedListener.onUserLoaded(data.getKey(), value);
                 }
                 Log.i("FIREBASE_TEST", "firebase load completed");
@@ -75,6 +76,7 @@ public class FirebaseWrapper implements IGameDatabase {
                     if(data.getKey().equals(userId)) {
 
                         User value = data.getValue(User.class);
+                        value.setId(data.getKey());
                         onUserLoadedListener.onUserLoaded(data.getKey(), value);
                         break;
                     }

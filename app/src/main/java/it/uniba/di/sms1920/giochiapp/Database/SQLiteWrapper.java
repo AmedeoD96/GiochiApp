@@ -148,6 +148,8 @@ public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
 
         if(cursor.getCount() > 0) {
             id = cursor.getString(cursor.getColumnIndex(_ID));
+            user.setId(id);
+
             user.name = cursor.getString(cursor.getColumnIndex(NICKNAME));
 
             user.score2048 = cursor.getInt(cursor.getColumnIndex(SCORE_2048));

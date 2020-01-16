@@ -4,6 +4,8 @@ import java.util.Objects;
 
 public class User {
 
+
+    private String id;
     public String name;
 
     public int scoreTetris = 0;
@@ -16,12 +18,22 @@ public class User {
     private int updatesCounter = 0;
     UserListener userChangeCallback;
 
+
     public User() {
+        updatesCounter = 0;
+    }
+
+    public User(String id) {
+        this.id = id;
         updatesCounter = 0;
     }
 
     public void setRegisterCallback(UserListener userListener) {
         userChangeCallback = userListener;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getTotalScore() {
@@ -87,19 +99,13 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return scoreTetris == user.scoreTetris &&
-                scoreFrogger == user.scoreFrogger &&
-                scoreHelicopter == user.scoreHelicopter &&
-                scoreAlienrun == user.scoreAlienrun &&
-                score2048 == user.score2048 &&
-                totalScore == user.totalScore &&
-                updatesCounter == user.updatesCounter &&
-                name.equals(user.name);
+
+        return id.equals(user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, scoreTetris, scoreFrogger, scoreHelicopter, scoreAlienrun, score2048, totalScore, updatesCounter);
+        return Objects.hash(id, name, scoreTetris, scoreFrogger, scoreHelicopter, scoreAlienrun, score2048, totalScore);
     }
 
     @Override

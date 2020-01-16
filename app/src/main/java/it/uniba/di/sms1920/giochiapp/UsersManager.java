@@ -77,7 +77,7 @@ public class UsersManager {
             resultUser = allUsers.get(idCurrentUser);
         } else {
 
-            resultUser = new User();
+            resultUser = new User(idCurrentUser);
             resultUser.name = DEFAULT_NAME;
             allUsers.put(idCurrentUser, resultUser);
         }
