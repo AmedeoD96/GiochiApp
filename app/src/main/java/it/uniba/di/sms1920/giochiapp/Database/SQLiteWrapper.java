@@ -120,6 +120,11 @@ public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
         onUserLoadedListener.onLoadCompleted();
     }
 
+    @Override
+    public void removeUser(String id) {
+        mDBDatabase.delete(TABLE_NAME_USERSCORES, _ID + "='" + id +"'", null);
+    }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {

@@ -89,4 +89,10 @@ public class FirebaseWrapper implements IGameDatabase {
         });
     }
 
+    @Override
+    public void removeUser(String id) {
+        myRef = database.getReference(id);
+        myRef.removeValue();
+    }
+
 }

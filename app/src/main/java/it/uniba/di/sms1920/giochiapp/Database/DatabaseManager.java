@@ -43,14 +43,7 @@ public class DatabaseManager {
         NetworkChangeReceiver.getInstance().registerCallback(new NetworkChangeReceiver.INetworkCallback() {
             @Override
             public void OnNetworkChange(boolean isNetworkPresent) {
-                boolean precValue = useLocalVsRemote;
                 useLocalVsRemote = isNetworkPresent;
-
-                if(!precValue && useLocalVsRemote) {
-                    OnGoingOffline();
-                } else if(precValue && !useLocalVsRemote) {
-                    OnGoingOnline();
-                }
             }
         });
     }
@@ -143,16 +136,6 @@ public class DatabaseManager {
 
 
 
-    void OnGoingOffline() {
-
-    }
-
-    void OnGoingOnline() {
-
-    }
-
-
-
 
     public void saveString(String key, String value) {
         Context context = GlobalApplicationContext.getAppContext();
@@ -197,6 +180,11 @@ public class DatabaseManager {
                 localDatabase.saveUser(currentUserKey, currentUser);
             }
         }
+    }
+
+    public void removeUserFromLocalDB(String id) {
+        Log.i("DATABASE_DEBUG", "Removing local user with id: " + id);
+        localDatabase.removeUser(id);
     }
 
 

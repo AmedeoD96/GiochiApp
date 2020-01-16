@@ -10,6 +10,7 @@ public interface IGameDatabase {
     void loadAllUsers(OnUserLoadedListener onUserLoadedListener);
     void loadUser(String userId, OnUserLoadedListener onUserLoadedListener);
 
+    void removeUser(String id);
 
     interface OnUserLoadedListener {
         void onUserLoaded(String id, User user);

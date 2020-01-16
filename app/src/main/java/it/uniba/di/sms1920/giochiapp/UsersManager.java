@@ -58,13 +58,6 @@ public class UsersManager {
         reloadUsers(null);
     }
 
-
-    public void populateUsers(IUsersLoadedCallback usersLoadedCallback) {
-        allUsers.clear();
-        precUsers.clear();
-        internalLoadUsers(usersLoadedCallback);
-    }
-
     public void reloadUsers(IUsersLoadedCallback usersLoadedCallback) {
         precUsers.putAll(allUsers);
         internalLoadUsers(usersLoadedCallback);
@@ -72,6 +65,7 @@ public class UsersManager {
 
 
     public void getAllUsers(IUsersLoadedCallback usersLoadedCallback) {
+        removeDefaultUser();
         reloadUsers(usersLoadedCallback);
     }
 
@@ -93,14 +87,20 @@ public class UsersManager {
     }
 
     public void setIdCurrentUser(String idCurrentUser) {
-        if(this.idCurrentUser.equals(DEFAULT_ID) && allUsers.containsValue(this.idCurrentUser)) {
+        Log.i("USER_DEBUG", "Trying to set new user id: " + idCurrentUser);
+        if(this.idCurrentUser.equals(DEFAULT_ID) ) {
 
-            // Remove the user with the default key to put the user with the correct key
-            User currentUser = allUsers.get(this.idCurrentUser);
-            allUsers.remove(this.idCurrentUser);
+            Log.i("USER_DEBUG", "Removing current id from database " + this.idCurrentUser);
+            DatabaseManager.getInstance().removeUserFromLocalDB(this.idCurrentUser);
 
-            allUsers.put(idCurrentUser, currentUser);
+            if( allUsers.containsValue(this.idCurrentUser)) {
+                // Remove the user with the default key to put the user with the correct key
+                User currentUser = allUsers.get(this.idCurrentUser);
+                allUsers.remove(this.idCurrentUser);
+                allUsers.put(idCurrentUser, currentUser);
+            }
         }
+
 
         this.idCurrentUser = idCurrentUser;
         saveCurrentUserID();
@@ -230,6 +230,8 @@ public class UsersManager {
         final DatabaseManager db = DatabaseManager.getInstance();
         String id = loadCurrentUserID();
 
+        removeDefaultUser();
+
         db.loadUser(id, new IGameDatabase.OnUserLoadedListener() {
             @Override
             public void onUserLoaded(String id, User user) {
@@ -265,6 +267,12 @@ public class UsersManager {
         });
     }
 
+
+    void removeDefaultUser() {
+        if(!idCurrentUser.equals(DEFAULT_ID) && allUsers.containsKey(DEFAULT_ID)) {
+            allUsers.remove(DEFAULT_ID);
+        }
+    }
 
 
 
