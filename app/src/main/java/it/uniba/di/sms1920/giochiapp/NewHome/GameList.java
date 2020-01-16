@@ -72,6 +72,10 @@ public class GameList extends AppCompatActivity {
                         startActivity(globalScoreboard);
                         finish();
                         break;
+                    case R.id.navigation_profile:
+                        Intent profile = new Intent(getApplicationContext(), Profile.class);
+                        startActivity(profile);
+                        break;
                 }
                 return false;
             }

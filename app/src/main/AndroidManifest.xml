@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewHome.SetUserName"></activity>
+        <activity android:name=".NewHome.Profile"></activity>
+        <activity android:name=".NewHome.SetUserName" />
         <activity android:name=".NewHome.GameList" />
         <activity android:name=".NewHome.GameScoreboard" />
         <activity android:name=".NewHome.GlobalScoreboard" />
