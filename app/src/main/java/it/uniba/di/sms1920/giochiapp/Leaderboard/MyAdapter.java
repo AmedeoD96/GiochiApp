@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
@@ -12,13 +14,17 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
 
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
+import it.uniba.di.sms1920.giochiapp.NewHome.GlobalScoreboard;
 import it.uniba.di.sms1920.giochiapp.R;
 
 public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,TitleChildViewHolder> {
 
     //TODO Cambiare green e gli altri colori di sfondo. Il WHITE è il colore di default
 
-    private LayoutInflater inflater;
+    LayoutInflater inflater;
+    Context context = GlobalApplicationContext.getAppContext();
+    private int lastPosition = 10;
 
     public MyAdapter(Context context, List<ParentObject> parentItemList) {
         super(context, parentItemList);
@@ -70,6 +76,12 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         }else {
             titleParentViewHolder.itemView.setBackgroundColor(Color.WHITE);
         }
+
+        if (i > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.scoll_animation);
+            titleParentViewHolder.itemView.startAnimation(animation);
+            lastPosition = i;
+        }
     }
 
     @Override
@@ -87,5 +99,7 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         titleChildViewHolder.scoreAlien.setText(title.getAlienRunScore());
         titleChildViewHolder.scoreRocket.setText(title.getRocketScore());
         titleChildViewHolder.scoreFrog.setText(title.getFroggerScore());
+
+
     }
 }
