@@ -24,7 +24,6 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
 
     //componente atto a "gonfiare" una parte del layout
     private LayoutInflater inflater;
-    LayoutInflater inflater;
     Context context = GlobalApplicationContext.getAppContext();
 
     int lastPosition = -1; //Usata per l'animazione
