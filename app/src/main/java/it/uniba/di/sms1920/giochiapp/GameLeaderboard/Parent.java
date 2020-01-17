@@ -8,6 +8,7 @@ public class Parent implements ParentObject {
 
     private String userName;
     private int score;
+    //utili a fini di leaderboard
     private boolean isCurrentUser;
     private int position;
 
@@ -24,15 +25,15 @@ public class Parent implements ParentObject {
         return String.valueOf(score);
     }
 
-    public String getUserName(){
+    String getUserName(){
         return userName;
     }
 
-    public boolean isCurrentUser() {
+    boolean isCurrentUser() {
         return isCurrentUser;
     }
 
-    public int getPosition() {
+    int getPosition() {
         return position;
     }
 
