@@ -79,23 +79,8 @@ public class GameScoreboard extends AppCompatActivity {
                 return false;
             }
         });
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if(dy > 0 && navigation.isShown()){
-                    navigation.animate().translationY(navigation.getHeight()).alpha(1.0f).setListener(null);
-                }else if(dy<0){
-                    navigation.animate().translationY(0).setDuration(200).alpha(1.0f).setListener(null);
-                }
-            }
-        });
     }
+
 
     private void initializeElement(){
         recyclerView = findViewById(R.id.rvSingleGameScoreboard);

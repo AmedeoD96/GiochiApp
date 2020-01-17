@@ -5,18 +5,18 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-
 import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
 import it.uniba.di.sms1920.giochiapp.Game2048.MainActivity2048;
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.Tetris.Tetris;
 
@@ -26,6 +26,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     public GameAdapter(List<Game> gameList){
         this.gameList = gameList;
     }
+    private int lastPosition = -1;
+    Context context = GlobalApplicationContext.getAppContext();
 
 
 
@@ -40,11 +42,17 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     /*Metodo per settare specifiche azioni a specifici elementi della recyclerView*/
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
         Game game = gameList.get(position);
         holder.name.setText(game.getName());
         holder.highScore.setText("High Score : " + game.getHighScore());
         holder.image.setImageResource(game.getImage());
+
+        if(position>lastPosition){
+           Animation animation = AnimationUtils.loadAnimation(context, R.anim.scoll_animation);
+           holder.itemView.startAnimation(animation);
+           lastPosition = position;
+        }
+
 
         switch (position) {
             //Tetris

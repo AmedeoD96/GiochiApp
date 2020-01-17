@@ -43,6 +43,7 @@ public class GameList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_list);
         initializeElement();
+
         /*Set up della toolbar*/
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -82,25 +83,6 @@ public class GameList extends AppCompatActivity {
                         break;
                 }
                 return false;
-            }
-        });
-
-        /*Mostra e nasconde la bottomNavigationView durante lo scroll della recycler view*/
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                /*Scroll verso il basso = nasconde la bottomNavigationView*/
-                if(dy > 0 && navigationView.isShown()){
-                    navigationView.animate().translationY(navigationView.getHeight()).alpha(1.0f).setListener(null);
-                }else if(dy<0){
-                    /*Scroll verso l'alto = mostra la bottom navigation view*/
-                    navigationView.animate().translationY(0).setDuration(200).alpha(1.0f).setListener(null);
-                }
             }
         });
     }

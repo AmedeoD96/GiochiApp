@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -96,25 +97,6 @@ public class GlobalScoreboard extends AppCompatActivity {
                 return false;
             }
         });
-
-        /*Viene nascosta la BottomNavigationView quando si scorlla verso il basso e viene
-        * mostrata nuovamente quando si scrolla verso l'alto.*/
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if(dy > 0 && navigation.isShown()){
-                    navigation.animate().translationY(navigation.getHeight()).alpha(1.0f).setListener(null);
-                }else if(dy<0){
-                    navigation.animate().translationY(0).setDuration(200).alpha(1.0f).setListener(null);
-                }
-            }
-        });
-
     }
 
     /*Inizializzazione degli elementi del layout*/

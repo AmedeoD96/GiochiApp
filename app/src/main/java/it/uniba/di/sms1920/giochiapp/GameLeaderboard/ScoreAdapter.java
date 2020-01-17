@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +15,7 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
 
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.Leaderboard.TitleChildViewHolder;
 import it.uniba.di.sms1920.giochiapp.R;
 
@@ -22,6 +25,9 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
     //TODO cambiare il colore green
 
     LayoutInflater inflater;
+    Context context = GlobalApplicationContext.getAppContext();
+
+    int lastPosition = -1; //Usata per l'animazione
 
     public ScoreAdapter(Context context, List<ParentObject> parentItemList){
         super(context, parentItemList);
@@ -44,6 +50,14 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
         Parent parent = (Parent)o;
         viewHolderTitle._userName.setText(parent.getUserName());
         viewHolderTitle._score.setText(parent.getScore());
+
+        if (i > lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.scoll_animation);
+            viewHolderTitle.itemView.startAnimation(animation);
+            lastPosition = i;
+        }
+
+
 
         int position = parent.getPosition();
 
