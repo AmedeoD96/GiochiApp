@@ -132,7 +132,7 @@ public class GlobalScoreboard extends AppCompatActivity {
             /*Set del titolo dell'elemento della leaderboard. Contiene la posizione in classifica, il nome utente, il suo punteggio
             * una variabile boolean che viene usata per evidenziare il testo solo se si tratta dell'utente corrente e l'indice
             * dell'elemento della recyclerView che viene usato per lo scorll automatico della recyclerView quando si clicca sul bottone*/
-            TitleParent title = new TitleParent(count + "°   "  + user.name, user.getTotalScore(), isCurrentUser, position);
+            TitleParent title = new TitleParent(count + "°   "  + user.name, user.getTotalScore(), isCurrentUser, position, R.drawable.ic_keyboard_arrow_down_float);
 
             position++;
             count++;

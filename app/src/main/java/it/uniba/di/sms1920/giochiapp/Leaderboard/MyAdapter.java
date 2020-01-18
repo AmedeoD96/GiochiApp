@@ -2,6 +2,7 @@ package it.uniba.di.sms1920.giochiapp.Leaderboard;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,11 +49,12 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
     }
 
     @Override
-    public void onBindParentViewHolder(TitleParentViewHolder titleParentViewHolder, int i, Object o) {
+    public void onBindParentViewHolder(final TitleParentViewHolder titleParentViewHolder, int i, Object o) {
         TitleParent title = (TitleParent)o;
-        //assegna il testo della singola riga della leaderboard
+        //assegna il testo della singola riga della leaderboard e l'immagine della freccia verso il basso
         titleParentViewHolder._textView.setText(title.getTitle());
         titleParentViewHolder._score.setText(title.getGlobalScore());
+        titleParentViewHolder._image.setImageResource(R.drawable.ic_keyboard_arrow_down_float);
 
         //in caso di utente corrente ci sarebbe il cambiamento del colore nel testo
         if(title.isCurrentUser()){
@@ -82,10 +84,12 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
             titleParentViewHolder.itemView.startAnimation(animation);
             lastPosition = i;
         }
+
+
     }
 
     @Override
-    public void onBindChildViewHolder(TitleChildViewHolder titleChildViewHolder, int i, Object o) {
+    public void onBindChildViewHolder(final TitleChildViewHolder titleChildViewHolder, int i, Object o) {
         //assegnazione del testo nelle viewholder child
         TitleChild title = (TitleChild)o;
         titleChildViewHolder.tetris.setText(title.getOption1());
@@ -99,7 +103,5 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         titleChildViewHolder.scoreAlien.setText(title.getAlienRunScore());
         titleChildViewHolder.scoreRocket.setText(title.getRocketScore());
         titleChildViewHolder.scoreFrog.setText(title.getFroggerScore());
-
-
     }
 }
