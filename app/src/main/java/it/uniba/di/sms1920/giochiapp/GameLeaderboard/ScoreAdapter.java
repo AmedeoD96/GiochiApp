@@ -5,14 +5,15 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.recyclerview.widget.RecyclerView;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
 
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.Leaderboard.TitleChildViewHolder;
 import it.uniba.di.sms1920.giochiapp.R;
 
@@ -21,13 +22,19 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
 
     //TODO cambiare il colore green
 
-    LayoutInflater inflater;
+    //componente atto a "gonfiare" una parte del layout
+    private LayoutInflater inflater;
+    Context context = GlobalApplicationContext.getAppContext();
+
+    int lastPosition = -1; //Usata per l'animazione
 
     public ScoreAdapter(Context context, List<ParentObject> parentItemList){
         super(context, parentItemList);
+        //ottiene il layoutInflater dal contestp
         inflater = LayoutInflater.from(context);
     }
 
+    //inserisce durante l'oncreate il layout che si trova nella classe ViewHolderTitle
     @Override
     public ViewHolderTitle onCreateParentViewHolder(ViewGroup viewGroup) {
         View view = inflater.inflate(R.layout.parent, viewGroup, false);
@@ -42,11 +49,22 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
     @Override
     public void onBindParentViewHolder(ViewHolderTitle viewHolderTitle, int i, Object o) {
         Parent parent = (Parent)o;
+        //assegna il testo della singola riga della leaderboard
         viewHolderTitle._userName.setText(parent.getUserName());
         viewHolderTitle._score.setText(parent.getScore());
 
+        if (i > lastPosition){
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.scoll_animation);
+            viewHolderTitle.itemView.startAnimation(animation);
+            lastPosition = i;
+        }
+
+
+
+        //si ottiene la posizione in classifica
         int position = parent.getPosition();
 
+        //i 3 sul podio
         if(position == 0){
             viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#FFCA28"));
         }else if(position == 1){
@@ -54,9 +72,11 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
         }else if(position == 2){
             viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#CC6633"));
         }else {
+            //le altre posizioni
             viewHolderTitle.itemView.setBackgroundColor(Color.WHITE);
         }
 
+        //in caso di utente corrente si evidenzia il testo
         if(parent.isCurrentUser()){
             viewHolderTitle._userName.setTextColor(Color.GREEN);
             viewHolderTitle._score.setTextColor(Color.GREEN);

@@ -13,7 +13,6 @@ public class TitleParent implements ParentObject {
     private int position;
 
 
-
     public TitleParent(String title, int globalScore, boolean isCurrentUser, int position) {
         this.title = title;
         this.globalScore = globalScore;
@@ -21,27 +20,29 @@ public class TitleParent implements ParentObject {
         this.position = position;
     }
 
-    public String getGlobalScore() {
+    String getGlobalScore() {
         return String.valueOf(globalScore);
     }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
-    public boolean isCurrentUser() {
+    boolean isCurrentUser() {
         return isCurrentUser;
     }
 
-    public int getPosition() {
+    int getPosition() {
         return position;
     }
 
+    //ritorna la lista dei punteggi dei singoli giochi di un singolo utente
     @Override
     public List<Object> getChildObjectList() {
         return mChildrenList;
     }
 
+    //assegna i valori alla lista dei punteggio dei singoli giochi di un singolo utente
     @Override
     public void setChildObjectList(List<Object> list) {
         mChildrenList = list;

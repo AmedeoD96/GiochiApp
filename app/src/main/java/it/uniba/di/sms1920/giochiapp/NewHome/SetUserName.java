@@ -42,6 +42,7 @@ public class SetUserName extends AppCompatActivity {
 
         final String welcomeInitialString = welcome.getText().toString();
 
+
         UsersManager.getInstance().getAllUsers(new UsersManager.IUsersLoadedCallback() {
             @Override
             public void OnAllUsersLoaded(Map<String, User> users) {
@@ -51,6 +52,7 @@ public class SetUserName extends AppCompatActivity {
                 name.setText(user.name);
             }
         });
+
 
         saveButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override

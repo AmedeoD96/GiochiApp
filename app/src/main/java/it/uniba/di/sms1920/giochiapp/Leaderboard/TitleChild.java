@@ -15,6 +15,7 @@ public class TitleChild {
     private int froggerScore;
 
 
+    //operazioni di get e set sulle stringhe riferite ai punteggi dei singoli giochi
     public TitleChild(String tetris, String game2084, String alienRun, String rocket, String frogger, int scoreTetris, int score2048, int alienRunScore, int rocketScore, int froggerScore) {
         this.tetris = tetris;
         this.game2084 = game2084;
@@ -29,7 +30,7 @@ public class TitleChild {
         this.froggerScore = froggerScore;
     }
 
-    public String getScoreTetris() {
+    String getScoreTetris() {
         return String.valueOf(scoreTetris);
     }
 
@@ -37,33 +38,31 @@ public class TitleChild {
         return String.valueOf(score2048);
     }
 
-    public String getAlienRunScore() {
+    String getAlienRunScore() {
         return String.valueOf(alienRunScore);
     }
 
-    public String getRocketScore() {
+    String getRocketScore() {
         return String.valueOf(rocketScore);
     }
 
-    public String getFroggerScore() {
+    String getFroggerScore() {
         return String.valueOf(froggerScore);
-    }
-
-
-
-    public String getTetris() {
-        return tetris;
     }
 
     public String getGame2084() {
         return game2084;
     }
 
-    public String getAlienRun() {
+    public String getTetris() {
+        return tetris;
+    }
+
+    String getAlienRun() {
         return alienRun;
     }
 
-    public String getRocket() {
+    String getRocket() {
         return rocket;
     }
 

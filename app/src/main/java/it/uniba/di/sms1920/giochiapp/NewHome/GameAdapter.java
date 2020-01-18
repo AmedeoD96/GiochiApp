@@ -5,18 +5,18 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-
 import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
 import it.uniba.di.sms1920.giochiapp.Game2048.MainActivity2048;
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
 import it.uniba.di.sms1920.giochiapp.Tetris.Tetris;
 
@@ -26,8 +26,12 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     public GameAdapter(List<Game> gameList){
         this.gameList = gameList;
     }
+    private int lastPosition = -1;
+    Context context = GlobalApplicationContext.getAppContext();
 
 
+
+    /*Creazione del layout*/
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,13 +39,20 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         return new MyViewHolder(itemView);
     }
 
+    /*Metodo per settare specifiche azioni a specifici elementi della recyclerView*/
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Game game = gameList.get(position);
-
         holder.name.setText(game.getName());
         holder.highScore.setText("High Score : " + game.getHighScore());
         holder.image.setImageResource(game.getImage());
+
+        if(position>lastPosition){
+           Animation animation = AnimationUtils.loadAnimation(context, R.anim.scoll_animation);
+           holder.itemView.startAnimation(animation);
+           lastPosition = position;
+        }
+
 
         switch (position) {
             //Tetris
@@ -65,7 +76,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.TETRIS);
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameScoreboard.class);
                         intent.putExtra("game", 0);
@@ -95,7 +105,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.GAME2048);
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameScoreboard.class);
                         intent.putExtra("game", 1);
@@ -124,7 +133,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.ALIEN_RUN);
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameScoreboard.class);
                         intent.putExtra("game", 2);
@@ -153,7 +161,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.ROCKET);
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameScoreboard.class);
                         intent.putExtra("game", 3);
@@ -182,7 +189,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //MainActivity.getInstance().gameTransaction(MainActivity.GameLeaderboard.FROGGER);
                         Context context = v.getContext();
                         Intent intent = new Intent(context, GameScoreboard.class);
                         intent.putExtra("game", 4);
@@ -195,11 +201,14 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     }
 
 
+    /*Metodo che ritorna il numero di elmenti contenuti nella recyclerView*/
     @Override
     public int getItemCount() {
         return gameList.size();
     }
 
+
+    /*Iniziazlizzazione degli elementi contenuti nel layout*/
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView highScore;

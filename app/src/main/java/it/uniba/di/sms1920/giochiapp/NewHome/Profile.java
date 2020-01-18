@@ -34,6 +34,8 @@ public class Profile extends AppCompatActivity {
 
         final String welcomeInitialString = welcome.getText().toString();
 
+        /*Dopo il caricamento di tutti gli utenti, vengono impostati i testi delle textview con i dati
+         * dell'utente corrente*/
         UsersManager.getInstance().getAllUsers(new UsersManager.IUsersLoadedCallback() {
             @Override
             public void OnAllUsersLoaded(Map<String, User> users) {
@@ -53,7 +55,9 @@ public class Profile extends AppCompatActivity {
         });
 
 
-
+        /*Toggle button che permette di abilitare l'edit text e modificare l'username.
+         * Dopo la modifica, cliccando nuovamente sul toggle button il nome viene salvato sul
+         * database e l'edit text viene disabilitata.*/
         saveButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,11 +74,16 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+        /*Set toolbar*/
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
 
+
+        /*Inizializzazione della BottomNavigationView*/
         final BottomNavigationView navigationView = findViewById(R.id.navigation);
         navigationView.setSelectedItemId(R.id.navigation_profile);
+
+        /*Set azioni dei bottoni della BottomNavigationView*/
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -97,6 +106,7 @@ public class Profile extends AppCompatActivity {
         });
     }
 
+    /*Inizializzazione degli elementi del layout*/
     private void initializeElement(){
         welcome = findViewById(R.id.welcome);
         name = findViewById(R.id.etName);
@@ -123,6 +133,7 @@ public class Profile extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*Salvo l'utente corrente quando l'activity viene chiusa*/
     @Override
     protected void onDestroy() {
         super.onDestroy();

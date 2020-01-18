@@ -79,23 +79,8 @@ public class GameScoreboard extends AppCompatActivity {
                 return false;
             }
         });
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                if(dy > 0 && navigation.isShown()){
-                    navigation.animate().translationY(navigation.getHeight()).alpha(1.0f).setListener(null);
-                }else if(dy<0){
-                    navigation.animate().translationY(0).setDuration(200).alpha(1.0f).setListener(null);
-                }
-            }
-        });
     }
+
 
     private void initializeElement(){
         recyclerView = findViewById(R.id.rvSingleGameScoreboard);
@@ -129,7 +114,7 @@ public class GameScoreboard extends AppCompatActivity {
                         flag = true;
                         find = position;
                     }
-                    Parent parent = new Parent(user.name, user.scoreTetris, flag, position);
+                    Parent parent = new Parent(position+1 + "°    " + user.name, user.scoreTetris, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
@@ -148,7 +133,7 @@ public class GameScoreboard extends AppCompatActivity {
                         flag = true;
                         find = position;
                     }
-                    Parent parent = new Parent(user.name, user.score2048, flag, position);
+                    Parent parent = new Parent(position+1 + "°    " +user.name, user.score2048, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
@@ -166,7 +151,7 @@ public class GameScoreboard extends AppCompatActivity {
                         flag = true;
                         find = position;
                     }
-                    Parent parent = new Parent(user.name, user.scoreAlienrun, flag, position);
+                    Parent parent = new Parent(position+1 + "°    " +user.name, user.scoreAlienrun, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
@@ -184,7 +169,7 @@ public class GameScoreboard extends AppCompatActivity {
                         flag = true;
                         find = position;
                     }
-                    Parent parent = new Parent(user.name, user.scoreHelicopter, flag, position);
+                    Parent parent = new Parent(position+1 + "°    " +user.name, user.scoreHelicopter, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
@@ -202,7 +187,7 @@ public class GameScoreboard extends AppCompatActivity {
                         flag = true;
                         find = position;
                     }
-                    Parent parent = new Parent(user.name, user.scoreFrogger, flag, position);
+                    Parent parent = new Parent(position+1 + "°    " +user.name, user.scoreFrogger, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;

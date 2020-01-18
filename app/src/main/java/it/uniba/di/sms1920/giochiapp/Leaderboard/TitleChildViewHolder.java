@@ -8,9 +8,9 @@ import com.bignerdranch.expandablerecyclerview.ViewHolder.ChildViewHolder;
 import it.uniba.di.sms1920.giochiapp.R;
 
 public class TitleChildViewHolder extends ChildViewHolder {
-    public TextView tetris, game2048, alienRun, rocket, frogger, tetrisScore, score2048, scoreAlien, scoreRocket, scoreFrog;
+    TextView tetris, game2048, alienRun, rocket, frogger, tetrisScore, score2048, scoreAlien, scoreRocket, scoreFrog;
 
-    public TitleChildViewHolder(View itemView) {
+    TitleChildViewHolder(View itemView) {
         super(itemView);
         tetris = itemView.findViewById(R.id.scoreGame);
         game2048 = itemView.findViewById(R.id.game2048);
