@@ -50,14 +50,6 @@ public class TitleChild {
     }
 
 
-    public String getOption1() {
-        return tetris;
-    }
-
-
-    public String getOption2() {
-        return game2084;
-    }
 
     public String getTetris() {
         return tetris;

@@ -15,6 +15,7 @@ public class User {
     public int score2048 = 0;
     public int totalScore = 0;
 
+    // Variabile necessaria alla decisione dell'utente da tenere, se tenere l'utente nel database locale oppure quello in remoto
     private int updatesCounter = 0;
     UserListener userChangeCallback;
 
@@ -28,7 +29,7 @@ public class User {
         updatesCounter = 0;
     }
 
-    public void setRegisterCallback(UserListener userListener) {
+    public void setOnChangeCallback(UserListener userListener) {
         userChangeCallback = userListener;
     }
 
@@ -43,36 +44,36 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-        CallOnValueChange();
+        OnValueChange();
     }
 
     public void setScoreTetris(int scoreTetris) {
         this.scoreTetris = scoreTetris;
-        CallOnValueChange();
+        OnValueChange();
     }
 
     public void setScoreFrogger(int scoreFrogger) {
         this.scoreFrogger = scoreFrogger;
-        CallOnValueChange();
+        OnValueChange();
     }
 
     public void setScoreHelicopter(int scoreHelicopter) {
         this.scoreHelicopter = scoreHelicopter;
-        CallOnValueChange();
+        OnValueChange();
     }
 
     public void setScoreAlienrun(int scoreAlienrun) {
         this.scoreAlienrun = scoreAlienrun;
-        CallOnValueChange();
+        OnValueChange();
     }
 
     public void setScore2048(int score2048) {
         this.score2048 = score2048;
-        CallOnValueChange();
+        OnValueChange();
     }
 
 
-    void CallOnValueChange() {
+    void OnValueChange() {
         if(userChangeCallback != null) {
             userChangeCallback.onValueChange();
         }

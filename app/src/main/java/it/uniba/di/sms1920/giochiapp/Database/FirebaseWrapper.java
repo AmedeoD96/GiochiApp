@@ -39,7 +39,7 @@ public class FirebaseWrapper implements IGameDatabase {
     public void loadAllUsers(final OnUserLoadedListener onUserLoadedListener) {
         myRef = database.getReference();
 
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent( new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
@@ -48,7 +48,6 @@ public class FirebaseWrapper implements IGameDatabase {
                     onUserLoadedListener.onUserLoaded(data.getKey(), value);
                 }
                 Log.i("FIREBASE_TEST", "firebase load completed");
-
                 onUserLoadedListener.onLoadCompleted();
             }
 
@@ -65,7 +64,7 @@ public class FirebaseWrapper implements IGameDatabase {
         myRef = database.getReference();
 
         Log.i("FirebaseTest", "trying load user: "+userId);
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.i("FirebaseTest", "Load user");

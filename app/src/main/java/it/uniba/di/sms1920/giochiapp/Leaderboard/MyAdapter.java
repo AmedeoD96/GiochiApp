@@ -2,7 +2,6 @@ package it.uniba.di.sms1920.giochiapp.Leaderboard;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
 
-import it.uniba.di.sms1920.giochiapp.NewHome.GlobalScoreboard;
 import it.uniba.di.sms1920.giochiapp.R;
 
 public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,TitleChildViewHolder> {
@@ -73,8 +71,8 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
     @Override
     public void onBindChildViewHolder(TitleChildViewHolder titleChildViewHolder, int i, Object o) {
         TitleChild title = (TitleChild)o;
-        titleChildViewHolder.tetris.setText(title.getOption1());
-        titleChildViewHolder.game2048.setText(title.getOption2());
+        titleChildViewHolder.tetris.setText(title.getTetris());
+        titleChildViewHolder.game2048.setText(title.getGame2084());
         titleChildViewHolder.alienRun.setText(title.getAlienRun());
         titleChildViewHolder.rocket.setText(title.getRocket());
         titleChildViewHolder.frogger.setText(title.getFrogger());
