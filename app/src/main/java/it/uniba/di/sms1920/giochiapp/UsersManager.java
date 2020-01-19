@@ -20,18 +20,20 @@ public class UsersManager {
     public static final String DEFAULT_ID = "-";
     public static final String DEFAULT_NAME = "guest";
 
-
     private static final String USER_KEY = "currentUserId";
 
     private final Map<String, User> precUsers = new HashMap<>();
     private final Map<String, User> allUsers = new HashMap<>();
     private String idCurrentUser;
 
+    // instanza singleton
     private static UsersManager instance;
 
-    private User.UserListener userListener = new User.UserListener() {
+    // creazione dell'ascoltatore dei cambiamenti dell'utente corrente
+    private final User.UserListener userListener = new User.UserListener() {
         @Override
         public void onValueChange() {
+            // al cambiamento di un valore di uno user viene salvato l'utente corrente
             saveCurrentUser();
         }
     };
@@ -49,12 +51,15 @@ public class UsersManager {
 
 
     public void init() {
+        // aggiunta dell'ascoltatore per il cambio del collegamento ad internet
         NetworkChangeReceiver.getInstance().registerCallback(new NetworkChangeReceiver.INetworkCallback() {
             @Override
             public void OnNetworkChange(boolean isNetworkPresent) {
+                //quando la rete cambia vengono ricaricati tutti gli utenti
                 reloadUsers(null);
             }
         });
+        //ricarica degli utenti all'inizio
         reloadUsers(null);
     }
 
@@ -65,6 +70,7 @@ public class UsersManager {
 
 
     public void getAllUsers(IUsersLoadedCallback usersLoadedCallback) {
+        // ritorna tutti gli utenti ricaricando
         removeDefaultUser();
         reloadUsers(usersLoadedCallback);
     }
@@ -72,11 +78,15 @@ public class UsersManager {
 
     public User getCurrentUser() {
         User resultUser;
+
+        // ritorna l'utente corrente se presente, se non presente ritorna l'utente di default
         if(allUsers.containsKey(idCurrentUser)) {
 
             resultUser = allUsers.get(idCurrentUser);
+
         } else {
 
+            // Creazione dell'utente di default
             resultUser = new User(idCurrentUser);
             resultUser.name = DEFAULT_NAME;
             allUsers.put(idCurrentUser, resultUser);
@@ -88,33 +98,23 @@ public class UsersManager {
 
     public void setIdCurrentUser(String idCurrentUser) {
         Log.i("USER_DEBUG", "Trying to set new user id: " + idCurrentUser);
+
+        // se l'id dell'utente attuale è quello di default viene rimosso e sostituito con l'utente corrente con l'id corretto
         if(this.idCurrentUser.equals(DEFAULT_ID) ) {
 
             Log.i("USER_DEBUG", "Removing current id from database " + this.idCurrentUser);
             DatabaseManager.getInstance().removeUserFromLocalDB(this.idCurrentUser);
 
             if( allUsers.containsValue(this.idCurrentUser)) {
-                // Remove the user with the default key to put the user with the correct key
+                // Sostituisce la chiave dell'utente corrente da quella di default a la chiave passata
                 User currentUser = allUsers.get(this.idCurrentUser);
                 allUsers.remove(this.idCurrentUser);
                 allUsers.put(idCurrentUser, currentUser);
             }
         }
 
-
         this.idCurrentUser = idCurrentUser;
         saveCurrentUserID();
-    }
-    
-    public String getUserID(User user) {
-        if(allUsers.containsValue(user)) {
-            for (Map.Entry<String, User> entry : allUsers.entrySet()) {
-                if(entry.getValue().equals(user)) {
-                    return entry.getKey();
-                }
-            }
-        }
-        return DEFAULT_ID;
     }
 
 
@@ -125,10 +125,10 @@ public class UsersManager {
         DatabaseManager.getInstance().saveUser(idCurrentUser, user);
     }
 
-
+    // ritorna la collection di tutti gli utenti ordinati tramite l'orderType passato
     public Collection<User> getAllUserSort(OrderType orderType, final boolean ascendentVsDescentend) {
         Collection<User> collection = allUsers.values();
-        List<User> list = new ArrayList(collection);
+        List<User> list = new ArrayList<>(collection);
 
         switch (orderType) {
             case TOTAL_SCORE:
@@ -184,6 +184,7 @@ public class UsersManager {
         return list;
     }
 
+    // metodo di comparazione di due interi
     int compareInt(int a, int b, boolean ascendentVsDescendent) {
         if(ascendentVsDescendent) {
             if(a > b) {
@@ -204,6 +205,7 @@ public class UsersManager {
         }
     }
 
+    // tipologie di ordinamento possibili
     public enum OrderType {
         TOTAL_SCORE,
         SCORE_HELICOPTER,
@@ -228,24 +230,29 @@ public class UsersManager {
         Log.i("DATABASE_DEBUG", "reload users");
 
         final DatabaseManager db = DatabaseManager.getInstance();
+        // caricamento dell'id dell'utente corrente
         String id = loadCurrentUserID();
 
         removeDefaultUser();
 
+        // caricamento dell'utente corrente
         db.loadUser(id, new IGameDatabase.OnUserLoadedListener() {
             @Override
             public void onUserLoaded(String id, User user) {
                 Log.i("USER_DEBUG", "user id: " +id+ " user: " + user);
 
+                // quando l'utente corrente viene caricato viene salvato
                 allUsers.put(id, user);
                 db.saveUser(id, user);
             }
 
             @Override
             public void onLoadCompleted() {
+                // al completamento dell'utente corrente carica tutti gli altri utenti
                 db.loadAllUsers(new IGameDatabase.OnUserLoadedListener() {
                     @Override
                     public void onUserLoaded(String id, User user) {
+                        //al caricamento di ogni utente viene aggiunto alla mappa degli utenti
                         allUsers.put(id, user);
                     }
 
@@ -255,9 +262,12 @@ public class UsersManager {
 
                         Log.i("USER_DEBUG", "On load completed current user id: " + idCurrentUser + "user: " + user);
 
-                        user.setRegisterCallback(userListener);
+                        // registra la callback della modifica dell'utente corrente
+                        user.setOnChangeCallback(userListener);
+                        // duplica il database remoto nel database locale
                         DatabaseManager.getInstance().saveUsersIntoLocalDB(precUsers, allUsers);
 
+                        // chiamata della callback della fine del caricamento degli utenti
                         if(usersLoadedCallback != null) {
                             usersLoadedCallback.OnAllUsersLoaded(allUsers);
                         }
@@ -269,13 +279,14 @@ public class UsersManager {
 
 
     void removeDefaultUser() {
+        // remove l'utente di default quando l'utente id corrente non è il default ed è contenuto nella mappa degli utenti locali
         if(!idCurrentUser.equals(DEFAULT_ID) && allUsers.containsKey(DEFAULT_ID)) {
             allUsers.remove(DEFAULT_ID);
         }
     }
 
 
-
+    // interfaccia per la callback del caricamento degli utenti
     public interface IUsersLoadedCallback {
         void OnAllUsersLoaded(Map<String, User> users);
     }

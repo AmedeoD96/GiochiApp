@@ -9,14 +9,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
 import java.util.List;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
-import it.uniba.di.sms1920.giochiapp.NewHome.GlobalScoreboard;
 import it.uniba.di.sms1920.giochiapp.R;
 
 public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,TitleChildViewHolder> {
@@ -92,8 +90,8 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
     public void onBindChildViewHolder(final TitleChildViewHolder titleChildViewHolder, int i, Object o) {
         //assegnazione del testo nelle viewholder child
         TitleChild title = (TitleChild)o;
-        titleChildViewHolder.tetris.setText(title.getOption1());
-        titleChildViewHolder.game2048.setText(title.getOption2());
+        titleChildViewHolder.tetris.setText(title.getTetris());
+        titleChildViewHolder.game2048.setText(title.getGame2084());
         titleChildViewHolder.alienRun.setText(title.getAlienRun());
         titleChildViewHolder.rocket.setText(title.getRocket());
         titleChildViewHolder.frogger.setText(title.getFrogger());

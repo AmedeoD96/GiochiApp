@@ -50,12 +50,7 @@ public class TitleChild {
         return String.valueOf(froggerScore);
     }
 
-    String getOption1() {
-        return tetris;
-    }
-
-
-    String getOption2() {
+    public String getGame2084() {
         return game2084;
     }
 
