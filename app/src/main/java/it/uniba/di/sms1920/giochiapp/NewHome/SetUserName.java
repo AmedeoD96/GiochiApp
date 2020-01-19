@@ -103,17 +103,4 @@ public class SetUserName extends AppCompatActivity {
         saveButton = findViewById(R.id.toggleButton);
         name.setEnabled(false);
     }
-
-    //Metodi per la toolbar superiore
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        //In questa classe il bottone non fa nulla.
-        return super.onOptionsItemSelected(item);
-    }
 }

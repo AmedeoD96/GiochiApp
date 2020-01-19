@@ -172,20 +172,6 @@ public class GameList extends AppCompatActivity {
         frogger.setHighScore(getScoreFrogger());
     }
 
-    //Metodi per la toolbar superiore
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(getApplicationContext(), SetUserName.class);
-        startActivity(intent);
-        return super.onOptionsItemSelected(item);
-    }
-
     /*Salvataggio dei dati dell'utente corrente alla distruzione
     * dell'activity*/
     @Override

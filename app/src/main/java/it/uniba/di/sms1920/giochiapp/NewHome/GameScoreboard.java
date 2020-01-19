@@ -60,11 +60,10 @@ public class GameScoreboard extends AppCompatActivity {
         });
 
 
-
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.navigation_home:
                         Intent gameList = new Intent(getApplicationContext(), GameList.class);
                         startActivity(gameList);
@@ -82,14 +81,14 @@ public class GameScoreboard extends AppCompatActivity {
     }
 
 
-    private void initializeElement(){
+    private void initializeElement() {
         recyclerView = findViewById(R.id.rvSingleGameScoreboard);
         recyclerView.setLayoutManager(new CenterLayoutManager(this));
         navigation = findViewById(R.id.navigation);
         imageButton = findViewById(R.id.ibFind);
     }
 
-    private List<ParentObject> initData(){
+    private List<ParentObject> initData() {
 
         ElementCreator elementCreator = ElementCreator.get(getApplicationContext());
 
@@ -103,18 +102,18 @@ public class GameScoreboard extends AppCompatActivity {
         User currentUser = UsersManager.getInstance().getCurrentUser();
         boolean flag;
         int position;
-        switch (value){
+        switch (value) {
             case 0:
                 flag = false;
                 position = 0;
                 Collection<User> allUserTetris = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_TETRIS, false);
 
-                for(User user: allUserTetris){
-                    if(user.equals(currentUser)){
+                for (User user : allUserTetris) {
+                    if (user.equals(currentUser)) {
                         flag = true;
                         find = position;
                     }
-                    Parent parent = new Parent(position+1 + "°    " + user.name, user.scoreTetris, flag, position);
+                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreTetris, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
@@ -129,11 +128,11 @@ public class GameScoreboard extends AppCompatActivity {
                 Collection<User> allUser2048 = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_2048, false);
 
                 for (User user : allUser2048) {
-                    if(user.equals(currentUser)){
+                    if (user.equals(currentUser)) {
                         flag = true;
                         find = position;
                     }
-                    Parent parent = new Parent(position+1 + "°    " +user.name, user.score2048, flag, position);
+                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.score2048, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
@@ -147,11 +146,11 @@ public class GameScoreboard extends AppCompatActivity {
                 Collection<User> allUserAlienRun = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_ALIENRUN, false);
 
                 for (User user : allUserAlienRun) {
-                    if (user.equals(currentUser)){
+                    if (user.equals(currentUser)) {
                         flag = true;
                         find = position;
                     }
-                    Parent parent = new Parent(position+1 + "°    " +user.name, user.scoreAlienrun, flag, position);
+                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreAlienrun, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
@@ -165,11 +164,11 @@ public class GameScoreboard extends AppCompatActivity {
                 Collection<User> allUserRocket = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_HELICOPTER, false);
 
                 for (User user : allUserRocket) {
-                    if(user.equals(currentUser)){
+                    if (user.equals(currentUser)) {
                         flag = true;
                         find = position;
                     }
-                    Parent parent = new Parent(position+1 + "°    " +user.name, user.scoreHelicopter, flag, position);
+                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreHelicopter, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
@@ -183,11 +182,11 @@ public class GameScoreboard extends AppCompatActivity {
                 Collection<User> allUserFrogger = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_FROGGER, false);
 
                 for (User user : allUserFrogger) {
-                    if(user.equals(currentUser)){
+                    if (user.equals(currentUser)) {
                         flag = true;
                         find = position;
                     }
-                    Parent parent = new Parent(position+1 + "°    " +user.name, user.scoreFrogger, flag, position);
+                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreFrogger, flag, position);
                     elementCreator.addElement(parent);
                     parentObject.add(parent);
                     flag = false;
@@ -207,17 +206,4 @@ public class GameScoreboard extends AppCompatActivity {
         UsersManager.getInstance().saveCurrentUser();
     }
 
-    //Metodi per la toolbar superiore
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(getApplicationContext(), SetUserName.class);
-        startActivity(intent);
-        return super.onOptionsItemSelected(item);
-    }
 }

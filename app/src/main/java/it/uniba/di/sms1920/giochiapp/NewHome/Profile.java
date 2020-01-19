@@ -119,20 +119,6 @@ public class Profile extends AppCompatActivity {
         tvRocket = findViewById(R.id.tvScoreRocket);
     }
 
-    //Metodi per la toolbar superiore
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(getApplicationContext(), SetUserName.class);
-        startActivity(intent);
-        return super.onOptionsItemSelected(item);
-    }
-
     /*Salvo l'utente corrente quando l'activity viene chiusa*/
     @Override
     protected void onDestroy() {
