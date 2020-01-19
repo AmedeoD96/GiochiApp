@@ -71,8 +71,8 @@ public class Profile extends AppCompatActivity {
 
                     if(!name.getText().toString().equals("")) {
                         UsersManager.getInstance().getCurrentUser().setName(name.getText().toString());
-                        welcome.setText("Welcome Back: " + name.getText().toString());
-
+                        welcome.setText("Welcome Back " + name.getText().toString());
+        //todo perchè non posso mettere R.string.welcome al posto della stringa in sè per sè?
                     }
                 }
             }
@@ -115,7 +115,7 @@ public class Profile extends AppCompatActivity {
         welcome = findViewById(R.id.welcome);
         name = findViewById(R.id.etName);
         saveButton = findViewById(R.id.toggleButton);
-//        name.setEnabled(false);
+        name.setEnabled(false);
         tvTetris = findViewById(R.id.tvScoreTetris);
         tv2048 = findViewById(R.id.TvScore2048);
         tvAlienRun = findViewById(R.id.tvScoreAlienRun);

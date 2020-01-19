@@ -33,4 +33,5 @@
     <string name="goUp">TOCCA E TIENI PREMUTO PER ANDARE IN ALTO</string>
     <string name="pressToStart">TOCCA PER INIZIARE</string>
     <string name="find">Trova</string>
+    <string name="welcome">Bentornato</string>
 </resources>

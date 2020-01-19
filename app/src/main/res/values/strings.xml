@@ -13,6 +13,7 @@
     <string name="for_now">For now…</string>
     <string name="endless">"Endless" Mode</string>
     <!-- Confirmation dialog-->
+    <string name="welcome">Welcome back </string>
     <string name="reset">Reset</string>
     <string name="continue_game">Cancel</string>
     <string name="reset_dialog_title">Reset game?</string>
