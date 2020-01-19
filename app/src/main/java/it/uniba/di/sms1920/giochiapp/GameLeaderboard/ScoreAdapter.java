@@ -66,23 +66,25 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
 
         //i 3 sul podio
         if(position == 0){
-            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#FFCA28"));
+            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#C6A530"));
         }else if(position == 1){
-            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#B0BEC5"));
+            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#788287"));
         }else if(position == 2){
-            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#CC6633"));
+            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#794909"));
         }else {
             //le altre posizioni
-            viewHolderTitle.itemView.setBackgroundColor(Color.WHITE);
+            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#4CAF50"));
         }
 
         //in caso di utente corrente si evidenzia il testo
         if(parent.isCurrentUser()){
-            viewHolderTitle._userName.setTextColor(Color.GREEN);
-            viewHolderTitle._score.setTextColor(Color.GREEN);
+            viewHolderTitle._userName.setTextColor(Color.parseColor("#265628"));
+            viewHolderTitle._score.setTextColor(Color.parseColor("#265628"));
         }else {
-            viewHolderTitle._userName.setTextColor(Color.parseColor("#737373"));
-            viewHolderTitle._score.setTextColor(Color.parseColor("#737373"));
+            viewHolderTitle._userName.setTextColor(Color.parseColor("#80e27e"));
+            viewHolderTitle._score.setTextColor(Color.parseColor("#80e27e"));
+            viewHolderTitle._userName.setTextColor(Color.WHITE);
+            viewHolderTitle._score.setTextColor(Color.WHITE);
         }
     }
 
