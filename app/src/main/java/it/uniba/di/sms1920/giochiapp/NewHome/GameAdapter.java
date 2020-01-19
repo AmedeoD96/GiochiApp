@@ -214,17 +214,17 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         TextView highScore;
         ImageView image;
 
-        ImageButton button;
+        ImageView button;
         ImageButton leaderboard;
 
         public MyViewHolder(View itemView){
             super(itemView);
 
-            name = itemView.findViewById(R.id.tvGameName);
-            highScore = itemView.findViewById(R.id.tvHighScore);
-            image = itemView.findViewById(R.id.imgViewGame);
-            button = itemView.findViewById(R.id.btPlay);
-            leaderboard = itemView.findViewById(R.id.imageButton);
+            name = itemView.findViewById(R.id.title);
+            highScore = itemView.findViewById(R.id.score);
+            image = itemView.findViewById(R.id.background);
+            button = itemView.findViewById(R.id.play);
+            leaderboard = itemView.findViewById(R.id.leaderboard);
         }
     }
 }

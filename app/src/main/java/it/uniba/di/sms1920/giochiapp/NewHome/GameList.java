@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,7 +49,8 @@ public class GameList extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
 
-
+        //setta tema dark
+        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         createGameList();
 
         /*Set adapter*/
@@ -96,7 +98,7 @@ public class GameList extends AppCompatActivity {
 
     /*Creazione della lista giochi*/
     private void createGameList(){
-        tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.tetris_launch_app);
+        tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.mattoncini);
         gameList.add(tetris);
 
         game2048 = new Game("2048", get2048HighScore(), R.drawable.game2048);

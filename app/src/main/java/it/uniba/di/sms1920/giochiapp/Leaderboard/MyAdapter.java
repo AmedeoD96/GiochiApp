@@ -56,25 +56,28 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
 
         //in caso di utente corrente ci sarebbe il cambiamento del colore nel testo
         if(title.isCurrentUser()){
-            titleParentViewHolder._textView.setTextColor(Color.GREEN);
-            titleParentViewHolder._score.setTextColor(Color.GREEN);
+            titleParentViewHolder._textView.setTextColor(Color.parseColor("#265628"));
+            titleParentViewHolder._score.setTextColor(Color.parseColor("#265628"));
+
 
         }else {
-            titleParentViewHolder._textView.setTextColor(Color.parseColor("#757575"));
-            titleParentViewHolder._score.setTextColor(Color.parseColor("#757575"));
+            titleParentViewHolder._textView.setTextColor(Color.parseColor("#80e27e"));
+            titleParentViewHolder._score.setTextColor(Color.parseColor("#80e27e"));
+            titleParentViewHolder._textView.setTextColor(Color.WHITE);
+            titleParentViewHolder._score.setTextColor(Color.WHITE);
         }
 
         int position = title.getPosition();
 
         //le prime 3 posizioni
         if(position == 0){
-            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#FFCA28"));
+            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#C6A530"));
         }else if(position == 1){
-            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#B0BEC5"));
+            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#788287"));
         }else if(position == 2){
-            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#cc6633"));
+            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#794909"));
         }else {
-            titleParentViewHolder.itemView.setBackgroundColor(Color.WHITE);
+            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#4CAF50"));
         }
 
         if (i > lastPosition) {

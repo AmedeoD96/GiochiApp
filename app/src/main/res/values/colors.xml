@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Quelli di default dell'app-->
-    <color name="colorPrimary">#008577</color>
+   <!-- <color name="colorPrimary">#000000</color>-->
+    <color name="colorPrimary">#357a38</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!--Colori applicazione-->
+
+    <color name="darkGreen">#265628</color>
+    <color name="greenMedium">#2e6830</color>
+    <color name="green">#357a38</color>
+    <color name="greenie">#449e48</color>
+    <color name="greenLight">#4CAF50</color>
+    <color name="lightgreen">#80e27e</color>
+
+    <!--Colori leaderboard-->
+    <color name="gold">#C6A530</color>
+    <color name="silver">#788287</color>
+    <color name="bronze">#794909</color>
 
     <!--2048-->
     <color name="text_white">#f9f6f2</color>

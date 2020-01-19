@@ -1,96 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-    android:orientation="vertical"
-    tools:context=".NewHome.GameAdapter">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:elevation="6dp"
-        android:orientation="vertical"
-        app:cardBackgroundColor="#fefefe"
-        app:cardElevation="6dp"
-        app:cardMaxElevation="10dp"
-        app:cardUseCompatPadding="true">
+        android:layout_width="417dp"
+        android:layout_height="716dp"
+        app:cardBackgroundColor="@color/greenLight"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_width="match_parent"
+            android:layout_height="315dp"
+            app:srcCompat="@drawable/mattoncini" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#4caf50"
+            android:elevation="2dp"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="384dp"
-                android:layout_height="42dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvGameName"
-                    android:layout_width="184dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:background="#4caf50"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:text="João Pereira"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />"
-
-                <TextView
-                    android:id="@+id/tvHighScore"
-                    android:layout_width="198dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:background="#4caf50"
-
-                    android:text="High score: "
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
             <ImageView
-                android:id="@+id/imgViewGame"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="10dp"
-                android:background="#4caf50"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/tetris_launch_app" />
+                android:id="@+id/play"
+                android:layout_width="115dp"
+                android:layout_height="121dp"
+                android:elevation="10dp"
+                android:translationX="145dp"
+                android:translationY="275dp"
+                app:srcCompat="@drawable/tetris" />
 
-            <LinearLayout
+            <!--   <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/btPlay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:backgroundTint="#80e27e"
-                    android:elevation="6dp"
-                    android:src="@mipmap/ic_play_3_foreground" />
+                <TextView
+                    android:id="@+id/score"
+                    android:layout_width="133dp"
+                    android:layout_height="56dp"
+                    android:text="@string/score"
+                    android:textSize="24sp"
+                    android:translationX="300dp"
+                    android:translationY="30dp" />
 
-                <ImageButton
-                    android:id="@+id/imageButton"
-                    android:layout_width="142dp"
-                    android:layout_height="63dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="#80e27e"
-                    android:elevation="6dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ranking" />
+                <TextView
+                    android:id="@+id/highscore"
+                    android:layout_width="133dp"
+                    android:layout_height="56dp"
+                    android:text="@string/highScore"
+                    android:textSize="24sp"
+                    android:translationX="15dp"
+                    android:translationY="80dp" />
+            </LinearLayout> -->
 
-            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:translationY="325dp">
+
+
+                <ImageView
+                    android:id="@+id/left"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:translationX="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/freccia_flop" />
+
+                <ImageView
+                    android:id="@+id/right"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/freccia_flip" />
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="221dp"
+                    android:layout_height="78dp"
+                    android:layout_marginStart="45dp"
+                    android:layout_marginEnd="45dp"
+                    android:layout_marginBottom="3dp"
+                    android:text="Title "
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/right"
+                    app:layout_constraintStart_toEndOf="@+id/left" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:translationY="330dp">
+
+                <TextView
+                    android:id="@+id/score"
+                    android:layout_width="134dp"
+                    android:layout_height="68dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="32dp"
+                    android:text="@string/score"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/highscore"
+                    android:layout_width="134dp"
+                    android:layout_height="68dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/highScore"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <ImageButton
+                android:id="@+id/leaderboard"
+                android:layout_width="match_parent"
+                android:layout_height="69dp"
+                android:backgroundTint="@color/lightgreen"
+                android:elevation="6dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ranking"
+                android:translationY="350dp" />
+
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
