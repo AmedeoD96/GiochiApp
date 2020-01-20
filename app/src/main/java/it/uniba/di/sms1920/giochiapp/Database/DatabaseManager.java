@@ -109,6 +109,7 @@ public class DatabaseManager {
                         public void onLoadCompleted() {
                             Log.i("DATABASE_DEBUG", "user remote completed");
 
+                            // finisce il caricamento dell'utente
                             userLoadedListener.onLoadCompleted();
                         }
                     });
@@ -125,24 +126,29 @@ public class DatabaseManager {
                     // finisce il caricamento dell'utente
                     userLoadedListener.onLoadCompleted();
                 }
+                // se non ha caricato l'utente corrente e deve usare il databse remoto
                 else if(!hasLoadLocally && !useLocalVsRemote) {
 
-                        remoteDatabase.loadUser(userId, new IGameDatabase.OnUserLoadedListener() {
-                            @Override
-                            public void onUserLoaded(String id, User user) {
-                                Log.i("DATABASE_DEBUG", "Remote user" + user.toString());
-                                userLoadedListener.onUserLoaded(id, user);
-                            }
+                    // carica l'utente da remoto
+                    remoteDatabase.loadUser(userId, new IGameDatabase.OnUserLoadedListener() {
+                        @Override
+                        public void onUserLoaded(String id, User user) {
+                            Log.i("DATABASE_DEBUG", "Remote user" + user.toString());
+                            userLoadedListener.onUserLoaded(id, user);
+                        }
 
-                            @Override
-                            public void onLoadCompleted() {
-                                Log.i("DATABASE_DEBUG", "user remote completed");
+                        @Override
+                        public void onLoadCompleted() {
+                            Log.i("DATABASE_DEBUG", "user remote completed");
 
-                                userLoadedListener.onLoadCompleted();
-                            }
-                        });
-
+                            // finisce il caricamento dell'utente
+                            userLoadedListener.onLoadCompleted();
+                        }
+                    });
+                // se non ha caricato l'utente locale e deve usare il database locale
                 } else {
+
+                    // finisce il caricamento dell'utente
                     userLoadedListener.onLoadCompleted();
                 }
             }
@@ -151,7 +157,7 @@ public class DatabaseManager {
 
 
 
-
+    // salva una stringa nelle shared preferences
     public void saveString(String key, String value) {
         Context context = GlobalApplicationContext.getAppContext();
 
@@ -162,6 +168,7 @@ public class DatabaseManager {
         editor.apply();
     }
 
+    // carica una stringa dalle shared preferences
     public String loadString(String key, String defalultValue) {
         Context context = GlobalApplicationContext.getAppContext();
         SharedPreferences pref = context.getSharedPreferences(LOCAL_PREF, Context.MODE_PRIVATE);
@@ -173,7 +180,7 @@ public class DatabaseManager {
 
 
 
-
+    // salva gli utenti nel database locale controllando se ci sono state modifiche dall'ultimo salvatagio
     public void saveUsersIntoLocalDB(Map<String, User> precUsers, Map<String, User> users) {
         Log.i("DATABASE_DEBUG", "Cloning db");
 
@@ -181,15 +188,19 @@ public class DatabaseManager {
             String currentUserKey = user.getKey();
             User currentUser = user.getValue();
 
+            // se l'utente e presente nei precedenti utenti
             if(precUsers.containsKey(currentUserKey)) {
                 User precUser = precUsers.get(currentUserKey);
 
+                // controlla quale utente è più aggiornato e lo salva
                 if(currentUser.isMoreUpdatedThan(precUser)) {
                     Log.i("DATABASE_DEBUG", "Cloning user more update: \ncurrent user: " + currentUser.toString() + "\nprec user: "+precUser.toString());
 
                     localDatabase.saveUser(currentUserKey, currentUser);
                 }
-            } else {
+            }
+            // se l'utente non è presente nei precedenti lo salva nel database locale
+            else {
                 Log.i("DATABASE_DEBUG", "Cloning not contained user into db: " + currentUser);
 
                 localDatabase.saveUser(currentUserKey, currentUser);
@@ -197,6 +208,7 @@ public class DatabaseManager {
         }
     }
 
+    // rimuove un utente dal database locale
     public void removeUserFromLocalDB(String id) {
         Log.i("DATABASE_DEBUG", "Removing local user with id: " + id);
         localDatabase.removeUser(id);

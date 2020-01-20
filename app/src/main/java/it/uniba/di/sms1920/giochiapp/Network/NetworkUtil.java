@@ -31,7 +31,7 @@ class NetworkUtil {
         return TYPE_NOT_CONNECTED;
     }
 
-    //si ottiene la stringa legata allo stato della connessione
+    //si ottiene l'intero legato allo stato della connessione
     static int getConnectivityStatusString(Context context) {
         int conn = NetworkUtil.getConnectivityStatus(context);
         int status = 0;

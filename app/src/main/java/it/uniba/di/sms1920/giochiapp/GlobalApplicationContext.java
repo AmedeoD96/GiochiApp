@@ -11,7 +11,9 @@ import it.uniba.di.sms1920.giochiapp.Network.NetworkChangeReceiver;
 
 
 public class GlobalApplicationContext extends Application {
+    // istanza del conteso del'app
     private static Context appContext;
+    // istanza del ricevitore delle modifiche alla rete
     private NetworkChangeReceiver networkChangeReceiver;
 
 
@@ -36,7 +38,7 @@ public class GlobalApplicationContext extends Application {
     }
 
 
-
+    // crea ed aggiunge il ricevitore delle modifiche alla rete
     private void addNetworkReceiver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -46,11 +48,12 @@ public class GlobalApplicationContext extends Application {
         registerReceiver(networkChangeReceiver, intentFilter);
     }
 
+    // rimuove il ricevitore delle modifiche alla rete
     private void removeNetworkReceiver() {
         unregisterReceiver(networkChangeReceiver);
     }
 
-
+    // iniziallizza i sistemi del database e dell'utente
     private void initSystem() {
         DatabaseManager.getInstance().init();
         UsersManager.getInstance().init();

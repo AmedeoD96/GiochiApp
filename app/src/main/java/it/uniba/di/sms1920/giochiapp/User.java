@@ -83,14 +83,17 @@ public class User {
         return updatesCounter;
     }
 
+    // imposta il valore di aggiornamento dell'utente
     public void setUpdatesCounter(int updatesCounter) {
         this.updatesCounter = updatesCounter;
     }
 
+    // incrementa l'aggiornamento di 1
     public void updateUser() {
         updatesCounter++;
     }
 
+    // informa se l'utente è aggiornato maggiormente di quello passato
     public boolean isMoreUpdatedThan(User user) {
         return  updatesCounter > user.updatesCounter;
     }

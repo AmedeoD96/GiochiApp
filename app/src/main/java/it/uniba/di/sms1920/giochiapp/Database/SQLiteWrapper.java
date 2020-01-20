@@ -12,7 +12,14 @@ import it.uniba.di.sms1920.giochiapp.User;
 
 public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
 
+    // nome database e versione
+    final public static String NOME_DB = "giochiapp_db";
+    final public static Integer VERSION = 2;
+
+    // nome tabella
     final static String TABLE_NAME_USERSCORES = "users_scores";
+
+    // nomi delle colonne del database
     public static final String _ID = "_id";
     public static final String NICKNAME = "nickname";
 
@@ -23,12 +30,10 @@ public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
     public static final String SCORE_FROGGER = "score_frogger";
     public static final String UPDATE_COUNTER = "update_counter";
 
-
-    final public static String NOME_DB = "giochiapp_db";
-    final public static Integer VERSION = 2;
-
+    // array delle colonne del database
     final static String[] columns = {_ID, NICKNAME, SCORE_2048, SCORE_HELICOPTER, SCORE_ALIENRUN, SCORE_TETRIS, SCORE_FROGGER, UPDATE_COUNTER};
 
+    // query di creazione della tabella
     final static String CREATE_CMD =
             "CREATE TABLE " + TABLE_NAME_USERSCORES + "("
                     + _ID + " TEXT PRIMARY KEY, " + NICKNAME + " TEXT, "
@@ -39,7 +44,9 @@ public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
                     + SCORE_FROGGER + " INTEGER, "
                     + UPDATE_COUNTER + " INTEGER);";
 
+    // query di richiesta di uno specifico utente
     final static String CHECK_CONTAINS_CMD = "SELECT * FROM "+TABLE_NAME_USERSCORES+" WHERE "+_ID+"='[x]';";
+    // carattere da sostituire all'id dell'utente da cercare
     final static String CHECK_KEY_ID_REPLACE = "[x]";
 
     SQLiteDatabase mDBDatabase;
@@ -52,8 +59,10 @@ public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
 
     @Override
     public String saveUser(String id, User user) {
+        // ottenimento del cursore per lo specifico utente
         Cursor cursor_userscores = GetUserCursor(id);
 
+        // se gia presente vengono aggiornati i valori
         if(cursor_userscores.getCount() > 0) {
             ContentValues values = new ContentValues();
 
@@ -67,7 +76,9 @@ public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
 
             mDBDatabase.update(TABLE_NAME_USERSCORES, values, _ID + "='" + id +"'", null);
 
-        } else {
+        }
+        // se non presente viene aggiunto al database
+        else {
             ContentValues values = new ContentValues();
 
             values.put(_ID, id);
@@ -83,45 +94,60 @@ public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
             values.clear();
         }
 
+        // chiusura del cursore
         cursor_userscores.close();
         return id;
     }
 
     @Override
     public void loadAllUsers(OnUserLoadedListener onUserLoadedListener) {
+        // ottenimento cursore per tutti gli utenti del databse
         Cursor cursor_userscores = mDBDatabase.query(TABLE_NAME_USERSCORES, columns, null, new String[]{}, null, null, null);
+        // spostamento del cursore al primo elemento
         cursor_userscores.moveToFirst();
 
         for (int i = 0; i < cursor_userscores.getCount(); i++) {
 
+            // ottenimento dell'utente dalla posizione attuale del cursore
             Pair<String, User> user = GetUser(cursor_userscores);
             cursor_userscores.moveToNext();
 
+            // chiamata della callback di caricamento del singolo utente
             if(onUserLoadedListener != null) {
                 onUserLoadedListener.onUserLoaded(user.first, user.second);
             }
         }
+
+        // chiamata della callback di fine caricamento
         if(onUserLoadedListener != null) {
             onUserLoadedListener.onLoadCompleted();
         }
 
+        // chiusura del cursore
         cursor_userscores.close();
     }
 
     @Override
     public void loadUser(String userId, OnUserLoadedListener onUserLoadedListener) {
+        // ottenimento cursore per l'utente
         Cursor userCursor = GetUserCursor(userId);
+        // spostamento del cursore al primo elemento
         userCursor.moveToFirst();
 
+        // ottenimento dell'utente dalla posizione attuale del cursore
         Pair<String, User> user = GetUser(userCursor);
+
+        // chiamata della callback di caricamento del singolo utente
         if(user.first != null) {
             onUserLoadedListener.onUserLoaded(user.first, user.second);
         }
+        // chiamata della callback di fine caricamento
         onUserLoadedListener.onLoadCompleted();
     }
 
     @Override
     public void removeUser(String id) {
+        // rimozione di uno specifico utente dal database
         mDBDatabase.delete(TABLE_NAME_USERSCORES, _ID + "='" + id +"'", null);
     }
 
@@ -137,11 +163,12 @@ public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
 
 
 
-
+    // crezione del cursore per un utente specifico
     Cursor GetUserCursor(String userId) {
         return mDBDatabase.rawQuery(CHECK_CONTAINS_CMD.replace(CHECK_KEY_ID_REPLACE, userId), null);
     }
 
+    // ottiene l'utente dato un cusore
     Pair<String, User> GetUser(Cursor cursor) {
         User user = new User();
         String id = null;
@@ -161,6 +188,5 @@ public class SQLiteWrapper extends SQLiteOpenHelper implements IGameDatabase {
         }
         return new Pair<>(id, user);
     }
-
 
 }
