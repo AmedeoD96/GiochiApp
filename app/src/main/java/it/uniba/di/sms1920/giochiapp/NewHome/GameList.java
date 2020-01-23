@@ -93,7 +93,8 @@ public class GameList extends AppCompatActivity {
     private void initializeElement(){
         gameList = new ArrayList<>();
         recyclerView = findViewById(R.id.rvGameList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     /*Creazione della lista giochi*/
