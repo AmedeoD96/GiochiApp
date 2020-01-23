@@ -9,8 +9,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/CardView"
-        android:layout_width="0dp"
-        android:layout_height="650dp"
+        android:layout_width="609dp"
+        android:layout_height="304dp"
         android:layout_marginTop="18dp"
         android:layout_marginBottom="68dp"
         app:cardBackgroundColor="@color/greenLight"
@@ -37,55 +37,50 @@
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/background"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.54"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <ImageView
                 android:id="@+id/background"
-                android:layout_width="match_parent"
-                android:layout_height="221dp"
-                android:layout_marginTop="12dp"
+                android:layout_width="282dp"
+                android:layout_height="197dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title"
-                app:srcCompat="@drawable/mattoncini" />
+                app:srcCompat="@drawable/mattoncini"
+                tools:layout_editor_absoluteY="96dp" />
 
             <TextView
                 android:id="@+id/score"
-                android:layout_width="339dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="37dp"
-                android:layout_marginTop="33dp"
+                android:layout_width="273dp"
+                android:layout_height="67dp"
                 android:text="@string/score"
                 android:textSize="24sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/play" />
+                tools:layout_editor_absoluteX="304dp"
+                tools:layout_editor_absoluteY="96dp" />
 
             <ImageView
                 android:id="@+id/play"
                 android:layout_width="124dp"
                 android:layout_height="96dp"
-                android:layout_marginTop="168dp"
-                android:layout_marginEnd="144dp"
                 android:elevation="10dp"
                 android:translationX="0dp"
                 android:translationY="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/background"
-                app:srcCompat="@drawable/play" />
+                app:srcCompat="@drawable/play"
+                tools:layout_editor_absoluteX="81dp"
+                tools:layout_editor_absoluteY="52dp" />
 
             <ImageButton
                 android:id="@+id/leaderboard"
-                android:layout_width="338dp"
+                android:layout_width="283dp"
                 android:layout_height="71dp"
-                android:layout_marginStart="38dp"
-                android:layout_marginTop="14dp"
                 android:backgroundTint="@color/lightgreen"
                 android:elevation="6dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ranking"
                 android:translationY="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/score" />
+                tools:layout_editor_absoluteX="304dp"
+                tools:layout_editor_absoluteY="186dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
