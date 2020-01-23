@@ -99,7 +99,7 @@ public class GameList extends AppCompatActivity {
 
     /*Creazione della lista giochi*/
     private void createGameList(){
-        tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.mattoncini);
+        tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.tetris_launch_app);
         gameList.add(tetris);
 
         game2048 = new Game("2048", get2048HighScore(), R.drawable.game2048);
