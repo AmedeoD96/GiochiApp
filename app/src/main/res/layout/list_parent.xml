@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/trophyImg"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -47,6 +47,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.545"
             app:srcCompat="@drawable/ic_keyboard_arrow_down_float" />
+
+        <ImageView
+            android:id="@+id/trophyImg"
+            android:layout_width="31dp"
+            android:layout_height="42dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:srcCompat="@drawable/trophy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

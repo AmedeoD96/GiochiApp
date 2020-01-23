@@ -53,16 +53,16 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         titleParentViewHolder._textView.setText(title.getTitle());
         titleParentViewHolder._score.setText(title.getGlobalScore());
         titleParentViewHolder._image.setImageResource(R.drawable.ic_keyboard_arrow_down_float);
+        titleParentViewHolder._trophyImage.setImageResource(R.drawable.trophy);
+        titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#4CAF50"));
 
         //in caso di utente corrente ci sarebbe il cambiamento del colore nel testo
         if(title.isCurrentUser()){
-            titleParentViewHolder._textView.setTextColor(Color.parseColor("#265628"));
-            titleParentViewHolder._score.setTextColor(Color.parseColor("#265628"));
-
-
+            titleParentViewHolder._textView.setTextColor(Color.parseColor("#081208"));
+            titleParentViewHolder._score.setTextColor(Color.parseColor("#081208"));
         }else {
-            titleParentViewHolder._textView.setTextColor(Color.parseColor("#80e27e"));
-            titleParentViewHolder._score.setTextColor(Color.parseColor("#80e27e"));
+            //titleParentViewHolder._textView.setTextColor(Color.parseColor("#80e27e"));
+            //titleParentViewHolder._score.setTextColor(Color.parseColor("#80e27e"));
             titleParentViewHolder._textView.setTextColor(Color.WHITE);
             titleParentViewHolder._score.setTextColor(Color.WHITE);
         }
@@ -71,13 +71,19 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
 
         //le prime 3 posizioni
         if(position == 0){
-            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#C6A530"));
+            //titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#C6A530"));
+            titleParentViewHolder._trophyImage.setVisibility(View.VISIBLE);
+            titleParentViewHolder._trophyImage.setColorFilter(Color.parseColor("#FFD700"));
         }else if(position == 1){
-            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#788287"));
+            //titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#788287"));
+            titleParentViewHolder._trophyImage.setVisibility(View.VISIBLE);
+            titleParentViewHolder._trophyImage.setColorFilter(Color.parseColor("#788287"));
         }else if(position == 2){
-            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#794909"));
+            //titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#794909"));
+            titleParentViewHolder._trophyImage.setVisibility(View.VISIBLE);
+            titleParentViewHolder._trophyImage.setColorFilter(Color.parseColor("#794909"));
         }else {
-            titleParentViewHolder.itemView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            titleParentViewHolder._trophyImage.setVisibility(View.GONE);
         }
 
         if (i > lastPosition) {

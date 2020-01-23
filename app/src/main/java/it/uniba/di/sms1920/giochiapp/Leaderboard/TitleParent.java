@@ -12,14 +12,16 @@ public class TitleParent implements ParentObject {
     private boolean isCurrentUser;
     private int position;
     private int image;
+    private int trophyImage;
 
 
-    public TitleParent(String title, int globalScore, boolean isCurrentUser, int position, int image) {
+    public TitleParent(String title, int globalScore, boolean isCurrentUser, int position, int image, int trophyImage) {
         this.title = title;
         this.globalScore = globalScore;
         this.isCurrentUser = isCurrentUser;
         this.position = position;
         this.image = image;
+        this.trophyImage = trophyImage;
     }
 
     public int getImage() {

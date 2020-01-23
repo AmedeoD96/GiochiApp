@@ -12,12 +12,14 @@ class TitleParentViewHolder extends ParentViewHolder {
     TextView _textView;
     TextView _score;
     ImageView _image;
+    ImageView _trophyImage;
 
     TitleParentViewHolder(View itemView) {
         super(itemView);
         _textView = itemView.findViewById(R.id.parentTitle);
         _score = itemView.findViewById(R.id.score1);
         _image = itemView.findViewById(R.id.down_arrow);
+        _trophyImage = itemView.findViewById(R.id.trophyImg);
     }
 
 
