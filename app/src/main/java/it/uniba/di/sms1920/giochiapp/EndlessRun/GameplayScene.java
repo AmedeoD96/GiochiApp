@@ -117,28 +117,30 @@ public class GameplayScene implements Scene {
             //si ottiene il contesto
             Context context = GlobalApplicationContext.getAppContext();
             //viene importato il font
-            Typeface customTypeface = ResourcesCompat.getFont(context, R.font.fippsregular);
+            Typeface customTypeface = ResourcesCompat.getFont(context, R.font.mariokartds);
             Paint paint = new Paint();
-            paint.setTextSize(100);
-            paint.setColor(Color.rgb(255,143,10));
+            paint.setTextSize(200);
+            paint.setARGB(255,255, 143, 10);
             paint.setTypeface(customTypeface);
             //create le bitmap per le scritte di game over e highscore
-            Bitmap gameOverImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.gameover);
-            Bitmap highScoreImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.highscore);
-            Matrix m = new Matrix();
+            //Bitmap gameOverImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.gameover);
+            //Bitmap highScoreImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.highscore);
+            //Matrix m = new Matrix();
             //interi relativi al centro dello schermo
-            int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
-            int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
-            gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
-            highScoreImg = Bitmap.createBitmap(highScoreImg,0,0, highScoreImg.getWidth(),highScoreImg.getHeight(),m,false);
+            //int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
+            //int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
+            //gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
+            //highScoreImg = Bitmap.createBitmap(highScoreImg,0,0, highScoreImg.getWidth(),highScoreImg.getHeight(),m,false);
             //drawCenterText(canvas, paint, "Game Over\nHigh score: " + highScore); Il \n non funziona quando si disegna un canvas.
             paint.setTextAlign(Paint.Align.CENTER);
             int xPos = (canvas.getWidth() / 2);
             int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) ;
             //canvas.drawText("Game Over", xPos, yPos, paint);
-            canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
-            canvas.drawBitmap(highScoreImg,centreX+150,centreY+170,paint);
-            canvas.drawText(String.valueOf(user.scoreAlienrun), xPos, 290+ yPos, paint);
+            //canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
+            //canvas.drawBitmap(highScoreImg,centreX+150,centreY+170,paint);
+            canvas.drawText("game over", xPos, yPos, paint);
+            canvas.drawText("high score",xPos,yPos+200,paint);
+            canvas.drawText(String.valueOf(user.scoreAlienrun), xPos, 400+ yPos, paint);
 
         }
     }

@@ -16,9 +16,9 @@
     <string name="you_win">Hai Vinto!</string>
 
     <plurals name="numberOfRiversSurpassed">
-        <item quantity="one">Fiume superato una volta</item>
-        <item quantity="few">Fiume superato %d volte</item>
-        <item quantity="other">Fiume superato %d volte</item>
+        <item quantity="one">FIUME SUPERATO UNA VOLTA</item>
+        <item quantity="few">FIUME SUPERATO %d VOLTE</item>
+        <item quantity="other">FIUME SUPERATO %d VOLTE</item>
     </plurals>
     <string name="gameOverTetris">"Il tuo punteggio è "</string>
     <string name="again">Riprova</string>
