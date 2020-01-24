@@ -452,26 +452,30 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         if(heart.getdead()==true){
 
             Context context = GlobalApplicationContext.getAppContext();
-            Typeface customTypeface = ResourcesCompat.getFont(context, R.font.montserratalternatesblack);
-            Bitmap gameOverImg = BitmapFactory.decodeResource(getResources(), R.drawable.gameover);
+            Typeface customTypeface = ResourcesCompat.getFont(context, R.font.mariokartds);
+            //Bitmap gameOverImg = BitmapFactory.decodeResource(getResources(), R.drawable.gameover);
             Matrix m = new Matrix();
 
             //imposta i parametri per il posizionamento della scritta Game Over
-            int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
-            int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
-            gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
+            //int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
+            //int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
+            //gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
             Paint paintDeath = new Paint();
-            paintDeath.setTextSize(100);
-            paintDeath.setColor(Color.BLACK);
+            paintDeath.setTextSize(200);
+            paintDeath.setARGB(255,34, 109, 20);
             paintDeath.setTextAlign(Paint.Align.CENTER);
-            paint.setTypeface(customTypeface);
+            paintDeath.setTypeface(customTypeface);
             User user = UsersManager.getInstance().getCurrentUser();
             int xPos = (canvas.getWidth() / 2);
             int yPos = (int) ((canvas.getHeight() / 2) - ((paintDeath.descent() + paintDeath.ascent()) / 2)) ;
-            canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
-            Resources res = getResources();
-            String numberScore = res.getQuantityString(R.plurals.numberOfRiversSurpassed, user.scoreFrogger, user.scoreFrogger);
-            canvas.drawText(numberScore, xPos, 100+ yPos, paintDeath);
+            //canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
+            canvas.drawText("game over", xPos, yPos, paintDeath);
+            canvas.drawText("high score",xPos,yPos+200,paintDeath);
+            canvas.drawText(String.valueOf(user.scoreFrogger), xPos, 400+ yPos, paintDeath);
+            //canvas.drawText("High Score",xPos,yPos+200,paintDeath);
+            //Resources res = getResources();
+            //String numberScore = res.getQuantityString(R.plurals.numberOfRiversSurpassed, user.scoreFrogger, user.scoreFrogger);
+            //canvas.drawText(numberScore, xPos, 150+ yPos, paintHighScore);
 
         }
 
