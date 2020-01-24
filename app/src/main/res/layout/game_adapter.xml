@@ -10,13 +10,22 @@
         android:layout_height="716dp"
         app:cardBackgroundColor="@color/greenLight"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="315dp"
-            android:translationY="100dp"
+            android:layout_marginBottom="168dp"
+            android:translationY="85dp"
             app:srcCompat="@drawable/tetris_launch_app" />
 
         <LinearLayout
@@ -54,12 +63,12 @@
                 android:id="@+id/play"
                 android:layout_width="115dp"
                 android:layout_height="121dp"
-                android:layout_weight="0"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:elevation="8dp"
                 android:scaleType="fitCenter"
                 android:translationX="145dp"
-                android:translationY="320dp"
+                android:translationY="325dp"
                 app:backgroundTint="@android:color/transparent"
                 app:elevation="8dp"
                 app:fabCustomSize="115dp"
@@ -69,7 +78,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="54dp"
                 android:orientation="horizontal"
                 android:translationY="325dp">
 
@@ -95,7 +104,7 @@
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="221dp"
-                    android:layout_height="78dp"
+                    android:layout_height="48dp"
                     android:layout_marginStart="45dp"
                     android:layout_marginEnd="45dp"
                     android:layout_marginBottom="3dp"
@@ -110,13 +119,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="56dp"
                 android:translationY="330dp">
 
                 <TextView
                     android:id="@+id/score"
-                    android:layout_width="0dp"
-                    android:layout_height="68dp"
+                    android:layout_width="342dp"
+                    android:layout_height="42dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="32dp"
@@ -138,7 +147,7 @@
                 android:elevation="6dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ranking"
-                android:translationY="350dp" />
+                android:translationY="330dp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
