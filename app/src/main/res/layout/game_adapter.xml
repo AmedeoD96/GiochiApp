@@ -16,6 +16,7 @@
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="315dp"
+            android:translationY="100dp"
             app:srcCompat="@drawable/tetris_launch_app" />
 
         <LinearLayout
@@ -49,13 +50,21 @@
             </LinearLayout> -->
 
 
-            <ImageView
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/play"
                 android:layout_width="115dp"
                 android:layout_height="121dp"
-                android:elevation="10dp"
+                android:layout_weight="0"
+                android:background="@android:color/transparent"
+                android:elevation="8dp"
+                android:scaleType="fitCenter"
                 android:translationX="145dp"
-                android:translationY="275dp"
+                android:translationY="320dp"
+                app:backgroundTint="@android:color/transparent"
+                app:elevation="8dp"
+                app:fabCustomSize="115dp"
+                app:fabSize="normal"
+                app:maxImageSize="140dp"
                 app:srcCompat="@drawable/play" />
 
             <androidx.constraintlayout.widget.ConstraintLayout

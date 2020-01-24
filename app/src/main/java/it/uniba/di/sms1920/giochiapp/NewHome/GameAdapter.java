@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
@@ -227,4 +228,5 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
             leaderboard = itemView.findViewById(R.id.leaderboard);
         }
     }
+
 }

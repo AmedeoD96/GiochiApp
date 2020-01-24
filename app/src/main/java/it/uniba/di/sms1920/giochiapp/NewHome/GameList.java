@@ -13,7 +13,10 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +61,9 @@ public class GameList extends AppCompatActivity {
         recyclerView.setAdapter(gameAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(recyclerView);
 
         /*Set high score*/
         tetris.setHighScore(getTetrisHighScore());
