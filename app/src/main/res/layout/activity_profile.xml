@@ -97,7 +97,7 @@
             android:text="2048"
             android:textColor="@color/text_white"
             android:textSize="30sp"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintStart_toEndOf="@+id/icon2048"
             app:layout_constraintTop_toBottomOf="@+id/tvTetris" />
 
         <TextView
@@ -208,11 +208,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="129dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/icon2048"
             app:srcCompat="@drawable/froggericon" />
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/icon2048"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_marginStart="16dp"
@@ -222,23 +222,23 @@
             app:srcCompat="@drawable/duemilaquarantottoicon" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/alienRunIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/icon2048"
             app:srcCompat="@drawable/alienicon" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/rocketIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/alienRunIcon"
             app:srcCompat="@drawable/rocketicon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

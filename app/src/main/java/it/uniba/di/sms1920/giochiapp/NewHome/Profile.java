@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -17,7 +20,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Map;
 
+import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
+import it.uniba.di.sms1920.giochiapp.Game2048.MainActivity2048;
 import it.uniba.di.sms1920.giochiapp.R;
+import it.uniba.di.sms1920.giochiapp.Tetris.Tetris;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
 
@@ -118,6 +124,56 @@ public class Profile extends AppCompatActivity {
         tvAlienRun = findViewById(R.id.tvScoreAlienRun);
         tvFrogger = findViewById(R.id.tvScoreFrogger);
         tvRocket = findViewById(R.id.tvScoreRocket);
+
+        ImageView toTetris = findViewById(R.id.tetrisicon);
+        toTetris.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, Tetris.class);
+                context.startActivity(intent);
+            }
+        });
+
+        ImageView to2048 = findViewById(R.id.icon2048);
+        to2048.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, MainActivity2048.class);
+                context.startActivity(intent);
+            }
+        });
+
+        ImageView toAlienRun = findViewById(R.id.alienRunIcon);
+        toAlienRun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, MainActivityrun.class);
+                context.startActivity(intent);
+            }
+        });
+
+        ImageView toRocket = findViewById(R.id.rocketIcon);
+        toRocket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Helicopter.Game.class);
+                context.startActivity(intent);
+            }
+        });
+
+        ImageView toFrogger = findViewById(R.id.froggericon);
+        toFrogger.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Frogger.MainActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     /*Salvo l'utente corrente quando l'activity viene chiusa*/
