@@ -129,9 +129,7 @@ public class Profile extends AppCompatActivity {
         toTetris.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, Tetris.class);
-                context.startActivity(intent);
+                GameHelper.showGame(v.getContext(), GameHelper.Games.TETRIS);
             }
         });
 
@@ -139,9 +137,7 @@ public class Profile extends AppCompatActivity {
         to2048.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, MainActivity2048.class);
-                context.startActivity(intent);
+                GameHelper.showGame(v.getContext(), GameHelper.Games.GAME_2048);
             }
         });
 
@@ -149,9 +145,7 @@ public class Profile extends AppCompatActivity {
         toAlienRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, MainActivityrun.class);
-                context.startActivity(intent);
+                GameHelper.showGame(v.getContext(), GameHelper.Games.ENDLESS);
             }
         });
 
@@ -159,9 +153,7 @@ public class Profile extends AppCompatActivity {
         toRocket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Helicopter.Game.class);
-                context.startActivity(intent);
+                GameHelper.showGame(v.getContext(), GameHelper.Games.HELICOPTER);
             }
         });
 
@@ -169,9 +161,7 @@ public class Profile extends AppCompatActivity {
         toFrogger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = v.getContext();
-                Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Frogger.MainActivity.class);
-                context.startActivity(intent);
+                GameHelper.showGame(v.getContext(), GameHelper.Games.FROGGER);
             }
         });
     }
