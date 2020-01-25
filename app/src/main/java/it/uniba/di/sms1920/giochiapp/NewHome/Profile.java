@@ -31,14 +31,16 @@ public class Profile extends AppCompatActivity {
     private TextView welcome, tvTetris, tv2048, tvAlienRun, tvRocket, tvFrogger;
     private EditText name;
     private ToggleButton saveButton;
+    private ImageView toTetris, to2048, toAlienRun, toRocket, toFrogger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         initializeElement();
+        listener();
 
-        final String welcomeInitialString = welcome.getText().toString();
+        final String welcomeInitialString = welcome.getText().toString() + " ";
 
         /*Dopo il caricamento di tutti gli utenti, vengono impostati i testi delle textview con i dati
          * dell'utente corrente*/
@@ -46,20 +48,15 @@ public class Profile extends AppCompatActivity {
             @Override
             public void OnAllUsersLoaded(Map<String, User> users) {
                 User user = UsersManager.getInstance().getCurrentUser();
+                String welcomeString = welcomeInitialString + user.name;
 
-              welcome.setText(welcomeInitialString + user.name);
+              welcome.setText(welcomeString);
               name.setText(user.name);
-
-
-
-
-                tvTetris.setText(String.valueOf(user.scoreTetris));
-                tv2048.setText(String.valueOf(user.score2048));
-                tvAlienRun.setText(String.valueOf(user.scoreAlienrun));
-                tvRocket.setText(String.valueOf(user.scoreHelicopter));
-                tvFrogger.setText(String.valueOf(user.scoreFrogger));
-
-
+              tvTetris.setText(String.valueOf(user.scoreTetris));
+              tv2048.setText(String.valueOf(user.score2048));
+              tvAlienRun.setText(String.valueOf(user.scoreAlienrun));
+              tvRocket.setText(String.valueOf(user.scoreHelicopter));
+              tvFrogger.setText(String.valueOf(user.scoreFrogger));
             }
         });
 
@@ -77,8 +74,8 @@ public class Profile extends AppCompatActivity {
 
                     if(!name.getText().toString().equals("")) {
                         UsersManager.getInstance().getCurrentUser().setName(name.getText().toString());
-                        welcome.setText("Welcome Back " + name.getText().toString());
-        //todo perchè non posso mettere R.string.welcome al posto della stringa in sè per sè?
+                        String welcomeBackUser = getApplicationContext().getString(R.string.welcome) + " " + name.getText().toString();
+                        welcome.setText(welcomeBackUser);
                     }
                 }
             }
@@ -124,8 +121,14 @@ public class Profile extends AppCompatActivity {
         tvAlienRun = findViewById(R.id.tvScoreAlienRun);
         tvFrogger = findViewById(R.id.tvScoreFrogger);
         tvRocket = findViewById(R.id.tvScoreRocket);
+        toTetris = findViewById(R.id.tetrisicon);
+        to2048 = findViewById(R.id.icon2048);
+        toAlienRun = findViewById(R.id.alienRunIcon);
+        toRocket = findViewById(R.id.rocketIcon);
+        toFrogger = findViewById(R.id.froggericon);
+    }
 
-        ImageView toTetris = findViewById(R.id.tetrisicon);
+    private void listener(){
         toTetris.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +136,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        ImageView to2048 = findViewById(R.id.icon2048);
+
         to2048.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,7 +144,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        ImageView toAlienRun = findViewById(R.id.alienRunIcon);
+
         toAlienRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +152,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        ImageView toRocket = findViewById(R.id.rocketIcon);
+
         toRocket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,7 +160,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        ImageView toFrogger = findViewById(R.id.froggericon);
+
         toFrogger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
