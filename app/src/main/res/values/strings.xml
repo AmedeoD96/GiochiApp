@@ -31,6 +31,8 @@
     <string name="goUp">PRESS AND HOLD TO GO UP</string>
     <string name="goDown">RELEASE TO GO DOWN</string>
     <string name="find">find</string>
+    <string name="high_score_game">High score: </string>
+    <string name="global_leaderboard">Global Leaderboard</string>
 
 
     <plurals name="numberOfRiversSurpassed">

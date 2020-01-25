@@ -2,6 +2,7 @@ package it.uniba.di.sms1920.giochiapp.NewHome;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         this.gameList = gameList;
     }
     private int lastPosition = -1;
-    Context context = GlobalApplicationContext.getAppContext();
+    private Context context = GlobalApplicationContext.getAppContext();
 
 
 
@@ -44,7 +45,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Game game = gameList.get(position);
         holder.name.setText(game.getName());
-        holder.highScore.setText("High Score : " + game.getHighScore());
+        String score = holder.highScore.getText().toString() + " " + game.getHighScore();
+        holder.highScore.setText(score);
         holder.image.setImageResource(game.getImage());
 
         if(position>lastPosition){
@@ -212,7 +214,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
 
 
     /*Iniziazlizzazione degli elementi contenuti nel layout*/
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder{
         TextView name;
         TextView highScore;
         ImageView image;
@@ -220,7 +222,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         ImageButton button;
         ImageButton leaderboard;
 
-        public MyViewHolder(View itemView){
+        private MyViewHolder(View itemView){
             super(itemView);
 
             name = itemView.findViewById(R.id.tvGameName);

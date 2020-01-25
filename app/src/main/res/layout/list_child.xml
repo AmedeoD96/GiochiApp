@@ -19,7 +19,8 @@
             android:padding="8dp"
             android:text="Tetris"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/textView"/>
 
         <TextView
             android:id="@+id/game2048"
@@ -28,7 +29,8 @@
             android:padding="8dp"
             android:text="2048"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/score1" />
+            app:layout_constraintTop_toBottomOf="@id/score1"
+            android:textColor="@color/textView"/>
 
         <TextView
             android:id="@+id/alienRun"
@@ -38,7 +40,8 @@
             android:padding="8dp"
             android:text="Alien Run"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/game2048" />
+            app:layout_constraintTop_toBottomOf="@id/game2048"
+            android:textColor="@color/textView"/>
 
         <TextView
             android:id="@+id/rocket"
@@ -48,7 +51,8 @@
             android:padding="8dp"
             android:text="Rocket"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/alienRun" />
+            app:layout_constraintTop_toBottomOf="@id/alienRun"
+            android:textColor="@color/textView"/>
 
         <TextView
             android:id="@+id/frogger"
@@ -58,48 +62,51 @@
             android:padding="8dp"
             android:text="Frogger"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rocket" />
+            app:layout_constraintTop_toBottomOf="@id/rocket"
+            android:textColor="@color/textView"/>
 
         <TextView
             android:id="@+id/score1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="SCore"
             app:layout_constraintBaseline_toBaselineOf="@+id/scoreGame"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/textView"/>
+
         <TextView
             android:id="@+id/score2048"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="SCore"
             app:layout_constraintBaseline_toBaselineOf="@+id/game2048"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/textView"/>
         <TextView
             android:id="@+id/alienRunScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="SCore"
             app:layout_constraintBaseline_toBaselineOf="@+id/alienRun"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/textView"/>
         <TextView
             android:id="@+id/rocketScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="SCore"
             app:layout_constraintBaseline_toBaselineOf="@+id/rocket"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/textView"/>
+
         <TextView
             android:id="@+id/froggerScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="SCore"
             app:layout_constraintBaseline_toBaselineOf="@+id/frogger"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/textView"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

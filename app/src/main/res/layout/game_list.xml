@@ -16,8 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="-113dp">
 
-        <!-- Appbar -->
-
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvGameList"

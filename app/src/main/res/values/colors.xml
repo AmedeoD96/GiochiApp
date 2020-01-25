@@ -7,8 +7,13 @@
     <color name="colorAccent">#D81B60</color>
 
 
-    <color name="linearLayout"></color>
+    <color name="backgroundLeaderboard">#E1E2E1</color>
     <color name="backgroundGameList">#E1E2E1</color>
+    <color name="textView">#474747</color>
+
+    <color name="trophyGold">#FFD700</color>
+    <color name="trophySilver">#788287</color>
+    <color name="trophyBronze">#794909</color>
 
     <!--Colori applicazione-->
 

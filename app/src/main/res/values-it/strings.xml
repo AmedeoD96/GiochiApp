@@ -34,4 +34,6 @@
     <string name="pressToStart">TOCCA PER INIZIARE</string>
     <string name="find">Trova</string>
     <string name="welcome">Bentornato</string>
+    <string name="global_leaderboard">Leaderboard Globale</string>
+    <string name="high_score_game">"Miglior Punteggio: "</string>
 </resources>

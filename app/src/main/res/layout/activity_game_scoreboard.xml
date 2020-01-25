@@ -5,10 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundGameList"
     tools:context=".NewHome.GameScoreboard">
-
-    <!-- Appbar -->
 
 
     <TextView
@@ -19,18 +16,18 @@
         android:layout_marginTop="24dp"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/textView"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSingleGameScoreboard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
-        android:background="@color/backgroundGameList"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameName"></androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/gameName"/>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
