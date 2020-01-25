@@ -2,7 +2,6 @@ package it.uniba.di.sms1920.giochiapp.Leaderboard;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,22 +11,29 @@ import android.view.animation.AnimationUtils;
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
 
 public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,TitleChildViewHolder> {
 
+    private final float STRAIGHT_ROT = 0;
+    private final float FLIP_ROT = 180;
+
     private LayoutInflater inflater;
     private Context context = GlobalApplicationContext.getAppContext();
     private int lastPosition = 10;
+
+    // Contenitore delle singole righe della global leaderboard
+    private Map<Integer, TitleParentViewHolder> usersTitles = new HashMap<>();
 
     public MyAdapter(Context context, List<ParentObject> parentItemList) {
         super(context, parentItemList);
         //ottenimento dell'inflater
         inflater = LayoutInflater.from(context);
-
     }
 
 
@@ -86,7 +92,8 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
             lastPosition = i;
         }
 
-
+        // riempimento delle righe degli utenti
+        usersTitles.put(i, titleParentViewHolder);
     }
 
     @Override
@@ -104,5 +111,25 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         titleChildViewHolder.scoreAlien.setText(title.getAlienRunScore());
         titleChildViewHolder.scoreRocket.setText(title.getRocketScore());
         titleChildViewHolder.scoreFrog.setText(title.getFroggerScore());
+    }
+
+
+    // metodo chiamato quando viene premuta una riga
+    @Override
+    public void onParentItemClickListener(int position) {
+        super.onParentItemClickListener(position);
+
+        TitleParentViewHolder title = usersTitles.get(position);
+        if(title != null) {
+
+            // ruota l'immagine se non ruotata, altrimenti la ruota
+            if(title._image.getRotation() == STRAIGHT_ROT) {
+
+                title._image.setRotation(FLIP_ROT);
+            } else {
+
+                title._image.setRotation(STRAIGHT_ROT);
+            }
+        }
     }
 }
