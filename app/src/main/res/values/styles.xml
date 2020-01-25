@@ -7,10 +7,18 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowAnimationStyle">@null</item>
+
     </style>
     <style name="ThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar"/>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar"/>
 
+    <style name="toggleButton">
+        <item name="android:buttonStyleToggle">@style/Widget.AppCompat.Button</item>
+        <item name="android:textOn"></item>
+        <item name="android:textOff"></item>
+        <item name="android:background">@drawable/ic_toggle_bg</item>
+        <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
+    </style>
 </resources>

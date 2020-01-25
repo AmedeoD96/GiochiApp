@@ -12,11 +12,13 @@
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:text="Welcome back "
+        android:textColor="#474747"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etName"
@@ -30,29 +32,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
-    <ImageView
-        android:id="@+id/user"
-        android:layout_width="104dp"
-        android:layout_height="95dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/user" />
-
     <ToggleButton
         android:id="@+id/toggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/toggleButton"
+        android:layout_width="54dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="13dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginBottom="3dp"
         android:text="ToggleButton"
-        android:textOff="Modify"
-        android:textOn="Save"
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintBottom_toTopOf="@+id/scrollView3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etName"
         app:layout_constraintTop_toBottomOf="@+id/welcome"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -70,16 +64,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/scrollView3"
-        android:layout_width="408dp"
-        android:layout_height="308dp"
+        android:layout_width="412dp"
+        android:layout_height="307dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="1dp"
-        android:background="#4CAF50"
+        android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view">
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintVertical_bias="0.02">
 
         <TextView
             android:id="@+id/tvTetris"
@@ -88,6 +83,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="32dp"
             android:text="Tetris"
+            android:textColor="@color/text_white"
             android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@+id/tetrisicon"
             app:layout_constraintTop_toTopOf="parent" />
@@ -99,6 +95,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="16dp"
             android:text="2048"
+            android:textColor="@color/text_white"
             android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
             app:layout_constraintTop_toBottomOf="@+id/tvTetris" />
@@ -110,6 +107,7 @@
             android:layout_marginStart="81dp"
             android:layout_marginTop="14dp"
             android:text="Alien Run"
+            android:textColor="@color/text_white"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv2048" />
@@ -121,6 +119,7 @@
             android:layout_marginStart="81dp"
             android:layout_marginTop="16dp"
             android:text="Rocket"
+            android:textColor="@color/text_white"
             android:textSize="30sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvAlienRun" />
@@ -132,6 +131,7 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="16dp"
             android:text="Frogger"
+            android:textColor="@color/text_white"
             android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@+id/froggericon"
             app:layout_constraintTop_toBottomOf="@+id/tvRocket" />
@@ -142,6 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
+            android:textColor="@color/text_white"
             android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -152,6 +153,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:textColor="@color/text_white"
             android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvScoreTetris" />
@@ -162,6 +164,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:textColor="@color/text_white"
             android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TvScore2048" />
@@ -172,6 +175,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:textColor="@color/text_white"
             android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvScoreAlienRun" />
@@ -182,6 +186,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:textColor="@color/text_white"
             android:textSize="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvScoreRocket" />
@@ -241,14 +246,10 @@
         android:id="@+id/navigation"
         android:layout_width="408dp"
         android:layout_height="59dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="40dp"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navigation">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
@@ -257,16 +258,15 @@
         android:id="@+id/textView"
         android:layout_width="418dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="1dp"
-        android:background="#4CAF50"
+        android:layout_marginTop="41dp"
+        android:background="@color/colorPrimary"
         android:text="Your Score"
         android:textAlignment="center"
+        android:textColor="@color/text_white"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/etName" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
