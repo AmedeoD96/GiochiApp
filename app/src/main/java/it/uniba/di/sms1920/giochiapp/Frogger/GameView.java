@@ -1,7 +1,6 @@
 package it.uniba.di.sms1920.giochiapp.Frogger;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -236,7 +235,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
      E' il metodo che determina l'aumento del punteggio quando si completa un livello. Viene chiamato quando la rana arriva alla superficie superiore di erba
      */
     public void score(){
-        points ++;
+        points++;
         if(points<0)points=0;
 
         User user = UsersManager.getInstance().getCurrentUser();
@@ -252,7 +251,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
      */
 
     public void reset(){
-        points=0;
         speeds = new int[logRows.length];
         times = new long[speeds.length];
         lastMils = new long[times.length];
@@ -302,6 +300,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN){
             if(heart.getdead()){
+                points=0;
                 reset();
             }
             start[0] = event.getX();
@@ -445,7 +444,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         textPaint.setColor(Color.BLACK);
         textPaint.setTextSize(150);
 
-        canvas.drawText(points + "", canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight()+50, textPaint);
+        canvas.drawText(String.valueOf(points), canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight()+50, textPaint);
 
 
         //qui cambia il colore nel caso di morte e imposta il game over
