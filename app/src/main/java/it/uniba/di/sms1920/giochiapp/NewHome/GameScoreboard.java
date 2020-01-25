@@ -2,7 +2,6 @@ package it.uniba.di.sms1920.giochiapp.NewHome;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
@@ -95,13 +93,13 @@ public class GameScoreboard extends AppCompatActivity {
         elementCreator.clearTitles();
         TextView gameName = findViewById(R.id.gameName);
         Bundle bundle = getIntent().getExtras();
-        int value = bundle.getInt("game");
+        GameHelper.Games value = GameHelper.Games.valueOf(bundle.getString("game"));
 
         User currentUser = UsersManager.getInstance().getCurrentUser();
         boolean flag;
         int position;
         switch (value) {
-            case 0:
+            case TETRIS:
                 flag = false;
                 position = 0;
                 Collection<User> allUserTetris = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_TETRIS, false);
@@ -120,7 +118,7 @@ public class GameScoreboard extends AppCompatActivity {
 
                 gameName.setText("Tetris");
                 break;
-            case 1:
+            case GAME_2048:
                 flag = false;
                 position = 0;
                 Collection<User> allUser2048 = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_2048, false);
@@ -138,7 +136,7 @@ public class GameScoreboard extends AppCompatActivity {
                 }
                 gameName.setText("2048");
                 break;
-            case 2:
+            case ENDLESS:
                 flag = false;
                 position = 0;
                 Collection<User> allUserAlienRun = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_ALIENRUN, false);
@@ -156,7 +154,7 @@ public class GameScoreboard extends AppCompatActivity {
                 }
                 gameName.setText("Alien Run");
                 break;
-            case 3:
+            case HELICOPTER:
                 flag = false;
                 position = 0;
                 Collection<User> allUserRocket = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_HELICOPTER, false);
@@ -174,7 +172,7 @@ public class GameScoreboard extends AppCompatActivity {
                 }
                 gameName.setText("Rocket");
                 break;
-            case 4:
+            case FROGGER:
                 flag = false;
                 position = 0;
                 Collection<User> allUserFrogger = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_FROGGER, false);

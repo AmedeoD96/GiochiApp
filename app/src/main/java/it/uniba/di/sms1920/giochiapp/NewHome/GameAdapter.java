@@ -1,8 +1,6 @@
 package it.uniba.di.sms1920.giochiapp.NewHome;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +10,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
-import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
-import it.uniba.di.sms1920.giochiapp.Game2048.MainActivity2048;
+
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
-import it.uniba.di.sms1920.giochiapp.Tetris.Tetris;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
 
@@ -62,27 +60,19 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, Tetris.class);
-                        context.startActivity(intent);
+                        GameHelper.showGame(v.getContext(), GameHelper.Games.TETRIS);
                     }
                 });
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, Tetris.class);
-                        context.startActivity(intent);
+                        GameHelper.showGame(v.getContext(), GameHelper.Games.TETRIS);
                     }
                 });
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, GameScoreboard.class);
-                        intent.putExtra("game", 0);
-                        context.startActivity(intent);
-
+                        GameHelper.showGameLeaderboard(v.getContext(), GameHelper.Games.TETRIS);
                     }
                 });
                 break;
@@ -91,26 +81,19 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, MainActivity2048.class);
-                        context.startActivity(intent);
+                        GameHelper.showGame(v.getContext(), GameHelper.Games.GAME_2048);
                     }
                 });
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, MainActivity2048.class);
-                        context.startActivity(intent);
+                        GameHelper.showGame(v.getContext(), GameHelper.Games.GAME_2048);
                     }
                 });
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, GameScoreboard.class);
-                        intent.putExtra("game", 1);
-                        context.startActivity(intent);
+                        GameHelper.showGameLeaderboard(v.getContext(), GameHelper.Games.GAME_2048);
                     }
                 });
                 break;
@@ -119,26 +102,19 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, MainActivityrun.class);
-                        context.startActivity(intent);
+                        GameHelper.showGame(v.getContext(), GameHelper.Games.ENDLESS);
                     }
                 });
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, MainActivityrun.class);
-                        context.startActivity(intent);
+                        GameHelper.showGame(v.getContext(), GameHelper.Games.ENDLESS);
                     }
                 });
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, GameScoreboard.class);
-                        intent.putExtra("game", 2);
-                        context.startActivity(intent);
+                        GameHelper.showGameLeaderboard(v.getContext(), GameHelper.Games.HELICOPTER);
                     }
                 });
                 break;
@@ -147,9 +123,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Helicopter.Game.class);
-                        context.startActivity(intent);
+                        GameHelper.showGame(v.getContext(), GameHelper.Games.HELICOPTER);
                     }
                 });
 
@@ -157,18 +131,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Helicopter.Game.class);
-                        context.startActivity(intent);
+                        GameHelper.showGame(v.getContext(), GameHelper.Games.HELICOPTER);
                     }
                 });
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, GameScoreboard.class);
-                        intent.putExtra("game", 3);
-                        context.startActivity(intent);
+                        GameHelper.showGameLeaderboard(v.getContext(), GameHelper.Games.HELICOPTER);
                     }
                 });
                 break;
@@ -177,27 +146,20 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Frogger.MainActivity.class);
-                        context.startActivity(intent);
+                        GameHelper.showGame(v.getContext(), GameHelper.Games.FROGGER);
                     }
                 });
 
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Frogger.MainActivity.class);
-                        context.startActivity(intent);
+                        GameHelper.showGame(v.getContext(), GameHelper.Games.FROGGER);
                     }
                 });
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Context context = v.getContext();
-                        Intent intent = new Intent(context, GameScoreboard.class);
-                        intent.putExtra("game", 4);
-                        context.startActivity(intent);
+                        GameHelper.showGameLeaderboard(v.getContext(), GameHelper.Games.FROGGER);
                     }
                 });
                 break;
