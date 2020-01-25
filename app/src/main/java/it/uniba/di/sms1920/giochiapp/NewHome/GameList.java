@@ -13,10 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +45,8 @@ public class GameList extends AppCompatActivity {
         setContentView(R.layout.game_list);
         initializeElement();
 
-        /*Set up della toolbar*/
-        Toolbar toolbar = findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
 
-        //setta tema dark
-        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
         createGameList();
 
         /*Set adapter*/
@@ -61,9 +54,6 @@ public class GameList extends AppCompatActivity {
         recyclerView.setAdapter(gameAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(recyclerView);
 
         /*Set high score*/
         tetris.setHighScore(getTetrisHighScore());
@@ -99,8 +89,7 @@ public class GameList extends AppCompatActivity {
     private void initializeElement(){
         gameList = new ArrayList<>();
         recyclerView = findViewById(R.id.rvGameList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     /*Creazione della lista giochi*/
@@ -182,7 +171,7 @@ public class GameList extends AppCompatActivity {
     }
 
     /*Salvataggio dei dati dell'utente corrente alla distruzione
-    * dell'activity*/
+     * dell'activity*/
     @Override
     protected void onDestroy() {
         super.onDestroy();

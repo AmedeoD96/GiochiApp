@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
@@ -49,16 +48,16 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         holder.image.setImageResource(game.getImage());
 
         if(position>lastPosition){
-           Animation animation = AnimationUtils.loadAnimation(context, R.anim.scoll_animation);
-           holder.itemView.startAnimation(animation);
-           lastPosition = position;
+            Animation animation = AnimationUtils.loadAnimation(context, R.anim.scoll_animation);
+            holder.itemView.startAnimation(animation);
+            lastPosition = position;
         }
 
 
         switch (position) {
             //Tetris
             case 0:
-                holder.button.setOnClickListener(new Button.OnClickListener() {
+               holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Context context = v.getContext();
@@ -85,7 +84,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                     }
                 });
                 break;
-                //2048
+            //2048
             case 1:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
@@ -113,7 +112,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                     }
                 });
                 break;
-                //Endless
+            //Endless
             case 2:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
@@ -141,7 +140,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                     }
                 });
                 break;
-                //Elicottero
+            //Elicottero
             case 3:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
@@ -151,6 +150,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                         context.startActivity(intent);
                     }
                 });
+
+
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -169,7 +170,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                     }
                 });
                 break;
-                //Frogger
+            //Frogger
             case 4:
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
@@ -179,6 +180,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                         context.startActivity(intent);
                     }
                 });
+
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -215,18 +217,17 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         TextView highScore;
         ImageView image;
 
-        ImageView button;
+        ImageButton button;
         ImageButton leaderboard;
 
         public MyViewHolder(View itemView){
             super(itemView);
 
-            name = itemView.findViewById(R.id.title);
-            highScore = itemView.findViewById(R.id.score);
-            image = itemView.findViewById(R.id.background);
-            button = itemView.findViewById(R.id.play);
-            leaderboard = itemView.findViewById(R.id.leaderboard);
+            name = itemView.findViewById(R.id.tvGameName);
+            highScore = itemView.findViewById(R.id.tvHighScore);
+            image = itemView.findViewById(R.id.imgViewGame);
+            button = itemView.findViewById(R.id.btPlay);
+            leaderboard = itemView.findViewById(R.id.imageButton);
         }
     }
-
 }

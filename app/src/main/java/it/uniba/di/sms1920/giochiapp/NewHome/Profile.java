@@ -78,9 +78,6 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        /*Set toolbar*/
-        Toolbar toolbar = findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
 
 
         /*Inizializzazione della BottomNavigationView*/

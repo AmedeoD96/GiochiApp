@@ -2,9 +2,13 @@
 <resources>
     <!--Quelli di default dell'app-->
    <!-- <color name="colorPrimary">#000000</color>-->
-    <color name="colorPrimary">#357a38</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#01579b</color>
+    <color name="colorPrimaryDark">#002f6c</color>
     <color name="colorAccent">#D81B60</color>
+
+
+    <color name="linearLayout"></color>
+    <color name="backgroundGameList">#E1E2E1</color>
 
     <!--Colori applicazione-->
 

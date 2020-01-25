@@ -43,9 +43,6 @@ public class GlobalScoreboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_global_scoreboard);
 
-        /*Set toolbar*/
-        Toolbar toolbar = findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
 
         initializeElement();
 
