@@ -35,9 +35,9 @@
     <string name="global_leaderboard">Global Leaderboard</string>
 
 
-    <plurals name="numberOfRiversSurpassed">
-        <item quantity="one">RIVER SURPASSED ONE TIME</item>
-        <item quantity="few">RIVER SURPASSED %d TIMES</item>
-        <item quantity="other">RIVER SURPASSED %d TIMES</item>
+    <plurals name="numberOfMissilesSurpassed">
+        <item quantity="one">YOU HAVE SURPASSED 1 MISSILE</item>
+        <item quantity="few">YOU HAVE SURPASSED %d MISSILES</item>
+        <item quantity="other">YOU HAVE SURPASSED %d MISSILES</item>
     </plurals>
 </resources>
