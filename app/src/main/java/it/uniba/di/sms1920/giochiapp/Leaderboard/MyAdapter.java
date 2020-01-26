@@ -62,8 +62,8 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
 
         //in caso di utente corrente ci sarebbe il cambiamento del colore nel testo
         if(title.isCurrentUser()){
-            titleParentViewHolder._textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
-            titleParentViewHolder._score.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+            titleParentViewHolder._textView.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            titleParentViewHolder._score.setTextColor(context.getResources().getColor(R.color.colorPrimary));
         }else {
             titleParentViewHolder._textView.setTextColor(context.getResources().getColor(R.color.textView));
             titleParentViewHolder._score.setTextColor(context.getResources().getColor(R.color.textView));

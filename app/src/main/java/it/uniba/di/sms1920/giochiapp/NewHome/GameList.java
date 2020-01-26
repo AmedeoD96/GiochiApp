@@ -90,12 +90,15 @@ public class GameList extends AppCompatActivity {
     private void initializeElement(){
         gameList = new ArrayList<>();
         recyclerView = findViewById(R.id.rvGameList);
+
+        /*Setta lo scorrimento della scroll view
+        * - Verticale se il device è in portrait mode
+        * - Orizzontale se il device è in landscape mode*/
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView.setLayoutManager(linearLayoutManager);
-
         }
 
 

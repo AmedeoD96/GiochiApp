@@ -20,13 +20,11 @@ import it.uniba.di.sms1920.giochiapp.R;
 /*Adapter della recycler view che è contenuta all'interno della scoreboard relativa al singolo gioco*/
 public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, TitleChildViewHolder> {
 
-    //TODO cambiare il colore green
-
     //componente atto a "gonfiare" una parte del layout
     private LayoutInflater inflater;
-    Context context = GlobalApplicationContext.getAppContext();
+    private Context context = GlobalApplicationContext.getAppContext();
 
-    int lastPosition = -1; //Usata per l'animazione
+    private int lastPosition = -1; //Usata per l'animazione
 
     public ScoreAdapter(Context context, List<ParentObject> parentItemList){
         super(context, parentItemList);
@@ -83,8 +81,8 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
 
         //in caso di utente corrente si evidenzia il testo
         if(parent.isCurrentUser()){
-            viewHolderTitle._userName.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
-            viewHolderTitle._score.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+            viewHolderTitle._userName.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            viewHolderTitle._score.setTextColor(context.getResources().getColor(R.color.colorPrimary));
         }else {
             viewHolderTitle._userName.setTextColor(context.getResources().getColor(R.color.textView));
             viewHolderTitle._score.setTextColor(context.getResources().getColor(R.color.textView));

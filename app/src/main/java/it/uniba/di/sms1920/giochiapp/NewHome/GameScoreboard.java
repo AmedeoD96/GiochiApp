@@ -45,8 +45,11 @@ public class GameScoreboard extends AppCompatActivity {
         initializeElement();
 
         navigation = findViewById(R.id.navigation);
+        //Toglie la selezione della bottomNavigationView
         navigation.getMenu().getItem(0).setCheckable(false);
 
+
+        //Set up adapter
         ScoreAdapter scoreAdapter = new ScoreAdapter(getApplicationContext(), initData());
         scoreAdapter.setParentAndIconExpandOnClick(false);
 
@@ -60,6 +63,7 @@ public class GameScoreboard extends AppCompatActivity {
         });
 
 
+        /*Set intent della navigation Bar*/
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -74,6 +78,10 @@ public class GameScoreboard extends AppCompatActivity {
                         startActivity(globalScoreboard);
                         finish();
                         break;
+                    case R.id.navigation_profile:
+                        Intent profile = new Intent(getApplicationContext(), Profile.class);
+                        startActivity(profile);
+                        break;
                 }
                 return false;
             }
@@ -81,6 +89,7 @@ public class GameScoreboard extends AppCompatActivity {
     }
 
 
+    /*Inizializza gli elementi del layout*/
     private void initializeElement() {
         recyclerView = findViewById(R.id.rvSingleGameScoreboard);
         recyclerView.setLayoutManager(new CenterLayoutManager(this));
@@ -88,6 +97,7 @@ public class GameScoreboard extends AppCompatActivity {
         imageButton = findViewById(R.id.ibFind);
     }
 
+    /*Ritorna la lista degli elementi che popolerà la leaderboard*/
     private List<ParentObject> initData() {
 
         ElementCreator elementCreator = ElementCreator.get(getApplicationContext());
@@ -102,11 +112,13 @@ public class GameScoreboard extends AppCompatActivity {
         User currentUser = UsersManager.getInstance().getCurrentUser();
 
         int position = 0;
+        /*Get di tutti gli utenti in ordine (dal punteggio maggiore a quello minore)*/
         Collection<User> allUserSorted = UsersManager.getInstance().getAllUserSort(getGameOrder(value), false);
 
         for (User user : allUserSorted) {
 
             boolean isCurrentUser = false;
+            /*Viene controllato se l'utente preso dalla collection corrisponde all'utente corrente*/
             if (user.equals(currentUser)) {
                 isCurrentUser = true;
                 find = position;
@@ -132,6 +144,7 @@ public class GameScoreboard extends AppCompatActivity {
         super.onDestroy();
         UsersManager.getInstance().saveCurrentUser();
     }
+
 
 
     UsersManager.OrderType getGameOrder(GameHelper.Games game) {

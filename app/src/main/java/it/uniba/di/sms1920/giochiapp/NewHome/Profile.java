@@ -121,6 +121,7 @@ public class Profile extends AppCompatActivity {
         toFrogger = findViewById(R.id.froggericon);
     }
 
+    /*Set listener*/
     private void listener(){
         toTetris.setOnClickListener(new View.OnClickListener() {
             @Override
