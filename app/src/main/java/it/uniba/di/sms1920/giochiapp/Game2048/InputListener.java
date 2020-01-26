@@ -25,10 +25,7 @@ public class InputListener implements View.OnTouchListener {
     private int previousDirection = 1;
     private int veryLastDirection = 1;
 
-    private final int MOVE_UP = 0;
-    private final int MOVE_DOWN = 2;
-    private final int MOVE_LEFT = 3;
-    private final int MOVE_RIGHT = 1;
+    private final int MOVE_LEFT;
     // Se si è effettuato o meno una mossa
     private boolean hasMoved = false;
     // Disabilita gli swipe se l'utente inizia la pressione di un'icona
@@ -37,6 +34,7 @@ public class InputListener implements View.OnTouchListener {
     InputListener(MainView view) {
         super();
         this.mView = view;
+        MOVE_LEFT = 3;
     }
 
     public boolean onTouch(View view, MotionEvent event) {
@@ -117,6 +115,7 @@ public class InputListener implements View.OnTouchListener {
                             previousDirection = previousDirection * 2;
                             veryLastDirection = 2;
                             //movimento effettivo verso il basso
+                            int MOVE_DOWN = 2;
                             mView.game.move(MOVE_DOWN);
                         } else if (((dy <= -SWIPE_THRESHOLD_VELOCITY && Math.abs(dy) >= Math.abs(dx)) || y - startingY <= -MOVE_THRESHOLD) && previousDirection % 3 != 0) {
                             moved = true;
@@ -124,6 +123,7 @@ public class InputListener implements View.OnTouchListener {
                             previousDirection = previousDirection * 3;
                             veryLastDirection = 3;
                             //movimento effettivo verso l'alto
+                            int MOVE_UP = 0;
                             mView.game.move(MOVE_UP);
                         }
                         //Orizzontale
@@ -133,6 +133,7 @@ public class InputListener implements View.OnTouchListener {
                             previousDirection = previousDirection * 5;
                             veryLastDirection = 5;
                             //movimento effettivo verso destra
+                            int MOVE_RIGHT = 1;
                             mView.game.move(MOVE_RIGHT);
                         } else if (((dx <= -SWIPE_THRESHOLD_VELOCITY && Math.abs(dx) >= Math.abs(dy)) || x - startingX <= -MOVE_THRESHOLD) && previousDirection % 7 != 0) {
                             moved = true;
