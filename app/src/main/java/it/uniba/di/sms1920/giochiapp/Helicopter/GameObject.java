@@ -6,7 +6,7 @@ public class GameObject {
 
     protected int x;
     protected int y;
-    protected int dx;
+    int dx;
     int dy;
     protected int width;
     protected int height;

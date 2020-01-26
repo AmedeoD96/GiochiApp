@@ -15,10 +15,10 @@
     <string name="score">PUNTI</string>
     <string name="you_win">Hai Vinto!</string>
 
-    <plurals name="numberOfRiversSurpassed">
-        <item quantity="one">FIUME SUPERATO UNA VOLTA</item>
-        <item quantity="few">FIUME SUPERATO %d VOLTE</item>
-        <item quantity="other">FIUME SUPERATO %d VOLTE</item>
+    <plurals name="numberOfMissilesSurpassed">
+        <item quantity="one">HAI SCHIVATO 1 MISSILE</item>
+        <item quantity="few">HAI SCHIVATO %d MISSILI</item>
+        <item quantity="other">HAI SCHIVATO %d MISSILI</item>
     </plurals>
 
     <string name="gameOverTetris">"Il tuo punteggio è "</string>
