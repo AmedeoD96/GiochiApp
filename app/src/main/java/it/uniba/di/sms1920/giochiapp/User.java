@@ -2,6 +2,8 @@ package it.uniba.di.sms1920.giochiapp;
 
 import java.util.Objects;
 
+import it.uniba.di.sms1920.giochiapp.NewHome.GameHelper;
+
 public class User {
 
 
@@ -79,6 +81,28 @@ public class User {
     public void setScore2048(int score2048) {
         this.score2048 = score2048;
         OnValueChange();
+    }
+
+
+    public int getScore(GameHelper.Games game) {
+        switch (game) {
+
+            case TETRIS:
+                return scoreTetris;
+
+            case GAME_2048:
+                return score2048;
+
+            case ENDLESS:
+                return scoreAlienrun;
+
+            case HELICOPTER:
+                return scoreHelicopter;
+
+            case FROGGER:
+                return scoreFrogger;
+        }
+        return 0;
     }
 
 

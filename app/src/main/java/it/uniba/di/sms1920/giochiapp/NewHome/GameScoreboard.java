@@ -27,6 +27,10 @@ import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class GameScoreboard extends AppCompatActivity {
 
+
+    private final String ORDINAL_VALUE = "°    ";
+
+
     private RecyclerView recyclerView;
     private BottomNavigationView navigation;
     private ImageButton imageButton;
@@ -93,106 +97,33 @@ public class GameScoreboard extends AppCompatActivity {
         elementCreator.clearTitles();
         TextView gameName = findViewById(R.id.gameName);
         Bundle bundle = getIntent().getExtras();
-        GameHelper.Games value = GameHelper.Games.valueOf(bundle.getString("game"));
+        GameHelper.Games value = GameHelper.Games.valueOf(bundle.getString(GameHelper.GAME_LEADERBOADR_EXTRA_GAME));
 
         User currentUser = UsersManager.getInstance().getCurrentUser();
-        boolean flag;
-        int position;
-        switch (value) {
-            case TETRIS:
-                flag = false;
-                position = 0;
-                Collection<User> allUserTetris = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_TETRIS, false);
 
-                for (User user : allUserTetris) {
-                    if (user.equals(currentUser)) {
-                        flag = true;
-                        find = position;
-                    }
-                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreTetris, flag, position);
-                    elementCreator.addElement(parent);
-                    parentObject.add(parent);
-                    flag = false;
-                    position++;
-                }
+        int position = 0;
+        Collection<User> allUserSorted = UsersManager.getInstance().getAllUserSort(getGameOrder(value), false);
 
-                gameName.setText("Tetris");
-                break;
-            case GAME_2048:
-                flag = false;
-                position = 0;
-                Collection<User> allUser2048 = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_2048, false);
+        for (User user : allUserSorted) {
 
-                for (User user : allUser2048) {
-                    if (user.equals(currentUser)) {
-                        flag = true;
-                        find = position;
-                    }
-                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.score2048, flag, position);
-                    elementCreator.addElement(parent);
-                    parentObject.add(parent);
-                    flag = false;
-                    position++;
-                }
-                gameName.setText("2048");
-                break;
-            case ENDLESS:
-                flag = false;
-                position = 0;
-                Collection<User> allUserAlienRun = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_ALIENRUN, false);
+            boolean isCurrentUser = false;
+            if (user.equals(currentUser)) {
+                isCurrentUser = true;
+                find = position;
+            }
 
-                for (User user : allUserAlienRun) {
-                    if (user.equals(currentUser)) {
-                        flag = true;
-                        find = position;
-                    }
-                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreAlienrun, flag, position);
-                    elementCreator.addElement(parent);
-                    parentObject.add(parent);
-                    flag = false;
-                    position++;
-                }
-                gameName.setText("Alien Run");
-                break;
-            case HELICOPTER:
-                flag = false;
-                position = 0;
-                Collection<User> allUserRocket = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_HELICOPTER, false);
+            String ordinalPosition = String.valueOf(position + 1);
 
-                for (User user : allUserRocket) {
-                    if (user.equals(currentUser)) {
-                        flag = true;
-                        find = position;
-                    }
-                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreHelicopter, flag, position);
-                    elementCreator.addElement(parent);
-                    parentObject.add(parent);
-                    flag = false;
-                    position++;
-                }
-                gameName.setText("Rocket");
-                break;
-            case FROGGER:
-                flag = false;
-                position = 0;
-                Collection<User> allUserFrogger = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_FROGGER, false);
+            String userName = ordinalPosition + ORDINAL_VALUE + user.name;
+            Parent parent = new Parent(userName, user.getScore(value), isCurrentUser, position);
+            elementCreator.addElement(parent);
+            parentObject.add(parent);
 
-                for (User user : allUserFrogger) {
-                    if (user.equals(currentUser)) {
-                        flag = true;
-                        find = position;
-                    }
-                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreFrogger, flag, position);
-                    elementCreator.addElement(parent);
-                    parentObject.add(parent);
-                    flag = false;
-                    position++;
-                }
-
-                gameName.setText("Frogger");
-                break;
-
+            position++;
         }
+
+        gameName.setText(GameHelper.getGameName(value));
+
         return parentObject;
     }
 
@@ -200,6 +131,31 @@ public class GameScoreboard extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         UsersManager.getInstance().saveCurrentUser();
+    }
+
+
+    UsersManager.OrderType getGameOrder(GameHelper.Games game) {
+
+        UsersManager.OrderType orderDecided = UsersManager.OrderType.SCORE_TETRIS;
+        switch (game) {
+
+            case TETRIS:
+                orderDecided = UsersManager.OrderType.SCORE_TETRIS;
+                break;
+            case GAME_2048:
+                orderDecided = UsersManager.OrderType.SCORE_2048;
+                break;
+            case ENDLESS:
+                orderDecided = UsersManager.OrderType.SCORE_ALIENRUN;
+                break;
+            case HELICOPTER:
+                orderDecided = UsersManager.OrderType.SCORE_HELICOPTER;
+                break;
+            case FROGGER:
+                orderDecided = UsersManager.OrderType.SCORE_FROGGER;
+                break;
+        }
+        return orderDecided;
     }
 
 }

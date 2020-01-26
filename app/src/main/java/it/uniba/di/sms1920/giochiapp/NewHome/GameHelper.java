@@ -2,10 +2,17 @@ package it.uniba.di.sms1920.giochiapp.NewHome;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+
+import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
+import it.uniba.di.sms1920.giochiapp.R;
 
 
 public class GameHelper {
 
+    public static final String GAME_LEADERBOADR_EXTRA_GAME = "game";
+
+    // Enum che rapresenta tutti i giochi
     public enum Games {
         TETRIS,
         GAME_2048,
@@ -14,8 +21,8 @@ public class GameHelper {
         FROGGER
     }
 
-
-    public static void showGame(Context context, Games game) {
+    // Permette di giocare ad uno specifico gioco
+    public static void playGame(Context context, Games game) {
 
         Intent intent = null;
         switch (game) {
@@ -42,11 +49,38 @@ public class GameHelper {
         }
     }
 
+    // Mostra una leaderbard specifica in base al gioco passato
     public static void showGameLeaderboard(Context context, Games game) {
         Intent intent = new Intent(context, GameScoreboard.class);
-        intent.putExtra("game", game.toString());
+        intent.putExtra(GAME_LEADERBOADR_EXTRA_GAME, game.toString());
         context.startActivity(intent);
     }
 
+
+    public static String getGameName(Games game) {
+        Context context = GlobalApplicationContext.getAppContext();
+        Resources resources = context.getResources();
+
+        String gameName = "";
+        switch (game) {
+
+            case TETRIS:
+                gameName = resources.getString(R.string.tetris);
+                break;
+            case GAME_2048:
+                gameName = resources.getString(R.string.header);
+                break;
+            case ENDLESS:
+                gameName = resources.getString(R.string.alienRun);
+                break;
+            case HELICOPTER:
+                gameName = resources.getString(R.string.rocket);
+                break;
+            case FROGGER:
+                gameName = resources.getString(R.string.frogger);
+                break;
+        }
+        return gameName;
+    }
 
 }
