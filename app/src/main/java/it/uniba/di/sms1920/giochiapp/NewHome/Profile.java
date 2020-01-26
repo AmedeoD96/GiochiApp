@@ -2,15 +2,11 @@ package it.uniba.di.sms1920.giochiapp.NewHome;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,10 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Map;
 
-import it.uniba.di.sms1920.giochiapp.EndlessRun.MainActivityrun;
-import it.uniba.di.sms1920.giochiapp.Game2048.MainActivity2048;
 import it.uniba.di.sms1920.giochiapp.R;
-import it.uniba.di.sms1920.giochiapp.Tetris.Tetris;
 import it.uniba.di.sms1920.giochiapp.User;
 import it.uniba.di.sms1920.giochiapp.UsersManager;
 
@@ -132,7 +125,7 @@ public class Profile extends AppCompatActivity {
         toTetris.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameHelper.showGame(v.getContext(), GameHelper.Games.TETRIS);
+                GameHelper.playGame(v.getContext(), GameHelper.Games.TETRIS);
             }
         });
 
@@ -140,7 +133,7 @@ public class Profile extends AppCompatActivity {
         to2048.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameHelper.showGame(v.getContext(), GameHelper.Games.GAME_2048);
+                GameHelper.playGame(v.getContext(), GameHelper.Games.GAME_2048);
             }
         });
 
@@ -148,7 +141,7 @@ public class Profile extends AppCompatActivity {
         toAlienRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameHelper.showGame(v.getContext(), GameHelper.Games.ENDLESS);
+                GameHelper.playGame(v.getContext(), GameHelper.Games.ENDLESS);
             }
         });
 
@@ -156,7 +149,7 @@ public class Profile extends AppCompatActivity {
         toRocket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameHelper.showGame(v.getContext(), GameHelper.Games.HELICOPTER);
+                GameHelper.playGame(v.getContext(), GameHelper.Games.HELICOPTER);
             }
         });
 
@@ -164,7 +157,7 @@ public class Profile extends AppCompatActivity {
         toFrogger.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameHelper.showGame(v.getContext(), GameHelper.Games.FROGGER);
+                GameHelper.playGame(v.getContext(), GameHelper.Games.FROGGER);
             }
         });
     }

@@ -26,7 +26,6 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
         this.gameList = gameList;
     }
     private int lastPosition = -1;
-    private Context context = GlobalApplicationContext.getAppContext();
 
 
 
@@ -42,12 +41,14 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Game game = gameList.get(position);
+        Context context = GlobalApplicationContext.getAppContext();
+
         holder.name.setText(game.getName());
-        String score = holder.highScore.getText().toString() + " " + game.getHighScore();
+        String score = context.getResources().getString(R.string.high_score_game) + " " + game.getHighScore();
         holder.highScore.setText(score);
         holder.image.setImageResource(game.getImage());
 
-        if(position>lastPosition){
+        if(position > lastPosition){
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.scoll_animation);
             holder.itemView.startAnimation(animation);
             lastPosition = position;
@@ -60,13 +61,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GameHelper.showGame(v.getContext(), GameHelper.Games.TETRIS);
+                        GameHelper.playGame(v.getContext(), GameHelper.Games.TETRIS);
                     }
                 });
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GameHelper.showGame(v.getContext(), GameHelper.Games.TETRIS);
+                        GameHelper.playGame(v.getContext(), GameHelper.Games.TETRIS);
                     }
                 });
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
@@ -81,13 +82,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GameHelper.showGame(v.getContext(), GameHelper.Games.GAME_2048);
+                        GameHelper.playGame(v.getContext(), GameHelper.Games.GAME_2048);
                     }
                 });
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GameHelper.showGame(v.getContext(), GameHelper.Games.GAME_2048);
+                        GameHelper.playGame(v.getContext(), GameHelper.Games.GAME_2048);
                     }
                 });
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
@@ -102,13 +103,13 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GameHelper.showGame(v.getContext(), GameHelper.Games.ENDLESS);
+                        GameHelper.playGame(v.getContext(), GameHelper.Games.ENDLESS);
                     }
                 });
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GameHelper.showGame(v.getContext(), GameHelper.Games.ENDLESS);
+                        GameHelper.playGame(v.getContext(), GameHelper.Games.ENDLESS);
                     }
                 });
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
@@ -123,7 +124,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GameHelper.showGame(v.getContext(), GameHelper.Games.HELICOPTER);
+                        GameHelper.playGame(v.getContext(), GameHelper.Games.HELICOPTER);
                     }
                 });
 
@@ -131,7 +132,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GameHelper.showGame(v.getContext(), GameHelper.Games.HELICOPTER);
+                        GameHelper.playGame(v.getContext(), GameHelper.Games.HELICOPTER);
                     }
                 });
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
@@ -146,14 +147,14 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
                 holder.button.setOnClickListener(new Button.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GameHelper.showGame(v.getContext(), GameHelper.Games.FROGGER);
+                        GameHelper.playGame(v.getContext(), GameHelper.Games.FROGGER);
                     }
                 });
 
                 holder.image.setOnClickListener(new ImageView.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        GameHelper.showGame(v.getContext(), GameHelper.Games.FROGGER);
+                        GameHelper.playGame(v.getContext(), GameHelper.Games.FROGGER);
                     }
                 });
                 holder.leaderboard.setOnClickListener(new ImageButton.OnClickListener() {
