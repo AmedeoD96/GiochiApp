@@ -13,7 +13,8 @@
     <string name="for_now">For now…</string>
     <string name="endless">"Endless" Mode</string>
     <!-- Confirmation dialog-->
-    <string name="welcome">Welcome back </string>
+
+    <string name="welcome">Welcome back</string>
     <string name="reset">Reset</string>
     <string name="continue_game">Cancel</string>
     <string name="reset_dialog_title">Reset game?</string>
@@ -33,6 +34,12 @@
     <string name="find">find</string>
     <string name="high_score_game">High score: </string>
     <string name="global_leaderboard">Global Leaderboard</string>
+
+    <string name="tetris" translatable="false">Tetris</string>
+    <string name="alienRun" translatable="false">Alien Run</string>
+    <string name="rocket" translatable="false">Rocket</string>
+    <string name="frogger" translatable="false">Frogger</string>
+    <string name="your_score">Your Scores</string>
 
 
     <plurals name="numberOfRiversSurpassed">

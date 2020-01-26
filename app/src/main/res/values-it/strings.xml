@@ -37,4 +37,5 @@
     <string name="welcome">Bentornato</string>
     <string name="global_leaderboard">Leaderboard Globale</string>
     <string name="high_score_game">"Miglior Punteggio: "</string>
+    <string name="your_score">I tuoi punteggi</string>
 </resources>

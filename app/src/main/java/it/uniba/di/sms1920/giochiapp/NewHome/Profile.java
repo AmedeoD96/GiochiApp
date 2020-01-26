@@ -40,7 +40,7 @@ public class Profile extends AppCompatActivity {
         initializeElement();
         listener();
 
-        final String welcomeInitialString = welcome.getText().toString() + " ";
+        final String welcomeInitialString = welcome.getText().toString();
 
         /*Dopo il caricamento di tutti gli utenti, vengono impostati i testi delle textview con i dati
          * dell'utente corrente*/
@@ -48,7 +48,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void OnAllUsersLoaded(Map<String, User> users) {
                 User user = UsersManager.getInstance().getCurrentUser();
-                String welcomeString = welcomeInitialString + user.name;
+                String welcomeString = welcomeInitialString + "\n" + user.name;
 
               welcome.setText(welcomeString);
               name.setText(user.name);
@@ -74,7 +74,7 @@ public class Profile extends AppCompatActivity {
 
                     if(!name.getText().toString().equals("")) {
                         UsersManager.getInstance().getCurrentUser().setName(name.getText().toString());
-                        String welcomeBackUser = getApplicationContext().getString(R.string.welcome) + " " + name.getText().toString();
+                        String welcomeBackUser = getApplicationContext().getString(R.string.welcome) + "\n" + name.getText().toString();
                         welcome.setText(welcomeBackUser);
                     }
                 }
