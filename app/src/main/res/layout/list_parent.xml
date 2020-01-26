@@ -19,10 +19,12 @@
 
         <TextView
             android:id="@+id/parentTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
             android:padding="8dp"
             android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/score1"
             app:layout_constraintStart_toEndOf="@+id/trophyImg"
             app:layout_constraintTop_toTopOf="parent" />
 

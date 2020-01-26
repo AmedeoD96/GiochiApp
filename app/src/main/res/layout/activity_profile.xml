@@ -15,7 +15,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/welcome"
         android:textAlignment="center"
-        android:textColor="#474747"
+        android:textColor="@color/textView"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +76,8 @@
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        android:textColor="@color/textView"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -113,7 +114,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/tetris"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
 
                 <TextView
                     android:id="@+id/tvScoreTetris"
@@ -123,7 +125,8 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textAlignment="viewEnd"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
             </LinearLayout>
 
             <LinearLayout
@@ -145,7 +148,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/header"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
 
                 <TextView
                     android:id="@+id/TvScore2048"
@@ -155,7 +159,8 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textAlignment="viewEnd"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
             </LinearLayout>
 
             <LinearLayout
@@ -177,7 +182,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/alienRun"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
 
                 <TextView
                     android:id="@+id/tvScoreAlienRun"
@@ -187,7 +193,8 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textAlignment="viewEnd"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
             </LinearLayout>
 
             <LinearLayout
@@ -209,7 +216,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/rocket"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
 
                 <TextView
                     android:id="@+id/tvScoreRocket"
@@ -219,7 +227,8 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textAlignment="viewEnd"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
             </LinearLayout>
 
             <LinearLayout
@@ -241,7 +250,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/frogger"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
 
                 <TextView
                     android:id="@+id/tvScoreFrogger"
@@ -251,7 +261,8 @@
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textAlignment="viewEnd"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

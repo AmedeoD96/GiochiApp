@@ -28,11 +28,14 @@
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
             android:padding="8dp"
+            android:textColor="@color/textView"
             android:textSize="24sp"
+            app:layout_constraintEnd_toStartOf="@+id/punteggio"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/trophyImg"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/textView"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/punteggio"
