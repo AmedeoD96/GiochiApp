@@ -13,7 +13,16 @@ public class User {
     public int scoreHelicopter = 0;
     public int scoreAlienrun = 0;
     public int score2048 = 0;
-    public int totalScore = 0;
+    private int totalScore = 0;
+    public int numberMissilesSurpassed = 0;
+
+    public int getNumberMissilesSurpassed() {
+        return numberMissilesSurpassed;
+    }
+
+    public void setNumberMissilesSurpassed(int numberMissilesSurpassed) {
+        this.numberMissilesSurpassed = numberMissilesSurpassed;
+    }
 
     // Variabile necessaria alla decisione dell'utente da tenere, se tenere l'utente nel database locale oppure quello in remoto
     private int updatesCounter = 0;

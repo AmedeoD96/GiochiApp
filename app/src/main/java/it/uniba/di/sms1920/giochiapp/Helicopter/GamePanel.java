@@ -1,6 +1,7 @@
 package it.uniba.di.sms1920.giochiapp.Helicopter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -22,6 +23,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static final int WIDTH=856;
     public static final int HEIGHT=480;
     public static final int MOVESPEED= -5;
+    public static final int NUMBEROFSURFACEDESTROYED = 1000;
+    public static final int HEIGHTPLAYER = 25;
+    public static final int WIDTHPLAYER = 65;
+    public static final int NUMBERFRAMESPLAYER = 3;
+    public static final int HEIGHTMISSILE = 15;
+    public static final int WIDTHMISSILE = 45 ;
+    public static final int FRAMESMISSILE = 13;
+    public static final int HEIGHTEXPLOSION = 100;
+    public static final int WIDTHEXPLOSION = 100;
+    public static final int FRAMESEXPLOSION = 24;
     private long SmokeStartTime;
     private long missileStartTime;
     private MainThread thread;
@@ -34,8 +45,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Random rand=new Random();
     private int maxBorderHeight;
     private int minBorderHeight;
-    private boolean topDown=true;
-    private boolean botDown=true;
     private boolean newGamecreated;
 
     private Explosion explosion;
@@ -43,6 +52,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private boolean reset;
     private boolean disappear;
     private boolean started;
+
+    private int numberMissilesSurpassed = 0;
 
 
     BitmapFactory.Options o = new BitmapFactory.Options();
@@ -63,7 +74,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceDestroyed(SurfaceHolder holder){
         boolean retry=true;
         int counter=0;
-        while (retry && counter<1000){
+        while (retry && counter<NUMBEROFSURFACEDESTROYED){
             try {
                 thread.setRunning(false);
                 counter++;
@@ -78,7 +89,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder){
         bg = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.grassbg1, o));
-        player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter, o),65,25,3);
+        player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter, o),WIDTHPLAYER,HEIGHTPLAYER,NUMBERFRAMESPLAYER);
         smoke = new ArrayList<>();
         missiles = new ArrayList<>();
         topBorders = new ArrayList<>();
@@ -178,11 +189,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 //il primo missile è sempre al centro
                 if(missiles.size()==0){
                     missiles.add(new Missile(BitmapFactory.decodeResource(getResources(),R.drawable.
-                            missile, o),WIDTH+10,HEIGHT/2,45,15,player.getScore(),13));
+                            missile, o),WIDTH+10,HEIGHT/2,WIDTHMISSILE,HEIGHTMISSILE,player.getScore(), FRAMESMISSILE));
                 }
                 else {
                     missiles.add(new Missile(BitmapFactory.decodeResource(getResources(),R.drawable.missile, o),
-                            WIDTH+10,(int)(rand.nextDouble()*(HEIGHT-(maxBorderHeight*2)+maxBorderHeight)),45,15,player.getScore(),13));
+                            WIDTH+10,(int)(rand.nextDouble()*(HEIGHT-(maxBorderHeight*2)+maxBorderHeight)), WIDTHMISSILE, HEIGHTMISSILE,player.getScore(),FRAMESMISSILE));
                 }
                 //resetta il timer
                 missileStartTime= System.nanoTime();
@@ -206,6 +217,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 //i missili fuori dallo schermo vengono rimossi
                 if(missiles.get(i).getX()<-100){
                     missiles.remove(i);
+                    numberMissilesSurpassed++;
                     break;
                 }
 
@@ -235,7 +247,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 reset = true;
                 disappear = true;
 
-                explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion, o),player.getX(),player.getY()-30,100,100,24);
+                explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion, o),player.getX(),player.getY()-30,WIDTHEXPLOSION,HEIGHTEXPLOSION,FRAMESEXPLOSION);
             }
             long resetElapsed=(System.nanoTime()-startReset)/1000000;
             explosion.update();
@@ -247,64 +259,25 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void updateBottomborder() {
-        //ogni 40 punti venivano aggiunti dei blocchi randomici
-        /*if(player.getScore()%40==0){
-            bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),
-                    bottomBorders.get(bottomBorders.size()-1).getX()+20,(int)((rand.nextDouble()*(maxBorderHeight))+(HEIGHT-maxBorderHeight)),200));
-        }*/
         //update del bordo inferiore
         for (int i=0;i<bottomBorders.size();i++){
             bottomBorders.get(i).update();
             //se il bordo esce dallo schermo, viene rimosso
             if(bottomBorders.get(i).getX()<-20){
                 bottomBorders.remove(i);
-                //determinava se il bordo stesse andando verso l'alto o verso il basso
-                /*if(bottomBorders.get(bottomBorders.size()-1).getY()<=HEIGHT-maxBorderHeight){
-                    botDown=true;
-                }
-                if(bottomBorders.get(bottomBorders.size()-1).getY()>=HEIGHT-minBorderHeight){
-                    botDown=false;
-                }*/
+                bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(), R.drawable.brick, o),bottomBorders.get(bottomBorders.size()-1).getX()+20,HEIGHT-minBorderHeight,200));
             }
-            botDown=true;
-        }
-        //in base a quale fosse la direzione del bordo ne veniva creato un altro che si accostasse in maniera corretta al precedente
-        if(botDown){
-            bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(), R.drawable.brick, o),bottomBorders.get(bottomBorders.size()-1).getX()+20,HEIGHT-minBorderHeight,200/*bottomBorders.get(bottomBorders.size()-1).getY()+1*/));
-        }
-        else {
-            bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(), R.drawable.brick, o), bottomBorders.get(bottomBorders.size() - 1).getX() + 20,HEIGHT-minBorderHeight,200 /*bottomBorders.get(bottomBorders.size() - 1).getY() - 1*/));
         }
     }
 
     public void updateTopborder() {
-        //ogni 50 punti, era inserito un bordo randomico che rompeva il pattern
-        /*if(player.getScore()%50==0){
-            topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),
-                   topBorders.get(topBorders.size()-1).getX()+20,0,10/*(int)((rand.nextDouble()*(maxBorderHeight))+1)*/ //));
-        //    }
         for(int i=0;i<topBorders.size();i++){
             topBorders.get(i).update();
             if(topBorders.get(i).getX()<-20){
                 topBorders.remove(i);
                 //rimuove gli elementi di un arraylist, ne aggiunge di nuovi
-                //calcolava la direzione verso la quale il bordo si muoveva
-                /*if(topBorders.get(topBorders.size()-1).getHeight()>=maxBorderHeight){
-                    topDown=false;
-                }
-                if(topBorders.get(topBorders.size()-1).getHeight()<=minBorderHeight){
-                    topDown=true;
-                }*/
-                //il nuovo bordo aggiunto avrebbe avuto più altezza
-                if(topDown){
-                    topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),
-                            topBorders.get(topBorders.size()-1).getX()+20,0,10/*topBorders.get(topBorders.size()-1).getHeight()+1*/));
-                }
-                //il nuovo bordo aggiunto avrebbe avuto meno altezza
-                else {
-                    topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),
-                            topBorders.get(topBorders.size()-1).getX()+20,0,10/*topBorders.get(topBorders.size()-1).getHeight()-1*/));
-                }
+                topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),
+                        topBorders.get(topBorders.size()-1).getX()+20,0,10));
             }
         }
     }
@@ -339,7 +312,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             for (Missile m : missiles) {
                 m.draw(canvas);
             }
-
 
             //viene disegnato il bordo superiore
             for (Border tb : topBorders) {
@@ -381,6 +353,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint1.setTextSize(20);
             canvas.drawText(getContext().getString(R.string.goUp),WIDTH/2-50,HEIGHT/2+20,paint1);
             canvas.drawText(getContext().getString(R.string.goDown),WIDTH/2-50,HEIGHT/2+40,paint1);
+            Resources res = getResources();
+            String numberMissiles = res.getQuantityString(R.plurals.numberOfMissilesSurpassed, user.getNumberMissilesSurpassed(), user.getNumberMissilesSurpassed());
+            canvas.drawText(numberMissiles, WIDTH/2-50,HEIGHT/2+60,paint1);
         }
 
     }
@@ -403,14 +378,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //viene salvato il punteggio massimo
         User user = UsersManager.getInstance().getCurrentUser();
         int highScore = user.scoreHelicopter;
+        user.setNumberMissilesSurpassed(numberMissilesSurpassed);
+        numberMissilesSurpassed = 0;
 
         if(highScore<player.getScore()) {
             user.setScoreHelicopter(player.getScore());
         }
 
         player.resetScore();
-
-
 
         //creazione dei bordi iniziali
         //bordo superiore
@@ -421,7 +396,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
             //aggiunti bordi finchè lo schermo iniziale è pieno
             else {
-                topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,0,10/*topBorders.get(i-1).getHeight()+1*/));
+                topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,0,10));
             }
         }
         //bordo inferiore
@@ -432,7 +407,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
             //aggiunti bordi finchè lo schermo iniziale è pieno
             else {
-                bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,HEIGHT-minBorderHeight,200/*bottomBorders.get(i-1).getY()-1*/));
+                bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,HEIGHT-minBorderHeight,200));
             }
         }
         newGamecreated=true;
