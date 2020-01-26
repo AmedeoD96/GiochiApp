@@ -4,7 +4,7 @@
     <string name="continue_game">Elimina</string>
     <string name="endless">Modalità Senza Fine</string>
     <string name="for_now">Per ora…</string>
-    <string name="game_over">Hai Perso!</string>
+    <string name="game_over">hai perso!</string>
     <string name="go_on">Tocca per Continuare</string>
     <string name="header">2048</string>
     <string name="high_score">Miglior Punteggio</string>
