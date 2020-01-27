@@ -28,9 +28,6 @@ import it.uniba.di.sms1920.giochiapp.UsersManager;
 public class GameScoreboard extends AppCompatActivity {
 
 
-    private final String ORDINAL_VALUE = "°    ";
-
-
     private RecyclerView recyclerView;
     private BottomNavigationView navigation;
     private ImageButton imageButton;
@@ -126,6 +123,7 @@ public class GameScoreboard extends AppCompatActivity {
 
             String ordinalPosition = String.valueOf(position + 1);
 
+            String ORDINAL_VALUE = "°    ";
             String userName = ordinalPosition + ORDINAL_VALUE + user.name;
             Parent parent = new Parent(userName, user.getScore(value), isCurrentUser, position);
             elementCreator.addElement(parent);

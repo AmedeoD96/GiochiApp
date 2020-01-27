@@ -20,9 +20,6 @@ import it.uniba.di.sms1920.giochiapp.R;
 
 public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,TitleChildViewHolder> {
 
-    private final float STRAIGHT_ROT = 0;
-    private final float FLIP_ROT = 180;
-
     private LayoutInflater inflater;
     private Context context = GlobalApplicationContext.getAppContext();
     private int lastPosition = 10;
@@ -123,8 +120,10 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         if(title != null) {
 
             // ruota l'immagine se non ruotata, altrimenti la ruota
+            float STRAIGHT_ROT = 0;
             if(title._image.getRotation() == STRAIGHT_ROT) {
 
+                float FLIP_ROT = 180;
                 title._image.setRotation(FLIP_ROT);
             } else {
 

@@ -28,9 +28,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:hint="@string/nickname"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome" />
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        android:importantForAutofill="no" />
 
     <ToggleButton
         android:id="@+id/toggleButton"
@@ -110,7 +112,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="-30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/tetris" />
+                    app:srcCompat="@drawable/tetris"
+                    android:contentDescription="@string/tetris" />
 
                 <TextView
                     android:id="@+id/tvTetris"
@@ -125,7 +128,7 @@
                     android:id="@+id/tvScoreTetris"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:paddingStart="4dp"
                     android:paddingEnd="8dp"
@@ -146,7 +149,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="-30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/duemilaquarantottoicon" />
+                    app:srcCompat="@drawable/duemilaquarantottoicon"
+                    android:contentDescription="@string/header" />
 
                 <TextView
                     android:id="@+id/tv2048"
@@ -161,7 +165,7 @@
                     android:id="@+id/TvScore2048"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
@@ -182,7 +186,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="-30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/alienicon" />
+                    app:srcCompat="@drawable/alienicon"
+                    android:contentDescription="@string/alienRun" />
 
                 <TextView
                     android:id="@+id/tvAlienRun"
@@ -197,7 +202,7 @@
                     android:id="@+id/tvScoreAlienRun"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
@@ -218,7 +223,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="-30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/rocketicon" />
+                    app:srcCompat="@drawable/rocketicon"
+                    android:contentDescription="@string/rocket" />
 
                 <TextView
                     android:id="@+id/tvRocket"
@@ -233,7 +239,7 @@
                     android:id="@+id/tvScoreRocket"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
@@ -254,7 +260,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="-30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/froggericon" />
+                    app:srcCompat="@drawable/froggericon"
+                    android:contentDescription="@string/frogger" />
 
                 <TextView
                     android:id="@+id/tvFrogger"
@@ -269,7 +276,7 @@
                     android:id="@+id/tvScoreFrogger"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"

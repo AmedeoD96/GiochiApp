@@ -35,7 +35,15 @@
     <string name="pressToStart">TOCCA PER INIZIARE</string>
     <string name="find">Trova</string>
     <string name="welcome">Bentornato</string>
-    <string name="global_leaderboard">Leaderboard Globale</string>
+    <string name="global_leaderboard">Classifica Globale</string>
     <string name="high_score_game">"Miglior Punteggio: "</string>
     <string name="your_score">I tuoi punteggi</string>
+    <string name="down_arrow">freccia verso il basso</string>
+    <string name="game">Giochi</string>
+    <string name="game_image">immagine del gioco</string>
+    <string name="leaderboard">Classifica</string>
+    <string name="play">gioca</string>
+    <string name="profile">Profilo</string>
+    <string name="splash_screen_image">splash screen image</string>
+    <string name="trophy">trofeo</string>
 </resources>
