@@ -340,9 +340,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //viene importato il font
         paint.setTextSize(30);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-        //viene scritto il testo
+        //viene attuato un draw del testo
         canvas.drawText(getContext().getString(R.string.distance)+ player.getScore(),10,HEIGHT-10,paint);
-        canvas.drawText(getContext().getString(R.string.best)+ best,WIDTH-215,HEIGHT-10,paint);
+        canvas.drawText(getContext().getString(R.string.best)+ best,10,HEIGHT-430,paint);
 
         if(!player.getPlaying()&&newGamecreated&&reset){
             //nella schermata di start
@@ -353,9 +353,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint1.setTextSize(20);
             canvas.drawText(getContext().getString(R.string.goUp),WIDTH/2-50,HEIGHT/2+20,paint1);
             canvas.drawText(getContext().getString(R.string.goDown),WIDTH/2-50,HEIGHT/2+40,paint1);
-            Resources res = getResources();
-            String numberMissiles = res.getQuantityString(R.plurals.numberOfMissilesSurpassed, user.getNumberMissilesSurpassed(), user.getNumberMissilesSurpassed());
-            canvas.drawText(numberMissiles, WIDTH/2-50,HEIGHT/2+60,paint1);
+            if(user.getNumberMissilesSurpassed() != 0) {
+                Resources res = getResources();
+                String numberMissiles = res.getQuantityString(R.plurals.numberOfMissilesSurpassed, user.getNumberMissilesSurpassed(), user.getNumberMissilesSurpassed());
+                canvas.drawText(numberMissiles, WIDTH/2-50,HEIGHT/2+60,paint1);
+            }
         }
 
     }
