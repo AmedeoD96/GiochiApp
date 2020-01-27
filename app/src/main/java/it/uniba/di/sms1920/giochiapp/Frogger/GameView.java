@@ -464,9 +464,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             Paint paintDeath = new Paint();
             paintDeath.setTextSize(200);
-
-            //todo cambiare colore gameover
-            paintDeath.setARGB(255,34, 109, 20);
+            paintDeath.setARGB(255,0, 1, 80);
             paintDeath.setTextAlign(Paint.Align.CENTER);
             paintDeath.setTypeface(customTypeface);
             User user = UsersManager.getInstance().getCurrentUser();
