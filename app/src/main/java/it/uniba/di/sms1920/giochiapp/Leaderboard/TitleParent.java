@@ -11,8 +11,6 @@ public class TitleParent implements ParentObject {
     private int globalScore;
     private boolean isCurrentUser;
     private int position;
-    private int image;
-    private int trophyImage;
 
 
     public TitleParent(String title, int globalScore, boolean isCurrentUser, int position, int image, int trophyImage) {
@@ -20,13 +18,8 @@ public class TitleParent implements ParentObject {
         this.globalScore = globalScore;
         this.isCurrentUser = isCurrentUser;
         this.position = position;
-        this.image = image;
-        this.trophyImage = trophyImage;
     }
 
-    public int getImage() {
-        return image;
-    }
 
     String getGlobalScore() {
         return String.valueOf(globalScore);

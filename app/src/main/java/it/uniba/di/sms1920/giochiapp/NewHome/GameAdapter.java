@@ -22,7 +22,7 @@ import it.uniba.di.sms1920.giochiapp.R;
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
 
     private List<Game> gameList;
-    public GameAdapter(List<Game> gameList){
+    GameAdapter(List<Game> gameList){
         this.gameList = gameList;
     }
     private int lastPosition = -1;

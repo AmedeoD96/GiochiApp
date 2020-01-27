@@ -32,6 +32,8 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
+        android:hint="@string/nickname"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toStartOf="@+id/view"
         app:layout_constraintStart_toEndOf="@+id/toggleButton"
@@ -77,7 +79,8 @@
                     android:layout_width="10dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/tetris" />
+                    app:srcCompat="@drawable/tetris"
+                    android:contentDescription="@string/tetris" />
 
                 <TextView
                     android:id="@+id/tvTetris"
@@ -111,7 +114,8 @@
                     android:layout_width="10dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/duemilaquarantottoicon" />
+                    app:srcCompat="@drawable/duemilaquarantottoicon"
+                    android:contentDescription="@string/header" />
 
                 <TextView
                     android:id="@+id/tv2048"
@@ -145,7 +149,8 @@
                     android:layout_width="10dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/alienicon" />
+                    app:srcCompat="@drawable/alienicon"
+                    android:contentDescription="@string/alienRun" />
 
                 <TextView
                     android:id="@+id/tvAlienRun"
@@ -179,7 +184,8 @@
                     android:layout_width="10dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/rocketicon" />
+                    app:srcCompat="@drawable/rocketicon"
+                    android:contentDescription="@string/rocket" />
 
                 <TextView
                     android:id="@+id/tvRocket"
@@ -213,7 +219,8 @@
                     android:layout_width="10dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/froggericon" />
+                    app:srcCompat="@drawable/froggericon"
+                    android:contentDescription="@string/frogger" />
 
                 <TextView
                     android:id="@+id/tvFrogger"

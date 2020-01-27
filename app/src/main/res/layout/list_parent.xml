@@ -48,7 +48,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.545"
-            app:srcCompat="@drawable/ic_keyboard_arrow_down_float" />
+            app:srcCompat="@drawable/ic_keyboard_arrow_down_float"
+            android:contentDescription="@string/down_arrow" />
 
         <ImageView
             android:id="@+id/trophyImg"
@@ -58,7 +59,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/trophy" />
+            app:srcCompat="@drawable/trophy"
+            android:contentDescription="@string/trophy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
