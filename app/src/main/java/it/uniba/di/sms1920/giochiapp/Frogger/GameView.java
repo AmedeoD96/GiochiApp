@@ -47,7 +47,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     int points;
     long lastMils[];
     Rect waterBox, upperGrass, lowerGrass;
-    Timer t;
     boolean haveMoved = false;
     GameThread thread;
     Bitmap logBitmap;
@@ -59,13 +58,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     AnimationManager animationManagerWater, animationManagerGrass;
     SoundPool soundPool_hit, soundPool_walking;
     int hitId,walkId;
-
-
-
-    public void setWasRunning(boolean wasRunning) {
-        this.wasRunning = wasRunning;
-    }
-
     boolean wasRunning;
 
 /*Costruttore della classe GameView, accetta come parametro il contesto dell'activity in cui viene chiamato.
@@ -114,10 +106,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         logRows = new ArrayList[LOGSTRIP-ROWS_WITHOUT_LOGS];
         remove = new ArrayList[LOGSTRIP-ROWS_WITHOUT_LOGS];
         for (int i = 0; i < remove.length; i++){
-            remove[i]=new ArrayList<Integer>();
+            remove[i]=new ArrayList<>();
         }
         for (int i = 0; i < logRows.length; i++){
-            logRows[i]=new ArrayList<LogObj>();
+            logRows[i]=new ArrayList<>();
         }
         waterBox = new Rect (0, logBitmap.getHeight()*2, getWidth(), ((LOGSTRIP-2)*logBitmap.getHeight())); //getWidth() dà 1080
         //se cambio left da 0 a getWidth() la rana mi cammina sull'acqua
@@ -127,9 +119,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         speeds = new int[logRows.length];
         times = new long[speeds.length];
         lastMils = new long[times.length];
-        for(long l : lastMils){
-            l = System.currentTimeMillis();
-        }
 
         //Generazione randomica delle velocità per ogni singola fila di tronchi. Infatti può anche capitare che la prima fila sia la più veloce.
         for (int i = 0; i < speeds.length; i++){
@@ -146,7 +135,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         for (int i = 0; i < speeds.length; i++){
             Random ran = new Random();
-            times[i]=ran.nextInt(2000)+1000;//2000+1000
+            times[i]=ran.nextInt(2000)+1000;
         }
 
         if(!wasRunning)
@@ -264,9 +253,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         frog.setY(frog.getyStart());
         frog.setX(frog.getxStart());
         frog.setxVel(0);
-        for(long l : lastMils){
-            l = System.currentTimeMillis();
-        }
+
         for (int i = 0; i < speeds.length; i++){
             Random ran = new Random();
             speeds[i]=ran.nextInt(SPEED_LEVELS)+STARTING_SPEED_LEVEL;
@@ -283,7 +270,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         for (int i = 0; i < speeds.length; i++){
             Random ran = new Random();
-            times[i]=ran.nextInt(2000)+1000;//2000+1000
+            times[i]=ran.nextInt(2000)+1000;
         }
     }
 
@@ -382,6 +369,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 thread.join();
                 retry = false;
             } catch (InterruptedException e) {
+                //dev'essere vuoto
             }
         }
     }
@@ -412,7 +400,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 try {
                 logRows[i].remove((int)remove[i].get(ii));
                 }
-                finally {}
+               catch(Exception e){
+                    //deve essere vuoto
+               }
             }
             remove[i].clear();
 

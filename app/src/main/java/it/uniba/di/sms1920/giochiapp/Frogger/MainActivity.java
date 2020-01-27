@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 gv.thread.join();
                 retry = true;
             } catch (InterruptedException e) {
+                //dev'essere vuoto
             }
         }
         this.gv = null;

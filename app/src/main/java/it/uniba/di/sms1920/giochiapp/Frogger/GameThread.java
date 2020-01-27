@@ -2,7 +2,6 @@ package it.uniba.di.sms1920.giochiapp.Frogger;
 
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
-import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameThread extends Thread{
@@ -14,7 +13,7 @@ public class GameThread extends Thread{
     che funge da flag e comunica al thread di gioco lo stato corrente, settando lo stato del thread
     in base al parametro booleano
     */
-    public void setRunning(boolean running) {
+    void setRunning(boolean running) {
         this.running = running;
     }
 
@@ -23,7 +22,7 @@ public class GameThread extends Thread{
     parameters: SurfaceHolder e GameView
     Viene usato per creare un thread di gioco.
      */
-    public GameThread(SurfaceHolder surfaceHolder, GameView gameView) {
+    GameThread(SurfaceHolder surfaceHolder, GameView gameView) {
         super();
 
         this.surfaceHolder = surfaceHolder;
