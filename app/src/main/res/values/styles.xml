@@ -16,8 +16,8 @@
 
     <style name="toggleButton">
         <item name="android:buttonStyleToggle">@style/Widget.AppCompat.Button</item>
-        <item name="android:textOn"></item>
-        <item name="android:textOff"></item>
+        <item name="android:textOn"/>
+        <item name="android:textOff"/>
         <item name="android:background">@drawable/ic_toggle_bg</item>
         <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
     </style>

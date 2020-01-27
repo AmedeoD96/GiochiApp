@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewHome.GlobalScoreboard">
+    tools:context=".NewHome.GameScoreboard">
 
 
     <TextView
@@ -13,19 +13,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/global_leaderboard"
-        android:textColor="@color/textView"
+        android:layout_marginTop="24dp"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/textView"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvGlobalScoreboard"
+        android:id="@+id/rvSingleGameScoreboard"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="56dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,8 +34,8 @@
         android:id="@+id/navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -45,16 +43,14 @@
         app:menu="@menu/navigation" />
 
     <ImageButton
-        android:id="@+id/findButton"
+        android:id="@+id/ibFind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/find"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/gameName"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_search"
-        android:contentDescription="@string/find" />
+        app:srcCompat="@android:drawable/ic_menu_search" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,6 +40,15 @@
     <string name="rocket" translatable="false">Rocket</string>
     <string name="frogger" translatable="false">Frogger</string>
     <string name="your_score">Your Scores</string>
+    <string name="nickname" translatable="false">Nickname</string>
+    <string name="splash_screen_image">splash screen image</string>
+    <string name="game_image">game image</string>
+    <string name="play">play</string>
+    <string name="down_arrow">down arrow</string>
+    <string name="trophy">trophy</string>
+    <string name="game">Games</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="profile">Profile</string>
 
 
     <plurals name="numberOfMissilesSurpassed">

@@ -64,7 +64,8 @@
                 app:srcCompat="@drawable/tetris_launch_app"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:contentDescription="@string/game_image" />
 
 
             <LinearLayout
@@ -78,7 +79,8 @@
                     android:layout_weight="1"
                     android:backgroundTint="#01579B"
                     android:elevation="1dp"
-                    android:src="@mipmap/ic_play_3_foreground" />
+                    android:src="@mipmap/ic_play_3_foreground"
+                    android:contentDescription="@string/play" />
 
                 <ImageButton
                     android:id="@+id/imageButton"
@@ -88,18 +90,8 @@
                     android:backgroundTint="#01579B"
                     android:elevation="1dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ranking" />
-
-
-              <!--  <ImageButton
-                    android:id="@+id/imageButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="63dp"
-
-                    android:backgroundTint="#01579B"
-                    android:elevation="1dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ranking" />-->
+                    android:src="@drawable/ranking"
+                    android:contentDescription="@string/global_leaderboard" />
 
             </LinearLayout>
         </LinearLayout>

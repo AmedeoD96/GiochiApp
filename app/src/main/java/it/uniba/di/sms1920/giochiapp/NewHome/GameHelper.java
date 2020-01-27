@@ -10,7 +10,7 @@ import it.uniba.di.sms1920.giochiapp.R;
 
 public class GameHelper {
 
-    public static final String GAME_LEADERBOADR_EXTRA_GAME = "game";
+    static final String GAME_LEADERBOADR_EXTRA_GAME = "game";
 
     // Enum che rapresenta tutti i giochi
     public enum Games {
@@ -22,7 +22,7 @@ public class GameHelper {
     }
 
     // Permette di giocare ad uno specifico gioco
-    public static void playGame(Context context, Games game) {
+    static void playGame(Context context, Games game) {
 
         Intent intent = null;
         switch (game) {
@@ -43,21 +43,18 @@ public class GameHelper {
                 intent = new Intent(context, it.uniba.di.sms1920.giochiapp.Frogger.MainActivity.class);
                 break;
         }
-
-        if(intent != null) {
             context.startActivity(intent);
-        }
     }
 
     // Mostra una leaderbard specifica in base al gioco passato
-    public static void showGameLeaderboard(Context context, Games game) {
+    static void showGameLeaderboard(Context context, Games game) {
         Intent intent = new Intent(context, GameScoreboard.class);
         intent.putExtra(GAME_LEADERBOADR_EXTRA_GAME, game.toString());
         context.startActivity(intent);
     }
 
 
-    public static String getGameName(Games game) {
+    static String getGameName(Games game) {
         Context context = GlobalApplicationContext.getAppContext();
         Resources resources = context.getResources();
 
