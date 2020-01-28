@@ -8,12 +8,13 @@
     <string name="score">SCORE</string>
     <string name="instructions">Swipe to move. 2 + 2 = 4. Reach 2048.</string>
     <string name="you_win">You Win!</string>
-    <string name="game_over">Game Over!</string>
+    <string name="game_over">game over!</string>
     <string name="go_on">Tap to Continue</string>
     <string name="for_now">For now…</string>
     <string name="endless">"Endless" Mode</string>
     <!-- Confirmation dialog-->
-    <string name="welcome">Welcome back </string>
+
+    <string name="welcome">Welcome back</string>
     <string name="reset">Reset</string>
     <string name="continue_game">Cancel</string>
     <string name="reset_dialog_title">Reset game?</string>
@@ -31,11 +32,28 @@
     <string name="goUp">PRESS AND HOLD TO GO UP</string>
     <string name="goDown">RELEASE TO GO DOWN</string>
     <string name="find">find</string>
+    <string name="high_score_game">High score: </string>
+    <string name="global_leaderboard">Global Leaderboard</string>
+
+    <string name="tetris" translatable="false">Tetris</string>
+    <string name="alienRun" translatable="false">Alien Run</string>
+    <string name="rocket" translatable="false">Rocket</string>
+    <string name="frogger" translatable="false">Frogger</string>
+    <string name="your_score">Your Scores</string>
+    <string name="nickname" translatable="false">Nickname</string>
+    <string name="splash_screen_image">splash screen image</string>
+    <string name="game_image">game image</string>
+    <string name="play">play</string>
+    <string name="down_arrow">down arrow</string>
+    <string name="trophy">trophy</string>
+    <string name="game">Games</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="profile">Profile</string>
 
 
-    <plurals name="numberOfRiversSurpassed">
-        <item quantity="one">RIVER SURPASSED ONE TIME</item>
-        <item quantity="few">RIVER SURPASSED %d TIMES</item>
-        <item quantity="other">RIVER SURPASSED %d TIMES</item>
+    <plurals name="numberOfMissilesSurpassed">
+        <item quantity="one">YOU HAVE SURPASSED 1 MISSILE</item>
+        <item quantity="few">YOU HAVE SURPASSED %d MISSILES</item>
+        <item quantity="other">YOU HAVE SURPASSED %d MISSILES</item>
     </plurals>
 </resources>

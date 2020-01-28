@@ -3,8 +3,8 @@
     <string name="app_name">GiochiApp</string>
     <string name="continue_game">Elimina</string>
     <string name="endless">Modalità Senza Fine</string>
-    <string name="for_now">Per ora...</string>
-    <string name="game_over">Hai Perso!</string>
+    <string name="for_now">Per ora…</string>
+    <string name="game_over">hai perso!</string>
     <string name="go_on">Tocca per Continuare</string>
     <string name="header">2048</string>
     <string name="high_score">Miglior Punteggio</string>
@@ -15,11 +15,12 @@
     <string name="score">PUNTI</string>
     <string name="you_win">Hai Vinto!</string>
 
-    <plurals name="numberOfRiversSurpassed">
-        <item quantity="one">FIUME SUPERATO UNA VOLTA</item>
-        <item quantity="few">FIUME SUPERATO %d VOLTE</item>
-        <item quantity="other">FIUME SUPERATO %d VOLTE</item>
+    <plurals name="numberOfMissilesSurpassed">
+        <item quantity="one">HAI SCHIVATO 1 MISSILE</item>
+        <item quantity="few">HAI SCHIVATO %d MISSILI</item>
+        <item quantity="other">HAI SCHIVATO %d MISSILI</item>
     </plurals>
+
     <string name="gameOverTetris">"Il tuo punteggio è "</string>
     <string name="again">Riprova</string>
     <string name="notice">Hai perso!</string>
@@ -34,4 +35,15 @@
     <string name="pressToStart">TOCCA PER INIZIARE</string>
     <string name="find">Trova</string>
     <string name="welcome">Bentornato</string>
+    <string name="global_leaderboard">Classifica Globale</string>
+    <string name="high_score_game">"Miglior Punteggio: "</string>
+    <string name="your_score">I tuoi punteggi</string>
+    <string name="down_arrow">freccia verso il basso</string>
+    <string name="game">Giochi</string>
+    <string name="game_image">immagine del gioco</string>
+    <string name="leaderboard">Classifica</string>
+    <string name="play">gioca</string>
+    <string name="profile">Profilo</string>
+    <string name="splash_screen_image">splash screen image</string>
+    <string name="trophy">trofeo</string>
 </resources>

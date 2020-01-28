@@ -14,37 +14,37 @@ public class Frog {
     private float yVel;
     private float xStart;
     private float yStart;
-    public float step;
-    Rect box;
+    private float step;
+    private Rect box;
     
     float widthPercentage = 0.3f;
 
 
     //ritorna il rettangolo in cui è contenuta la rana
-    public Rect getBox() {
+    Rect getBox() {
         return box;
     }
 
     //ritorna la posizione di start rispetto all'asse x
-    public float getxStart() {
+    float getxStart() {
         return xStart;
     }
 
     //ritorna la posizione di start rispetto all'asse y
-    public float getyStart() {
+    float getyStart() {
         return yStart;
     }
 
 
     //imposta la posizione di start
-    public void setStart(float x, float y){
+    void setStart(float x, float y){
         this.xStart = x;
         this.yStart = y;
     }
 
     //ritorna l'immagine bitmap
-    public Bitmap getBitmap() {
-        return bitmap;
+    public Bitmap getBitmap()
+    {  return bitmap;
     }
 
     //imposta l'immagine bitmap
@@ -73,12 +73,12 @@ public class Frog {
     }
 
     //imposta la velocità sull'asse y, viene usato quando la rana viene colpita per fermarla
-    public void setyVel(float yVel) {
+    void setyVel(float yVel) {
         this.yVel = yVel;
     }
 
     //imposta la velocità sull'asse x, viene usato quando la rana viene colpita per fermarla
-    public void setxVel(float xVel) {
+    void setxVel(float xVel) {
         this.xVel = xVel;
     }
 
@@ -86,7 +86,7 @@ public class Frog {
 
     //Costruttore della classe Frog, che prende in input l'immagine della rana e la grandezza di ogni passo o salto.
     //Setta la posizione della rana rispetto all'asse x all'inizio della partita, dando un valore di 50
-    public Frog(Bitmap bitmap, float step){
+     Frog(Bitmap bitmap, float step){
         this.step = step;
         this.bitmap = bitmap;
         x = 50;
@@ -100,7 +100,7 @@ public class Frog {
     y=1 se si deve andare indietro
 
      */
-    public void frogJump(float x, float y){
+    void frogJump(float x, float y){
         this.x += step * x;
         this.y += step * y;
     }

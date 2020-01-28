@@ -13,18 +13,18 @@ public class Animation {
 
     private boolean isPlaying = false;
 
-    public boolean isPlaying() {
+     boolean isPlaying() {
 
         return isPlaying;
     }
 
-    public void play() {
+     void play() {
         isPlaying = true;
         frameIndex = 0;
         lastFrame = System.currentTimeMillis();
     }
 
-    public void stop() {
+     void stop() {
 
         isPlaying = false;
     }

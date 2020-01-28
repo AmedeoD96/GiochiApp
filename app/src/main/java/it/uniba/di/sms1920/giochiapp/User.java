@@ -2,6 +2,8 @@ package it.uniba.di.sms1920.giochiapp;
 
 import java.util.Objects;
 
+import it.uniba.di.sms1920.giochiapp.NewHome.GameHelper;
+
 public class User {
 
 
@@ -13,7 +15,16 @@ public class User {
     public int scoreHelicopter = 0;
     public int scoreAlienrun = 0;
     public int score2048 = 0;
-    public int totalScore = 0;
+    private int totalScore = 0;
+    public int numberMissilesSurpassed = 0;
+
+    public int getNumberMissilesSurpassed() {
+        return numberMissilesSurpassed;
+    }
+
+    public void setNumberMissilesSurpassed(int numberMissilesSurpassed) {
+        this.numberMissilesSurpassed = numberMissilesSurpassed;
+    }
 
     // Variabile necessaria alla decisione dell'utente da tenere, se tenere l'utente nel database locale oppure quello in remoto
     private int updatesCounter = 0;
@@ -70,6 +81,28 @@ public class User {
     public void setScore2048(int score2048) {
         this.score2048 = score2048;
         OnValueChange();
+    }
+
+
+    public int getScore(GameHelper.Games game) {
+        switch (game) {
+
+            case TETRIS:
+                return scoreTetris;
+
+            case GAME_2048:
+                return score2048;
+
+            case ENDLESS:
+                return scoreAlienrun;
+
+            case HELICOPTER:
+                return scoreHelicopter;
+
+            case FROGGER:
+                return scoreFrogger;
+        }
+        return 0;
     }
 
 

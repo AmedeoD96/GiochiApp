@@ -1,22 +1,16 @@
 package it.uniba.di.sms1920.giochiapp.NewHome;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +42,8 @@ public class GameList extends AppCompatActivity {
         setContentView(R.layout.game_list);
         initializeElement();
 
-        /*Set up della toolbar*/
-        Toolbar toolbar = findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
 
-        //setta tema dark
-        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
         createGameList();
 
         /*Set adapter*/
@@ -61,9 +51,6 @@ public class GameList extends AppCompatActivity {
         recyclerView.setAdapter(gameAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-
-        SnapHelper snapHelper = new PagerSnapHelper();
-        snapHelper.attachToRecyclerView(recyclerView);
 
         /*Set high score*/
         tetris.setHighScore(getTetrisHighScore());
@@ -99,8 +86,18 @@ public class GameList extends AppCompatActivity {
     private void initializeElement(){
         gameList = new ArrayList<>();
         recyclerView = findViewById(R.id.rvGameList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+
+        /*Setta lo scorrimento della scroll view
+        * - Verticale se il device è in portrait mode
+        * - Orizzontale se il device è in landscape mode*/
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerView.setLayoutManager(linearLayoutManager);
+        }
+
+
     }
 
     /*Creazione della lista giochi*/
@@ -182,7 +179,7 @@ public class GameList extends AppCompatActivity {
     }
 
     /*Salvataggio dei dati dell'utente corrente alla distruzione
-    * dell'activity*/
+     * dell'activity*/
     @Override
     protected void onDestroy() {
         super.onDestroy();

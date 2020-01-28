@@ -17,15 +17,15 @@ public class Game {
         return name;
     }
 
-    public int getHighScore() {
+    int getHighScore() {
         return highScore;
     }
 
-    public int getImage() {
+    int getImage() {
         return image;
     }
 
-    public void setHighScore(int maxhishscore) {
+    void setHighScore(int maxhishscore) {
         highScore = maxhishscore;
     }
 

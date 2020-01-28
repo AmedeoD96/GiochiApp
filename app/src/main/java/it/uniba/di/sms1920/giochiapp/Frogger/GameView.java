@@ -1,7 +1,6 @@
 package it.uniba.di.sms1920.giochiapp.Frogger;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -38,10 +37,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     long times[];
     boolean inWater = false;
     int LOGSTRIP;
+    final int ROWS_WITHOUT_LOGS=4;
+    final int BOTTOM_BOUNDS=1900;
+    final int LEFT_BOUNDS=55;
+    final int RIGHT_BOUNDS=900;
+    final int SPEED_LEVELS=7;
+    final int STARTING_SPEED_LEVEL=2;
+
     int points;
     long lastMils[];
     Rect waterBox, upperGrass, lowerGrass;
-    Timer t;
     boolean haveMoved = false;
     GameThread thread;
     Bitmap logBitmap;
@@ -53,13 +58,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     AnimationManager animationManagerWater, animationManagerGrass;
     SoundPool soundPool_hit, soundPool_walking;
     int hitId,walkId;
-
-
-
-    public void setWasRunning(boolean wasRunning) {
-        this.wasRunning = wasRunning;
-    }
-
     boolean wasRunning;
 
 /*Costruttore della classe GameView, accetta come parametro il contesto dell'activity in cui viene chiamato.
@@ -105,13 +103,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         //LOGSTRIP indica il numero di array di tronchi che andranno generati, uno per ogni "fila", sono le caselle da sove si trova la rana fino alla fine dello scenario
         LOGSTRIP = (int)Math.ceil(getHeight()/logBitmap.getHeight());
-        logRows = new ArrayList[LOGSTRIP-4]; //4 sono le caselle dove i log non devono essere generati
-        remove = new ArrayList[LOGSTRIP-4];
+        logRows = new ArrayList[LOGSTRIP-ROWS_WITHOUT_LOGS];
+        remove = new ArrayList[LOGSTRIP-ROWS_WITHOUT_LOGS];
         for (int i = 0; i < remove.length; i++){
-            remove[i]=new ArrayList<Integer>();
+            remove[i]=new ArrayList<>();
         }
         for (int i = 0; i < logRows.length; i++){
-            logRows[i]=new ArrayList<LogObj>();
+            logRows[i]=new ArrayList<>();
         }
         waterBox = new Rect (0, logBitmap.getHeight()*2, getWidth(), ((LOGSTRIP-2)*logBitmap.getHeight())); //getWidth() dà 1080
         //se cambio left da 0 a getWidth() la rana mi cammina sull'acqua
@@ -121,14 +119,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         speeds = new int[logRows.length];
         times = new long[speeds.length];
         lastMils = new long[times.length];
-        for(long l : lastMils){
-            l = System.currentTimeMillis();
-        }
 
         //Generazione randomica delle velocità per ogni singola fila di tronchi. Infatti può anche capitare che la prima fila sia la più veloce.
         for (int i = 0; i < speeds.length; i++){
             Random ran = new Random();
-            speeds[i]=ran.nextInt(10)+3;
+            speeds[i]=ran.nextInt(SPEED_LEVELS)+STARTING_SPEED_LEVEL;
         }
         for (int i = 0; i < speeds.length; i+=2){ //le velocità pari vanno in un senso (moltiplicate per 1)
             speeds[i] *= 1;
@@ -236,7 +231,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
      E' il metodo che determina l'aumento del punteggio quando si completa un livello. Viene chiamato quando la rana arriva alla superficie superiore di erba
      */
     public void score(){
-        points ++;
+        points++;
         if(points<0)points=0;
 
         User user = UsersManager.getInstance().getCurrentUser();
@@ -252,19 +247,16 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
      */
 
     public void reset(){
-        points=0;
         speeds = new int[logRows.length];
         times = new long[speeds.length];
         lastMils = new long[times.length];
         frog.setY(frog.getyStart());
         frog.setX(frog.getxStart());
         frog.setxVel(0);
-        for(long l : lastMils){
-            l = System.currentTimeMillis();
-        }
+
         for (int i = 0; i < speeds.length; i++){
             Random ran = new Random();
-            speeds[i]=ran.nextInt(10)+3;
+            speeds[i]=ran.nextInt(SPEED_LEVELS)+STARTING_SPEED_LEVEL;
         }
         for (int i = 0; i < speeds.length; i+=2){
             speeds[i] *= 1;
@@ -302,6 +294,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN){
             if(heart.getdead()){
+                points=0;
                 reset();
             }
             start[0] = event.getX();
@@ -327,7 +320,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
                     Log.d("Direction", "Up");
                 }
-                else if (angle > 135 && angle < 225){
+                else if ((angle > 135 && angle < 225)&& frog.getX()>LEFT_BOUNDS){
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogsx));
                     frog.frogJump(-1,0);
                     frog.setxVel(0);
@@ -335,7 +328,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     soundPool_walking.play(walkId,1,1,1,0,1);
                     Log.d("Direction", "Left");
                 }
-                else if (angle > 45 && angle < 135){
+                else if ((angle > 45 && angle < 135)&& frog.getY()<BOTTOM_BOUNDS){
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogdown));
                     frog.frogJump(0,1);
                     frog.setxVel(0);
@@ -343,7 +336,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     soundPool_walking.play(walkId,1,1,1,0,1);
                     Log.d("Direction", "Down");
                 }
-                else{
+                else if(frog.getX()<RIGHT_BOUNDS){
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogright));
                     frog.frogJump(1,0);
                     frog.setxVel(0);
@@ -376,6 +369,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 thread.join();
                 retry = false;
             } catch (InterruptedException e) {
+                //dev'essere vuoto
             }
         }
     }
@@ -406,7 +400,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 try {
                 logRows[i].remove((int)remove[i].get(ii));
                 }
-                finally {}
+               catch(Exception e){
+                    //deve essere vuoto
+               }
             }
             remove[i].clear();
 
@@ -445,7 +441,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         textPaint.setColor(Color.BLACK);
         textPaint.setTextSize(150);
 
-        canvas.drawText(points + "", canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight()+50, textPaint);
+        canvas.drawText(String.valueOf(points), canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight()+50, textPaint);
 
 
         //qui cambia il colore nel caso di morte e imposta il game over
@@ -453,29 +449,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
             Context context = GlobalApplicationContext.getAppContext();
             Typeface customTypeface = ResourcesCompat.getFont(context, R.font.mariokartds);
-            //Bitmap gameOverImg = BitmapFactory.decodeResource(getResources(), R.drawable.gameover);
-            Matrix m = new Matrix();
 
             //imposta i parametri per il posizionamento della scritta Game Over
-            //int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
-            //int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
-            //gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
+
             Paint paintDeath = new Paint();
             paintDeath.setTextSize(200);
-            paintDeath.setARGB(255,34, 109, 20);
+            paintDeath.setARGB(255,0, 1, 80);
             paintDeath.setTextAlign(Paint.Align.CENTER);
             paintDeath.setTypeface(customTypeface);
             User user = UsersManager.getInstance().getCurrentUser();
             int xPos = (canvas.getWidth() / 2);
             int yPos = (int) ((canvas.getHeight() / 2) - ((paintDeath.descent() + paintDeath.ascent()) / 2)) ;
-            //canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
-            canvas.drawText("game over", xPos, yPos, paintDeath);
+
+            canvas.drawText(getContext().getString(R.string.game_over), xPos, yPos, paintDeath);
             canvas.drawText("high score",xPos,yPos+200,paintDeath);
             canvas.drawText(String.valueOf(user.scoreFrogger), xPos, 400+ yPos, paintDeath);
-            //canvas.drawText("High Score",xPos,yPos+200,paintDeath);
-            //Resources res = getResources();
-            //String numberScore = res.getQuantityString(R.plurals.numberOfRiversSurpassed, user.scoreFrogger, user.scoreFrogger);
-            //canvas.drawText(numberScore, xPos, 150+ yPos, paintHighScore);
+
 
         }
 

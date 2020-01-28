@@ -10,95 +10,63 @@
 
     <TextView
         android:id="@+id/welcome"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/welcome"
         android:textAlignment="center"
         android:textColor="@color/textView"
         android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <EditText
         android:id="@+id/etName"
         android:layout_width="141dp"
         android:layout_height="42dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/nickname"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome"
-        android:importantForAutofill="no" />
+        app:layout_constraintEnd_toStartOf="@+id/view"
+        app:layout_constraintStart_toEndOf="@+id/toggleButton"
+        app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
     <ToggleButton
         android:id="@+id/toggleButton"
         style="@style/toggleButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:textOff=""
         android:textOn=""
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation" />
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="40dp"
-        android:background="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etName" />
-
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="204dp"
-        android:layout_marginTop="20dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view">
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="35dp"
-                    android:text="@string/your_score"
-                    android:textAlignment="center"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -110,7 +78,6 @@
                     android:id="@+id/tetrisicon"
                     android:layout_width="10dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="-30dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/tetris"
                     android:contentDescription="@string/tetris" />
@@ -121,20 +88,19 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/tetris"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
 
                 <TextView
                     android:id="@+id/tvScoreTetris"
-                    android:layout_width="0dp"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="8dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
             </LinearLayout>
 
             <LinearLayout
@@ -147,7 +113,6 @@
                     android:id="@+id/icon2048"
                     android:layout_width="10dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="-30dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/duemilaquarantottoicon"
                     android:contentDescription="@string/header" />
@@ -158,20 +123,19 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/header"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
 
                 <TextView
                     android:id="@+id/TvScore2048"
-                    android:layout_width="0dp"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
             </LinearLayout>
 
             <LinearLayout
@@ -184,7 +148,6 @@
                     android:id="@+id/alienRunIcon"
                     android:layout_width="10dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="-30dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/alienicon"
                     android:contentDescription="@string/alienRun" />
@@ -195,20 +158,19 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/alienRun"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
 
                 <TextView
                     android:id="@+id/tvScoreAlienRun"
-                    android:layout_width="0dp"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
             </LinearLayout>
 
             <LinearLayout
@@ -221,7 +183,6 @@
                     android:id="@+id/rocketIcon"
                     android:layout_width="10dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="-30dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/rocketicon"
                     android:contentDescription="@string/rocket" />
@@ -232,20 +193,19 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/rocket"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
 
                 <TextView
                     android:id="@+id/tvScoreRocket"
-                    android:layout_width="0dp"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
             </LinearLayout>
 
             <LinearLayout
@@ -258,7 +218,6 @@
                     android:id="@+id/froggericon"
                     android:layout_width="10dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="-30dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/froggericon"
                     android:contentDescription="@string/frogger" />
@@ -266,26 +225,61 @@
                 <TextView
                     android:id="@+id/tvFrogger"
                     android:layout_width="30dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/frogger"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
 
                 <TextView
                     android:id="@+id/tvScoreFrogger"
-                    android:layout_width="0dp"
+                    android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="16dp"
                     android:layout_weight="1"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/textView"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:textColor="@color/textView"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigation"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="296dp"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/your_score"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/textView"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,29 +11,14 @@ public class LogObj {
      private Bitmap bitmap;
      private float x;
      private float y;
-     private float yVel;
      private float xVel;
-     int direction;
 
-    public Rect getBox() {
+
+    Rect getBox() {
         return box;
     }
 
-    public void setBox(Rect box) {
-        this.box = box;
-    }
-
     private Rect box;
-
-    public int getDirection() {
-        return direction;
-    }
-
-    public void setDirection(int direction) {
-        this.direction = direction;
-    }
-
-
 
      public Bitmap getBitmap() {
          return bitmap;
@@ -58,27 +43,15 @@ public class LogObj {
          this.y = y;
      }
 
-     public float getyVel() {
-         return yVel;
-     }
-
-     public void setyVel(float yVel) {
-         this.yVel = yVel;
-     }
-
-     public float getxVel() {
+     float getxVel() {
          return xVel;
-     }
-
-     public void setxVel(float xVel) {
-         this.xVel = xVel;
      }
 
 
      /*Costruttore della classe LogObj
      parameters: riceve in input la Bitmap del log, la velocità del log e la posizione rispetto agli assi
       */
-     public LogObj(Bitmap bitmap, int speed, float y, float x) {
+      LogObj(Bitmap bitmap, int speed, float y, float x) {
          this.bitmap = bitmap;
          this.x = x;
          this.y = y;

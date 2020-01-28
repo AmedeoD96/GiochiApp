@@ -20,13 +20,11 @@ import it.uniba.di.sms1920.giochiapp.R;
 /*Adapter della recycler view che è contenuta all'interno della scoreboard relativa al singolo gioco*/
 public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, TitleChildViewHolder> {
 
-    //TODO cambiare il colore green
-
     //componente atto a "gonfiare" una parte del layout
     private LayoutInflater inflater;
-    Context context = GlobalApplicationContext.getAppContext();
+    private Context context = GlobalApplicationContext.getAppContext();
 
-    int lastPosition = -1; //Usata per l'animazione
+    private int lastPosition = -1; //Usata per l'animazione
 
     public ScoreAdapter(Context context, List<ParentObject> parentItemList){
         super(context, parentItemList);
@@ -52,6 +50,8 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
         //assegna il testo della singola riga della leaderboard
         viewHolderTitle._userName.setText(parent.getUserName());
         viewHolderTitle._score.setText(parent.getScore());
+        viewHolderTitle._trophyImage.setImageResource(R.drawable.trophy);
+        viewHolderTitle.itemView.setBackgroundColor(Color.WHITE);
 
         if (i > lastPosition){
             Animation animation = AnimationUtils.loadAnimation(context, R.anim.scoll_animation);
@@ -66,25 +66,26 @@ public class ScoreAdapter extends ExpandableRecyclerAdapter<ViewHolderTitle, Tit
 
         //i 3 sul podio
         if(position == 0){
-            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#C6A530"));
+            viewHolderTitle._trophyImage.setVisibility(View.VISIBLE);
+            viewHolderTitle._trophyImage.setColorFilter(context.getResources().getColor(R.color.trophyGold));
         }else if(position == 1){
-            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#788287"));
+            viewHolderTitle._trophyImage.setVisibility(View.VISIBLE);
+            viewHolderTitle._trophyImage.setColorFilter(context.getResources().getColor(R.color.trophySilver));
         }else if(position == 2){
-            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#794909"));
+            viewHolderTitle._trophyImage.setVisibility(View.VISIBLE);
+            viewHolderTitle._trophyImage.setColorFilter(context.getResources().getColor(R.color.trophyBronze));
         }else {
             //le altre posizioni
-            viewHolderTitle.itemView.setBackgroundColor(Color.parseColor("#4CAF50"));
+            viewHolderTitle._trophyImage.setVisibility(View.GONE);
         }
 
         //in caso di utente corrente si evidenzia il testo
         if(parent.isCurrentUser()){
-            viewHolderTitle._userName.setTextColor(Color.parseColor("#265628"));
-            viewHolderTitle._score.setTextColor(Color.parseColor("#265628"));
+            viewHolderTitle._userName.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            viewHolderTitle._score.setTextColor(context.getResources().getColor(R.color.colorPrimary));
         }else {
-            viewHolderTitle._userName.setTextColor(Color.parseColor("#80e27e"));
-            viewHolderTitle._score.setTextColor(Color.parseColor("#80e27e"));
-            viewHolderTitle._userName.setTextColor(Color.WHITE);
-            viewHolderTitle._score.setTextColor(Color.WHITE);
+            viewHolderTitle._userName.setTextColor(context.getResources().getColor(R.color.textView));
+            viewHolderTitle._score.setTextColor(context.getResources().getColor(R.color.textView));
         }
     }
 

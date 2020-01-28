@@ -8,7 +8,7 @@ class AnimationGrid {
     private int activeAnimations = 0;
     private boolean oneMoreFrame = false;
 
-    public static final int GLOBAL_ANIMATION_INDEX = -1;
+    static final int GLOBAL_ANIMATION_INDEX = -1;
 
     AnimationGrid(int x, int y) {
         field = new ArrayList[x][y];

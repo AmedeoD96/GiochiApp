@@ -17,7 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Tetris"
+            android:text="@string/tetris"
+            android:textColor="@color/textView"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,7 +28,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="2048"
+            android:text="@string/header"
+            android:textColor="@color/textView"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/score1" />
 
@@ -36,7 +40,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/game2048"
             android:padding="8dp"
-            android:text="Alien Run"
+            android:text="@string/alienRun"
+            android:textColor="@color/textView"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/game2048" />
 
@@ -46,7 +52,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/alienRun"
             android:padding="8dp"
-            android:text="Rocket"
+            android:text="@string/rocket"
+            android:textColor="@color/textView"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alienRun" />
 
@@ -56,7 +64,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/rocket"
             android:padding="8dp"
-            android:text="Frogger"
+            android:text="@string/frogger"
+            android:textColor="@color/textView"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rocket" />
 
@@ -65,39 +75,48 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="SCore"
+            android:textColor="@color/textView"
+            android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/scoreGame"
             app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
             android:id="@+id/score2048"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="SCore"
+            android:textColor="@color/textView"
+            android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/game2048"
             app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
             android:id="@+id/alienRunScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="SCore"
+            android:textColor="@color/textView"
+            android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/alienRun"
             app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
             android:id="@+id/rocketScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="SCore"
+            android:textColor="@color/textView"
+            android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/rocket"
             app:layout_constraintEnd_toEndOf="parent" />
+
         <TextView
             android:id="@+id/froggerScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="SCore"
+            android:textColor="@color/textView"
+            android:textSize="18sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/frogger"
             app:layout_constraintEnd_toEndOf="parent" />
 

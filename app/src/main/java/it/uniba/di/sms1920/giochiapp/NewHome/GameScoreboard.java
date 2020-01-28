@@ -2,7 +2,6 @@ package it.uniba.di.sms1920.giochiapp.NewHome;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject;
@@ -29,6 +27,7 @@ import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class GameScoreboard extends AppCompatActivity {
 
+
     private RecyclerView recyclerView;
     private BottomNavigationView navigation;
     private ImageButton imageButton;
@@ -39,14 +38,15 @@ public class GameScoreboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_scoreboard);
 
-        Toolbar toolbar = findViewById(R.id.toolbar2);
-        setSupportActionBar(toolbar);
 
         initializeElement();
 
         navigation = findViewById(R.id.navigation);
+        //Toglie la selezione della bottomNavigationView
         navigation.getMenu().getItem(0).setCheckable(false);
 
+
+        //Set up adapter
         ScoreAdapter scoreAdapter = new ScoreAdapter(getApplicationContext(), initData());
         scoreAdapter.setParentAndIconExpandOnClick(false);
 
@@ -60,6 +60,7 @@ public class GameScoreboard extends AppCompatActivity {
         });
 
 
+        /*Set intent della navigation Bar*/
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -74,6 +75,10 @@ public class GameScoreboard extends AppCompatActivity {
                         startActivity(globalScoreboard);
                         finish();
                         break;
+                    case R.id.navigation_profile:
+                        Intent profile = new Intent(getApplicationContext(), Profile.class);
+                        startActivity(profile);
+                        break;
                 }
                 return false;
             }
@@ -81,6 +86,7 @@ public class GameScoreboard extends AppCompatActivity {
     }
 
 
+    /*Inizializza gli elementi del layout*/
     private void initializeElement() {
         recyclerView = findViewById(R.id.rvSingleGameScoreboard);
         recyclerView.setLayoutManager(new CenterLayoutManager(this));
@@ -88,6 +94,7 @@ public class GameScoreboard extends AppCompatActivity {
         imageButton = findViewById(R.id.ibFind);
     }
 
+    /*Ritorna la lista degli elementi che popolerà la leaderboard*/
     private List<ParentObject> initData() {
 
         ElementCreator elementCreator = ElementCreator.get(getApplicationContext());
@@ -97,106 +104,36 @@ public class GameScoreboard extends AppCompatActivity {
         elementCreator.clearTitles();
         TextView gameName = findViewById(R.id.gameName);
         Bundle bundle = getIntent().getExtras();
-        int value = bundle.getInt("game");
+        GameHelper.Games value = GameHelper.Games.valueOf(bundle.getString(GameHelper.GAME_LEADERBOADR_EXTRA_GAME));
 
         User currentUser = UsersManager.getInstance().getCurrentUser();
-        boolean flag;
-        int position;
-        switch (value) {
-            case 0:
-                flag = false;
-                position = 0;
-                Collection<User> allUserTetris = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_TETRIS, false);
 
-                for (User user : allUserTetris) {
-                    if (user.equals(currentUser)) {
-                        flag = true;
-                        find = position;
-                    }
-                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreTetris, flag, position);
-                    elementCreator.addElement(parent);
-                    parentObject.add(parent);
-                    flag = false;
-                    position++;
-                }
+        int position = 0;
+        /*Get di tutti gli utenti in ordine (dal punteggio maggiore a quello minore)*/
+        Collection<User> allUserSorted = UsersManager.getInstance().getAllUserSort(getGameOrder(value), false);
 
-                gameName.setText("Tetris");
-                break;
-            case 1:
-                flag = false;
-                position = 0;
-                Collection<User> allUser2048 = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_2048, false);
+        for (User user : allUserSorted) {
 
-                for (User user : allUser2048) {
-                    if (user.equals(currentUser)) {
-                        flag = true;
-                        find = position;
-                    }
-                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.score2048, flag, position);
-                    elementCreator.addElement(parent);
-                    parentObject.add(parent);
-                    flag = false;
-                    position++;
-                }
-                gameName.setText("2048");
-                break;
-            case 2:
-                flag = false;
-                position = 0;
-                Collection<User> allUserAlienRun = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_ALIENRUN, false);
+            boolean isCurrentUser = false;
+            /*Viene controllato se l'utente preso dalla collection corrisponde all'utente corrente*/
+            if (user.equals(currentUser)) {
+                isCurrentUser = true;
+                find = position;
+            }
 
-                for (User user : allUserAlienRun) {
-                    if (user.equals(currentUser)) {
-                        flag = true;
-                        find = position;
-                    }
-                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreAlienrun, flag, position);
-                    elementCreator.addElement(parent);
-                    parentObject.add(parent);
-                    flag = false;
-                    position++;
-                }
-                gameName.setText("Alien Run");
-                break;
-            case 3:
-                flag = false;
-                position = 0;
-                Collection<User> allUserRocket = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_HELICOPTER, false);
+            String ordinalPosition = String.valueOf(position + 1);
 
-                for (User user : allUserRocket) {
-                    if (user.equals(currentUser)) {
-                        flag = true;
-                        find = position;
-                    }
-                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreHelicopter, flag, position);
-                    elementCreator.addElement(parent);
-                    parentObject.add(parent);
-                    flag = false;
-                    position++;
-                }
-                gameName.setText("Rocket");
-                break;
-            case 4:
-                flag = false;
-                position = 0;
-                Collection<User> allUserFrogger = UsersManager.getInstance().getAllUserSort(UsersManager.OrderType.SCORE_FROGGER, false);
+            String ORDINAL_VALUE = "°    ";
+            String userName = ordinalPosition + ORDINAL_VALUE + user.name;
+            Parent parent = new Parent(userName, user.getScore(value), isCurrentUser, position);
+            elementCreator.addElement(parent);
+            parentObject.add(parent);
 
-                for (User user : allUserFrogger) {
-                    if (user.equals(currentUser)) {
-                        flag = true;
-                        find = position;
-                    }
-                    Parent parent = new Parent(position + 1 + "°    " + user.name, user.scoreFrogger, flag, position);
-                    elementCreator.addElement(parent);
-                    parentObject.add(parent);
-                    flag = false;
-                    position++;
-                }
-
-                gameName.setText("Frogger");
-                break;
-
+            position++;
         }
+
+        gameName.setText(GameHelper.getGameName(value));
+
         return parentObject;
     }
 
@@ -204,6 +141,32 @@ public class GameScoreboard extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         UsersManager.getInstance().saveCurrentUser();
+    }
+
+
+
+    UsersManager.OrderType getGameOrder(GameHelper.Games game) {
+
+        UsersManager.OrderType orderDecided = UsersManager.OrderType.SCORE_TETRIS;
+        switch (game) {
+
+            case TETRIS:
+                orderDecided = UsersManager.OrderType.SCORE_TETRIS;
+                break;
+            case GAME_2048:
+                orderDecided = UsersManager.OrderType.SCORE_2048;
+                break;
+            case ENDLESS:
+                orderDecided = UsersManager.OrderType.SCORE_ALIENRUN;
+                break;
+            case HELICOPTER:
+                orderDecided = UsersManager.OrderType.SCORE_HELICOPTER;
+                break;
+            case FROGGER:
+                orderDecided = UsersManager.OrderType.SCORE_FROGGER;
+                break;
+        }
+        return orderDecided;
     }
 
 }

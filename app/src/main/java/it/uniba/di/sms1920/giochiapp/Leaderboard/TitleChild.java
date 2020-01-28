@@ -50,7 +50,7 @@ public class TitleChild {
         return String.valueOf(froggerScore);
     }
 
-    public String getGame2084() {
+    String getGame2084() {
         return game2084;
     }
 

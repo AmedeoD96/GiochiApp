@@ -8,13 +8,13 @@ public class AnimationManager {
     private Animation[] animations;
     private int animationIndex = 0;
 
-    public AnimationManager(Animation[] animations) {
+     AnimationManager(Animation[] animations) {
         this.animations = animations;
     }
 
     //riceve in input un indice e, applicandosi ad un vettore di Animation avvia la funzione play per l'animazione posta
     //nella posizione specificatta dall'indice. Vengono poste in stato di stop tutti gli altri elementi del vettore
-    public void playAnim(int index) {
+     void playAnim(int index) {
         for(int i = 0; i<animations.length; i++) {
             if (i == index) {
                 if (!animations[index].isPlaying()) {
