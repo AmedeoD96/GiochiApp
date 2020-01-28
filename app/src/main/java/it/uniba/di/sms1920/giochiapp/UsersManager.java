@@ -92,9 +92,9 @@ public class UsersManager {
             allUsers.put(idCurrentUser, resultUser);
         }
 
-        Log.i("USER_DEBUG", "Id: " + idCurrentUser + " User: " + resultUser.toString());
         return resultUser;
     }
+
 
     public void setIdCurrentUser(String idCurrentUser) {
         Log.i("USER_DEBUG", "Trying to set new user id: " + idCurrentUser);

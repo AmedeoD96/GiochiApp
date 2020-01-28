@@ -182,7 +182,6 @@ public class DatabaseManager {
 
     // salva gli utenti nel database locale controllando se ci sono state modifiche dall'ultimo salvatagio
     public void saveUsersIntoLocalDB(Map<String, User> precUsers, Map<String, User> users) {
-        Log.i("DATABASE_DEBUG", "Cloning db");
 
         for (Map.Entry<String, User> user : users.entrySet()) {
             String currentUserKey = user.getKey();
@@ -194,14 +193,12 @@ public class DatabaseManager {
 
                 // controlla quale utente è più aggiornato e lo salva
                 if(currentUser.isMoreUpdatedThan(precUser)) {
-                    Log.i("DATABASE_DEBUG", "Cloning user more update: \ncurrent user: " + currentUser.toString() + "\nprec user: "+precUser.toString());
 
                     localDatabase.saveUser(currentUserKey, currentUser);
                 }
             }
             // se l'utente non è presente nei precedenti lo salva nel database locale
             else {
-                Log.i("DATABASE_DEBUG", "Cloning not contained user into db: " + currentUser);
 
                 localDatabase.saveUser(currentUserKey, currentUser);
             }
