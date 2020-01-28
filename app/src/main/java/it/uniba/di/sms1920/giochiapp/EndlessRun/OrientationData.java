@@ -59,7 +59,7 @@ public class OrientationData implements SensorEventListener {
         } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
             magOutput = event.values;
         }
-        //se i valori ottenuti dai sensori fossero diversi da null si ottiene il booleano risultante da
+        //se i valori ottenuti dai sensori fossero diversi da null si otterrebbe il booleano risultante da
         //getRotationManager: se un array di 3 float contiene il vettore geomagnetico nelle coordinate del dispositivo
         //il boolean è usato per ottenere l'orientation del SensorManager
         //l'orientation viene poi inizializzata come un vettore di float

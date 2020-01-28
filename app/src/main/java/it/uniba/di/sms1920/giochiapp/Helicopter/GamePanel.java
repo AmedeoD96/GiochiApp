@@ -54,6 +54,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private boolean started;
 
     private int numberMissilesSurpassed = 0;
+    private int lastNumberOfMissilesSurpassed = 0;
+
+    public int getLastNumberOfMissilesSurpassed() {
+        return lastNumberOfMissilesSurpassed;
+    }
+
+    public void setLastNumberOfMissilesSurpassed(int lastNumberOfMissilesSurpassed) {
+        this.lastNumberOfMissilesSurpassed = lastNumberOfMissilesSurpassed;
+    }
+
 
 
     BitmapFactory.Options o = new BitmapFactory.Options();
@@ -353,9 +363,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint1.setTextSize(20);
             canvas.drawText(getContext().getString(R.string.goUp),WIDTH/2-50,HEIGHT/2+20,paint1);
             canvas.drawText(getContext().getString(R.string.goDown),WIDTH/2-50,HEIGHT/2+40,paint1);
-            if(user.getNumberMissilesSurpassed() != 0) {
+            if(getLastNumberOfMissilesSurpassed() != 0) {
                 Resources res = getResources();
-                String numberMissiles = res.getQuantityString(R.plurals.numberOfMissilesSurpassed, user.getNumberMissilesSurpassed(), user.getNumberMissilesSurpassed());
+                String numberMissiles = res.getQuantityString(R.plurals.numberOfMissilesSurpassed, getLastNumberOfMissilesSurpassed(), getLastNumberOfMissilesSurpassed());
                 canvas.drawText(numberMissiles, WIDTH/2-50,HEIGHT/2+60,paint1);
             }
         }
@@ -380,7 +390,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //viene salvato il punteggio massimo
         User user = UsersManager.getInstance().getCurrentUser();
         int highScore = user.scoreHelicopter;
-        user.setNumberMissilesSurpassed(numberMissilesSurpassed);
+        setLastNumberOfMissilesSurpassed(numberMissilesSurpassed);
         numberMissilesSurpassed = 0;
 
         if(highScore<player.getScore()) {
