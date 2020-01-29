@@ -2,7 +2,6 @@ package it.uniba.di.sms1920.giochiapp.Database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import java.util.Map;
 
@@ -76,8 +75,6 @@ public class DatabaseManager {
 
     // caricamento di uno specifico utente
     public void loadUser(final String userId, final IGameDatabase.OnUserLoadedListener userLoadedListener) {
-        Log.i("DATABASE_DEBUG", "load user: " + userId);
-
         // carica l'utente dal database locale
         localDatabase.loadUser(userId, new IGameDatabase.OnUserLoadedListener() {
 
@@ -88,14 +85,11 @@ public class DatabaseManager {
             public void onUserLoaded(String id, final User userLocal) {
                 hasLoadLocally = true;
 
-                Log.i("DATABASE_DEBUG", "using Remote: "+!useLocalVsRemote+" User local loaded: " + userLocal.toString());
-
                 // se deve usare il database remoto scarica l'utente dal databse remoto
                 if(!useLocalVsRemote) {
                     remoteDatabase.loadUser(id, new IGameDatabase.OnUserLoadedListener() {
                         @Override
                         public void onUserLoaded(String id, User user) {
-                            Log.i("DATABASE_DEBUG", "User local more updated of remote: " +userLocal.isMoreUpdatedThan(user)+ "\nLocal user: "+ userLocal.toString() + "\nRemote user" + user.toString());
 
                             // contolla quale utente è più aggiornato se quello locale oppure quello remoto e lo passa alla callback
                             if(userLocal.isMoreUpdatedThan(user)) {
@@ -107,8 +101,6 @@ public class DatabaseManager {
 
                         @Override
                         public void onLoadCompleted() {
-                            Log.i("DATABASE_DEBUG", "user remote completed");
-
                             // finisce il caricamento dell'utente
                             userLoadedListener.onLoadCompleted();
                         }
@@ -118,8 +110,6 @@ public class DatabaseManager {
 
             @Override
             public void onLoadCompleted() {
-                Log.i("DATABASE_DEBUG", "user local completed need continue: " + (hasLoadLocally && useLocalVsRemote) + " Use local vs remote: " + useLocalVsRemote);
-
                 // se ha caricato l'utente dal database locale è deve usare il database locale
                 if(hasLoadLocally && useLocalVsRemote) {
 
@@ -133,14 +123,11 @@ public class DatabaseManager {
                     remoteDatabase.loadUser(userId, new IGameDatabase.OnUserLoadedListener() {
                         @Override
                         public void onUserLoaded(String id, User user) {
-                            Log.i("DATABASE_DEBUG", "Remote user" + user.toString());
                             userLoadedListener.onUserLoaded(id, user);
                         }
 
                         @Override
                         public void onLoadCompleted() {
-                            Log.i("DATABASE_DEBUG", "user remote completed");
-
                             // finisce il caricamento dell'utente
                             userLoadedListener.onLoadCompleted();
                         }
@@ -207,7 +194,6 @@ public class DatabaseManager {
 
     // rimuove un utente dal database locale
     public void removeUserFromLocalDB(String id) {
-        Log.i("DATABASE_DEBUG", "Removing local user with id: " + id);
         localDatabase.removeUser(id);
     }
 

@@ -97,12 +97,8 @@ public class UsersManager {
 
 
     public void setIdCurrentUser(String idCurrentUser) {
-        Log.i("USER_DEBUG", "Trying to set new user id: " + idCurrentUser);
-
         // se l'id dell'utente attuale è quello di default viene rimosso e sostituito con l'utente corrente con l'id corretto
         if(this.idCurrentUser.equals(DEFAULT_ID) ) {
-
-            Log.i("USER_DEBUG", "Removing current id from database " + this.idCurrentUser);
             DatabaseManager.getInstance().removeUserFromLocalDB(this.idCurrentUser);
 
             if( allUsers.containsValue(this.idCurrentUser)) {
@@ -119,7 +115,6 @@ public class UsersManager {
 
 
     public void saveCurrentUser() {
-        Log.i("USER_DEBUG", "Save current user");
         User user = getCurrentUser();
         user.updateUser();
         DatabaseManager.getInstance().saveUser(idCurrentUser, user);
@@ -227,8 +222,6 @@ public class UsersManager {
 
 
     private void internalLoadUsers(final IUsersLoadedCallback usersLoadedCallback) {
-        Log.i("DATABASE_DEBUG", "reload users");
-
         final DatabaseManager db = DatabaseManager.getInstance();
         // caricamento dell'id dell'utente corrente
         String id = loadCurrentUserID();
@@ -239,8 +232,6 @@ public class UsersManager {
         db.loadUser(id, new IGameDatabase.OnUserLoadedListener() {
             @Override
             public void onUserLoaded(String id, User user) {
-                Log.i("USER_DEBUG", "user id: " +id+ " user: " + user);
-
                 // quando l'utente corrente viene caricato viene salvato
                 allUsers.put(id, user);
                 db.saveUser(id, user);
@@ -259,8 +250,6 @@ public class UsersManager {
                     @Override
                     public void onLoadCompleted() {
                         final User user = getCurrentUser();
-
-                        Log.i("USER_DEBUG", "On load completed current user id: " + idCurrentUser + "user: " + user);
 
                         // registra la callback della modifica dell'utente corrente
                         user.setOnChangeCallback(userListener);

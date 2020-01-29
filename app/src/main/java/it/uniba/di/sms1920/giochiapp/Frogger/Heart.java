@@ -3,7 +3,6 @@ package it.uniba.di.sms1920.giochiapp.Frogger;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.util.Log;
 
  class Heart {
 
@@ -70,7 +69,6 @@ import android.util.Log;
             default:
                 break;
         }
-        Log.d("Lives: ", lives+"");
     }
 
     /*Metodo che disegna gli oggetti di tipo Heart

@@ -42,15 +42,12 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
 
         //si ottiene il tipo di connessione
         final int status = NetworkUtil.getConnectivityStatusString(context);
-        //Log.i("NetworkDebug", "Connection status: " + status);
 
         String CONNECTIVITY_CHANGE = "android.net.conn.CONNECTIVITY_CHANGE";
         if (CONNECTIVITY_CHANGE.equals(intent.getAction())) {
             //se il tipo di connessione dovesse cambiare in corso d'opera, allora si assegna allo stato della connessione
             //la variabile che indica il "non connesso"
             boolean isNetworkPresent = status == NetworkUtil.NETWORK_STATUS_NOT_CONNECTED;
-
-            //DatabaseManager.getInstance().setUseLocalVsRemote(isNetworkPresent);
 
             //in caso di cambiamenti della connessione verrebbero aggiornate tutte le callback
             for (INetworkCallback networkCallback : networkCallbacks) {

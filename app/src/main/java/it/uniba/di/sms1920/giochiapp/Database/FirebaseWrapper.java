@@ -1,8 +1,6 @@
 package it.uniba.di.sms1920.giochiapp.Database;
 
 
-import android.util.Log;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,13 +59,11 @@ public class FirebaseWrapper implements IGameDatabase {
                     //caricamento del singolo utente
                     onUserLoadedListener.onUserLoaded(data.getKey(), value);
                 }
-                Log.i("FIREBASE_TEST", "firebase load completed");
                 onUserLoadedListener.onLoadCompleted();
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Log.i("FIREBASE_TEST", "firebase load completed error");
                 onUserLoadedListener.onLoadCompleted();
             }
         });
@@ -80,16 +76,11 @@ public class FirebaseWrapper implements IGameDatabase {
 
         // ascoltatore per il cambiamento di un valore applicato solo una volta,
         // in modo tale da poterne aggiunge altri dopo senza che siano cumulativi
-        Log.i("FirebaseTest", "trying load user: "+userId);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.i("FirebaseTest", "Load user");
-
                 // cerca l'utente da caricare
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
-
-                    Log.i("FirebaseTest", "User key " +data.getKey()+ " == User searched " +userId+ " = " + (data.getKey().equals(userId)));
                     if(data.getKey().equals(userId)) {
 
                         User value = data.getValue(User.class);

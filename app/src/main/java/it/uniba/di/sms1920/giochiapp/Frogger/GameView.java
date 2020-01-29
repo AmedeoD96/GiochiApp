@@ -5,14 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.text.TextPaint;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -21,7 +19,6 @@ import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Timer;
 
 import it.uniba.di.sms1920.giochiapp.GlobalApplicationContext;
 import it.uniba.di.sms1920.giochiapp.R;
@@ -317,8 +314,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     frog.setxVel(0);
 
                     soundPool_walking.play(walkId,1,1,1,0,1);
-
-                    Log.d("Direction", "Up");
                 }
                 else if ((angle > 135 && angle < 225)&& frog.getX()>LEFT_BOUNDS){
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogsx));
@@ -326,7 +321,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     frog.setxVel(0);
 
                     soundPool_walking.play(walkId,1,1,1,0,1);
-                    Log.d("Direction", "Left");
                 }
                 else if ((angle > 45 && angle < 135)&& frog.getY()<BOTTOM_BOUNDS){
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogdown));
@@ -334,7 +328,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     frog.setxVel(0);
 
                     soundPool_walking.play(walkId,1,1,1,0,1);
-                    Log.d("Direction", "Down");
                 }
                 else if(frog.getX()<RIGHT_BOUNDS){
                     frog.setBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.frogright));
@@ -342,7 +335,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                     frog.setxVel(0);
 
                     soundPool_walking.play(walkId,1,1,1,0,1);
-                    Log.d("Direction", "Right");
                 }
 
 

@@ -2,7 +2,7 @@ package it.uniba.di.sms1920.giochiapp.Frogger;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.util.Log;
+
 
 public class AnimationManager {
     private Animation[] animations;
@@ -30,7 +30,6 @@ public class AnimationManager {
     //la funzione disegna una Animation a partire da un Rect
     //viene disegnata solamente la animazione in esecuzione
     public void draw(Canvas canvas, Rect rect) {
-        Log.i("isplaying", String.valueOf(animations[animationIndex].isPlaying()));
         if (animations[animationIndex].isPlaying()) {
             animations[animationIndex].draw(canvas, rect);
         }
