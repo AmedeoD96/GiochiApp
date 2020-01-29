@@ -377,12 +377,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
                 logRows[i].get(ii).draw(canvas);
 
                 //se un log va a velocità -1 ed è fuori dallo schermo(verso un estremo), rimuovi il log dalla lista
-                if ((Math.signum(logRows[i].get(ii).getxVel())==-1)&&((logRows[i].get(ii).getX()<0-logBitmap.getWidth()))){
+                if ((Math.signum(logRows[i].get(ii).getxVel()) == -1) && ((logRows[i].get(ii).getX() < 0 - logBitmap.getWidth()))){
                     remove[i].add(ii);
                 }
 
                 //se un log va a velocità 1 ed è fuori dallo schermo (dall'altro estremo), rimuovi il log dalla lista
-                else if ((Math.signum(logRows[i].get(ii).getxVel())==1)&&((logRows[i].get(ii).getX()>canvas.getWidth()))){
+                else if ((Math.signum(logRows[i].get(ii).getxVel()) == 1) && ((logRows[i].get(ii).getX() > canvas.getWidth()))){
                     remove[i].add(ii);
                 }
             }
@@ -421,8 +421,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         spawnLogs(System.currentTimeMillis(), canvas);
         Paint paint = new Paint();
         paint.setColor(Color.GREEN);
-        upperGrass = new Rect(0,(LOGSTRIP-2)*logBitmap.getHeight(),canvas.getWidth(),canvas.getHeight());
-        lowerGrass = new Rect(0,0,canvas.getWidth(),logBitmap.getHeight()*2);
+        upperGrass = new Rect(0, (LOGSTRIP - 2) * logBitmap.getHeight(), canvas.getWidth(), canvas.getHeight());
+        lowerGrass = new Rect(0, 0, canvas.getWidth(), logBitmap.getHeight() * 2);
         animationManagerGrass.draw(canvas,upperGrass);
         animationManagerGrass.draw(canvas,lowerGrass);
         drawLogs(canvas);
@@ -433,11 +433,11 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         textPaint.setColor(Color.BLACK);
         textPaint.setTextSize(150);
 
-        canvas.drawText(String.valueOf(points), canvas.getWidth()-logBitmap.getWidth(), logBitmap.getHeight()+50, textPaint);
+        canvas.drawText(String.valueOf(points), canvas.getWidth() - logBitmap.getWidth(), logBitmap.getHeight() + 50, textPaint);
 
 
         //qui cambia il colore nel caso di morte e imposta il game over
-        if(heart.getdead()==true){
+        if(heart.getdead() == true){
 
             Context context = GlobalApplicationContext.getAppContext();
             Typeface customTypeface = ResourcesCompat.getFont(context, R.font.mariokartds);
@@ -454,7 +454,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             int yPos = (int) ((canvas.getHeight() / 2) - ((paintDeath.descent() + paintDeath.ascent()) / 2)) ;
 
             canvas.drawText(getContext().getString(R.string.game_over), xPos, yPos, paintDeath);
-            canvas.drawText("high score",xPos,yPos+200,paintDeath);
+            canvas.drawText(getContext().getString(R.string.high_score_game), xPos, yPos+200,paintDeath);
             canvas.drawText(String.valueOf(user.scoreFrogger), xPos, 400+ yPos, paintDeath);
 
 

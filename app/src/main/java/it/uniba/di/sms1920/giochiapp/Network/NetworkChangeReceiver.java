@@ -25,15 +25,9 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
         return _instance;
     }
 
-
     //aggiunge una callback
     public void registerCallback(INetworkCallback callback) {
         networkCallbacks.add(callback);
-    }
-
-    //mai usato
-    public boolean removeCallback(INetworkCallback callback) {
-        return networkCallbacks.remove(callback);
     }
 
 

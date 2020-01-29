@@ -103,7 +103,7 @@ public class GlobalScoreboard extends AppCompatActivity {
 
     /*Metodo che ritorna la lista degli elementi che compongono la scoreboard*/
     private List<ParentObject> initData() {
-        TitleCreator titleCreator = TitleCreator.get(this);
+        TitleCreator titleCreator = TitleCreator.get();
         List<ParentObject> parentObject = new ArrayList<>();
         titleCreator.clearTitles();
 
@@ -126,7 +126,7 @@ public class GlobalScoreboard extends AppCompatActivity {
             /*Set del titolo dell'elemento della leaderboard. Contiene la posizione in classifica, il nome utente, il suo punteggio
             * una variabile boolean che viene usata per evidenziare il testo solo se si tratta dell'utente corrente e l'indice
             * dell'elemento della recyclerView che viene usato per lo scorll automatico della recyclerView quando si clicca sul bottone*/
-            TitleParent title = new TitleParent(count + "°   "  + user.name, user.getTotalScore(), isCurrentUser, position, R.drawable.ic_keyboard_arrow_down_float, R.drawable.trophy);
+            TitleParent title = new TitleParent(count + "°   "  + user.name, user.getTotalScore(), isCurrentUser, position);
 
             position++;
             count++;
@@ -135,11 +135,11 @@ public class GlobalScoreboard extends AppCompatActivity {
             List<Object> childList = new ArrayList<>();
 
             childList.add(new TitleChild(
-                            "Tetris",
-                            "2048",
-                            "Alien Run",
-                            "Rocket",
-                            "Frogger",
+                            GameHelper.getGameName(GameHelper.Games.TETRIS),
+                            GameHelper.getGameName(GameHelper.Games.GAME_2048),
+                            GameHelper.getGameName(GameHelper.Games.ENDLESS),
+                            GameHelper.getGameName(GameHelper.Games.HELICOPTER),
+                            GameHelper.getGameName(GameHelper.Games.FROGGER),
                             user.scoreTetris,
                             user.score2048,
                             user.scoreAlienrun,

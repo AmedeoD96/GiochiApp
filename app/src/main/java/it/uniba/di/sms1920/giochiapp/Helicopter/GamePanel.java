@@ -33,6 +33,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public static final int HEIGHTEXPLOSION = 100;
     public static final int WIDTHEXPLOSION = 100;
     public static final int FRAMESEXPLOSION = 24;
+
     private long SmokeStartTime;
     private long missileStartTime;
     private MainThread thread;
@@ -156,15 +157,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             // aumentare per rallentare l'aumentare della difficoltà, diminuire per rallentare l'aumentare della difficoltà
             //indica quanto debbano essere grandi i muri, al massimo metà dello schermo
             int progressDenom = 20;
-            maxBorderHeight=30+ player.getScore()/ progressDenom;
-            if(maxBorderHeight>HEIGHT/4)maxBorderHeight=HEIGHT/4;
-            minBorderHeight=5+player.getScore()/ progressDenom;
+            maxBorderHeight = 30 + player.getScore()/ progressDenom;
+            if(maxBorderHeight > HEIGHT / 4) {
+                maxBorderHeight= HEIGHT / 4;
+            }
+            minBorderHeight = 5 + player.getScore() / progressDenom;
 
             User user = UsersManager.getInstance().getCurrentUser();
 
             //controlla la collisione con il bordo inferiore
-            for(int i=0;i<bottomBorders.size();i++){
-                if(collision(bottomBorders.get(i),player)){
+            for(int i=0; i < bottomBorders.size(); i++){
+                if(collision(bottomBorders.get(i), player)){
                     player.setPlaying(false);
 
                     int highScore = user.scoreHelicopter;
@@ -176,7 +179,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 }
             }
             //controlla la collisione con il bordo superiore
-            for(int i=0;i<topBorders.size();i++){
+            for(int i=0; i < topBorders.size(); i++){
                 if(collision(topBorders.get(i),player)){
                     player.setPlaying(false);
 
@@ -194,38 +197,38 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             //update del bordo inferiore
             this.updateBottomborder();
             //si aggiungono i missili in base al tempo
-            long missilesElapsed= (System.nanoTime()-missileStartTime)/1000000;
-            if(missilesElapsed>(2000-player.getScore()/4)){
+            long missilesElapsed= (System.nanoTime()-missileStartTime) / 1000000;
+            if(missilesElapsed>(2000 - player.getScore() / 4)){
                 //il primo missile è sempre al centro
                 if(missiles.size()==0){
                     missiles.add(new Missile(BitmapFactory.decodeResource(getResources(),R.drawable.
-                            missile, o),WIDTH+10,HEIGHT/2,WIDTHMISSILE,HEIGHTMISSILE,player.getScore(), FRAMESMISSILE));
+                            missile, o), WIDTH + 10, HEIGHT / 2, WIDTHMISSILE, HEIGHTMISSILE, player.getScore(), FRAMESMISSILE));
                 }
                 else {
                     missiles.add(new Missile(BitmapFactory.decodeResource(getResources(),R.drawable.missile, o),
-                            WIDTH+10,(int)(rand.nextDouble()*(HEIGHT-(maxBorderHeight*2)+maxBorderHeight)), WIDTHMISSILE, HEIGHTMISSILE,player.getScore(),FRAMESMISSILE));
+                            WIDTH + 10, (int)(rand.nextDouble() * (HEIGHT - (maxBorderHeight * 2) + maxBorderHeight)), WIDTHMISSILE, HEIGHTMISSILE,player.getScore(),FRAMESMISSILE));
                 }
                 //resetta il timer
                 missileStartTime= System.nanoTime();
             }
             //scorre attraverso ogni missile e controlla che la collisione sia avvenuta
-            for(int i=0;i<missiles.size();i++){
+            for(int i=0; i < missiles.size(); i++){
                 //aggiorna i missili
                 missiles.get(i).update();
-                if(collision(missiles.get(i),player)){
+                if(collision(missiles.get(i), player)){
                     missiles.remove(i);
                     player.setPlaying(false);
 
                     //si controlla l'highscore
                     int highScore = user.scoreHelicopter;
 
-                    if(highScore<player.getScore()) {
+                    if(highScore < player.getScore()) {
                         user.setScoreHelicopter(player.getScore());
                     }
                     break;
                 }
                 //i missili fuori dallo schermo vengono rimossi
-                if(missiles.get(i).getX()<-100){
+                if(missiles.get(i).getX() < -100){
                     missiles.remove(i);
                     numberMissilesSurpassed++;
                     break;
@@ -234,15 +237,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             //viene aggiunto il fumo e si crea una nuova immagine in base al tempo trascorso
-            long elapsed=(System.nanoTime()-SmokeStartTime)/1000000;
-            if(elapsed>120){
-                smoke.add(new Smokepuff(player.getX(),player.getY()+10));
+            long elapsed = (System.nanoTime() - SmokeStartTime) / 1000000;
+            if(elapsed > 120){
+                smoke.add(new Smokepuff(player.getX(),player.getY() + 10));
                 SmokeStartTime= System.nanoTime();
             }
             //se l'immagine va fuori dallo schermo viene rimossa
-            for (int i=0;i<smoke.size();i++){
+            for (int i=0; i < smoke.size(); i++){
                 smoke.get(i).update();
-                if(smoke.get(i).getX()<-10){
+                if(smoke.get(i).getX() < -10){
                     smoke.remove(i);
                 }
             }
@@ -259,10 +262,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
                 explosion = new Explosion(BitmapFactory.decodeResource(getResources(),R.drawable.explosion, o),player.getX(),player.getY()-30,WIDTHEXPLOSION,HEIGHTEXPLOSION,FRAMESEXPLOSION);
             }
-            long resetElapsed=(System.nanoTime()-startReset)/1000000;
+            long resetElapsed = (System.nanoTime() - startReset) / 1000000;
             explosion.update();
 
-            if(resetElapsed<2500 && !newGamecreated){
+            if(resetElapsed < 2500 && !newGamecreated){
                 newGame();
             }
         }
@@ -270,12 +273,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public void updateBottomborder() {
         //update del bordo inferiore
-        for (int i=0;i<bottomBorders.size();i++){
+        for (int i=0; i < bottomBorders.size(); i++){
             bottomBorders.get(i).update();
             //se il bordo esce dallo schermo, viene rimosso
-            if(bottomBorders.get(i).getX()<-20){
+            if(bottomBorders.get(i).getX() < -20){
                 bottomBorders.remove(i);
-                bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(), R.drawable.brick, o),bottomBorders.get(bottomBorders.size()-1).getX()+20,HEIGHT-minBorderHeight,200));
+                bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(), R.drawable.brick, o),bottomBorders.get(bottomBorders.size() - 1).getX() + 20,HEIGHT - minBorderHeight,200));
             }
         }
     }
@@ -283,11 +286,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void updateTopborder() {
         for(int i=0;i<topBorders.size();i++){
             topBorders.get(i).update();
-            if(topBorders.get(i).getX()<-20){
+            if(topBorders.get(i).getX() < -20){
                 topBorders.remove(i);
                 //rimuove gli elementi di un arraylist, ne aggiunge di nuovi
                 topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),
-                        topBorders.get(topBorders.size()-1).getX()+20,0,10));
+                        topBorders.get(topBorders.size() - 1).getX() + 20,0,10));
             }
         }
     }
@@ -351,22 +354,22 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(30);
         paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         //viene attuato un draw del testo
-        canvas.drawText(getContext().getString(R.string.distance)+ player.getScore(),10,HEIGHT-10,paint);
-        canvas.drawText(getContext().getString(R.string.best)+ best,10,HEIGHT-430,paint);
+        canvas.drawText(getContext().getString(R.string.distance) + player.getScore(),10,HEIGHT - 10, paint);
+        canvas.drawText(getContext().getString(R.string.best) + best,10,HEIGHT - 430,paint);
 
-        if(!player.getPlaying()&&newGamecreated&&reset){
+        if(!player.getPlaying() && newGamecreated && reset){
             //nella schermata di start
             Paint paint1=new Paint();
             paint1.setTextSize(40);
             paint1.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
             canvas.drawText(getContext().getString(R.string.pressToStart), WIDTH / 2 - 50, HEIGHT / 2, paint1);
             paint1.setTextSize(20);
-            canvas.drawText(getContext().getString(R.string.goUp),WIDTH/2-50,HEIGHT/2+20,paint1);
-            canvas.drawText(getContext().getString(R.string.goDown),WIDTH/2-50,HEIGHT/2+40,paint1);
+            canvas.drawText(getContext().getString(R.string.goUp),WIDTH / 2 - 50,HEIGHT / 2 + 20,paint1);
+            canvas.drawText(getContext().getString(R.string.goDown),WIDTH / 2 - 50,HEIGHT / 2 + 40,paint1);
             if(getLastNumberOfMissilesSurpassed() != 0) {
                 Resources res = getResources();
                 String numberMissiles = res.getQuantityString(R.plurals.numberOfMissilesSurpassed, getLastNumberOfMissilesSurpassed(), getLastNumberOfMissilesSurpassed());
-                canvas.drawText(numberMissiles, WIDTH/2-50,HEIGHT/2+60,paint1);
+                canvas.drawText(numberMissiles, WIDTH / 2 - 50,HEIGHT / 2 + 60,paint1);
             }
         }
 
@@ -381,8 +384,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         smoke.clear();
 
         //altezza minima e massima del bordo
-        minBorderHeight=5;
-        maxBorderHeight=30;
+        minBorderHeight = 5;
+        maxBorderHeight = 30;
 
         //posizione di partenza del giocatore
         player.setY(HEIGHT / 2);
@@ -401,25 +404,25 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         //creazione dei bordi iniziali
         //bordo superiore
-        for (int i=0;i*20<WIDTH+40;i++){
+        for (int i = 0; i * 20 < WIDTH + 40; i++){
             //creato primo bordo superiore
-            if(i==0){
-                topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,0,10));
+            if(i == 0){
+                topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o), i *20, 0, 10));
             }
             //aggiunti bordi finchè lo schermo iniziale è pieno
             else {
-                topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,0,10));
+                topBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o), i * 20, 0, 10));
             }
         }
         //bordo inferiore
-        for (int i=0;i*20<WIDTH+40;i++){
+        for (int i = 0; i * 20 < WIDTH + 40; i++){
             //primo bordo inferiore creato
-            if(i==0){
-                bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,HEIGHT-minBorderHeight,200));
+            if(i == 0){
+                bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o), i * 20, HEIGHT - minBorderHeight, 200));
             }
             //aggiunti bordi finchè lo schermo iniziale è pieno
             else {
-                bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o),i*20,HEIGHT-minBorderHeight,200));
+                bottomBorders.add(new Border(BitmapFactory.decodeResource(getResources(),R.drawable.brick, o), i * 20, HEIGHT - minBorderHeight, 200));
             }
         }
         newGamecreated=true;

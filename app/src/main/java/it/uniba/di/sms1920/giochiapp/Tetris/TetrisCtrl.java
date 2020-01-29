@@ -19,6 +19,10 @@ import it.uniba.di.sms1920.giochiapp.UsersManager;
 
 public class TetrisCtrl extends View {
     Context context;
+    final int EMPTY_WHAT_MESSAGE = 0;
+    final long SMALL_TIME = 10;
+    final long LARGE_TIME = 1000;
+
     final int MatrixSizeH = 10;
     final int MatrixSizeV = 18;
     final int DirRotate = 0;
@@ -87,7 +91,6 @@ public class TetrisCtrl extends View {
         mNewBlockPos.y = MatrixSizeV - mNewBlockArea;
 
         int blockType = random();
-        //blockType = 6;
 
         switch(blockType) {
             case 1:
@@ -356,9 +359,9 @@ public class TetrisCtrl extends View {
 
     //si incrementa la velocità e si pone il blocco velocemente in basso
     public void block2Bottom() {
-        mTimerFrame.removeMessages(0);
+        mTimerFrame.removeMessages(EMPTY_WHAT_MESSAGE);
         mTimerGap = TimerGapFast;
-        mTimerFrame.sendEmptyMessageDelayed(0, 10);
+        mTimerFrame.sendEmptyMessageDelayed(EMPTY_WHAT_MESSAGE, SMALL_TIME);
     }
 
 
@@ -373,7 +376,7 @@ public class TetrisCtrl extends View {
         if( mDlgMsg != null )
             return;
 
-        mTimerFrame.sendEmptyMessageDelayed(0, 1000);
+        mTimerFrame.sendEmptyMessageDelayed(EMPTY_WHAT_MESSAGE, LARGE_TIME);
     }
 
     public void startGame() {
@@ -392,7 +395,7 @@ public class TetrisCtrl extends View {
         //si setta il timer
         TimerGapNormal = TimerGapStart;
         //vengono mandati messaggi vuoti ad intervalli regolari
-        mTimerFrame.sendEmptyMessageDelayed(0, 10);
+        mTimerFrame.sendEmptyMessageDelayed(EMPTY_WHAT_MESSAGE, SMALL_TIME);
     }
 
     /*** Interface end ***/

@@ -1,11 +1,8 @@
 package it.uniba.di.sms1920.giochiapp.EndlessRun;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -31,19 +28,18 @@ public class GameplayScene implements Scene {
 
     private OrientationData orientationData;
     private long frameTime;
-    //Context context = GlobalApplicationContext.getAppContext();
 
     //costruttore
     //crea il giocatore con una sua grandezza e con un suo colore di base
     //Genera dinamicamente il punto di partenza del giocatore in base alla grandezza dello schermo
     GameplayScene() {
-        player = new RectPlayer(new Rect(100,100,200,200), Color.rgb(255,0,0));
-        playerPoint = new Point(Constants.SCREEN_WIDTH/2,3*Constants.SCREEN_HEIGHT/4);
+        player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(255, 0, 0));
+        playerPoint = new Point(Constants.SCREEN_WIDTH / 2,3 * Constants.SCREEN_HEIGHT / 4);
         //il giocatore viene posto nel punto di partenza
         player.update(playerPoint);
 
         //crea l'èobstacleManager dando come parametri le misure degli ostacoli da generare il colore di base
-        obstacleManager = new ObstacleManager(300,550 ,150, Color.BLACK);
+        obstacleManager = new ObstacleManager(300, 550 , 150, Color.BLACK);
 
         //viene istanziato e registrato l'OrientationData.
         orientationData = new OrientationData();
@@ -54,10 +50,10 @@ public class GameplayScene implements Scene {
 
     //genera il punto di inizio e un nuovo Obstacle Manager in caso di reset della partita dopo il primo utilizzo
     private void reset() {
-        playerPoint = new Point(Constants.SCREEN_WIDTH/2,3*Constants.SCREEN_HEIGHT/4);
+        playerPoint = new Point(Constants.SCREEN_WIDTH / 2,3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
 
-        obstacleManager = new ObstacleManager(300,550,150, Color.BLACK);
+        obstacleManager = new ObstacleManager(300, 550, 150, Color.BLACK);
         movingPlayer = false;
     }
 
@@ -122,25 +118,12 @@ public class GameplayScene implements Scene {
             paint.setTextSize(200);
             paint.setARGB(255,255, 143, 10);
             paint.setTypeface(customTypeface);
-            //create le bitmap per le scritte di game over e highscore
-            //Bitmap gameOverImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.gameover);
-            //Bitmap highScoreImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.highscore);
-            //Matrix m = new Matrix();
-            //interi relativi al centro dello schermo
-            //int centreX = (canvas.getWidth()  - gameOverImg.getWidth()) /2;
-            //int centreY = (canvas.getHeight() - gameOverImg.getHeight()) /2;
-            //gameOverImg = Bitmap.createBitmap(gameOverImg, 0, 0, gameOverImg.getWidth(), gameOverImg.getHeight(), m, false);
-            //highScoreImg = Bitmap.createBitmap(highScoreImg,0,0, highScoreImg.getWidth(),highScoreImg.getHeight(),m,false);
-            //drawCenterText(canvas, paint, "Game Over\nHigh score: " + highScore); Il \n non funziona quando si disegna un canvas.
             paint.setTextAlign(Paint.Align.CENTER);
             int xPos = (canvas.getWidth() / 2);
             int yPos = (int) ((canvas.getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)) ;
-            //canvas.drawText("Game Over", xPos, yPos, paint);
-            //canvas.drawBitmap(gameOverImg,centreX,centreY,paint);
-            //canvas.drawBitmap(highScoreImg,centreX+150,centreY+170,paint);
-            canvas.drawText("game over", xPos, yPos, paint);
-            canvas.drawText("high score",xPos,yPos+200,paint);
-            canvas.drawText(String.valueOf(user.scoreAlienrun), xPos, 400+ yPos, paint);
+            canvas.drawText(context.getString(R.string.game_over), xPos, yPos, paint);
+            canvas.drawText(context.getString(R.string.high_score_game), xPos, yPos + 200, paint);
+            canvas.drawText(String.valueOf(user.scoreAlienrun), xPos, 400 + yPos, paint);
 
         }
     }
@@ -159,8 +142,8 @@ public class GameplayScene implements Scene {
                 float pitch = orientationData.getOrientation()[1]- orientationData.getStartOrientation()[1];
                 float roll =  orientationData.getOrientation()[2]- orientationData.getStartOrientation()[2];
 
-                float xSpeed = 2*roll* Constants.SCREEN_WIDTH/1000f;
-                float ySpeed = pitch * Constants.SCREEN_HEIGHT/1000f;
+                float xSpeed = 2 * roll * Constants.SCREEN_WIDTH / 1000f;
+                float ySpeed = pitch * Constants.SCREEN_HEIGHT / 1000f;
 
                 playerPoint.x += Math.abs(xSpeed*elapsedTime) > 5 ? xSpeed*elapsedTime : 0;
                 playerPoint.y += Math.abs(ySpeed*elapsedTime) > 5 ? ySpeed*elapsedTime : 0;

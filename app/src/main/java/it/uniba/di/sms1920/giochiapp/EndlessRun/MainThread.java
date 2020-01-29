@@ -28,7 +28,7 @@ public class MainThread extends Thread {
         long waitTime;
         long frameCount = 0;
         long totalTIme = 0;
-        long targetTime = 1000/MAX_FPS;
+        long targetTime = 1000 / MAX_FPS;
 
         while(running) {
             //otteniamo il tempo di avvio del gioco
@@ -53,7 +53,7 @@ public class MainThread extends Thread {
                     }
                 }
             }
-            timeMillis = (System.nanoTime() - startTime )/1000000;
+            timeMillis = (System.nanoTime() - startTime ) / 1000000;
             //il tempo di attesa è ottenuto dalla differenza tra il tempo scelto di default come target e il tempo di gioco in millisecondi
             waitTime = targetTime - timeMillis;
             try {

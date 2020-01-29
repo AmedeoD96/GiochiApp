@@ -22,8 +22,8 @@ public class Obstacle implements GameObject {
     Obstacle(int rectHeight, int color, int startX, int startY, int playerGap) {
         this.color = color;
         //vengono create le bitmap
-        rectangle = new Rect(0, startY, startX, startY+rectHeight);
-        rectangle2 = new Rect(startX + playerGap, startY, Constants.SCREEN_WIDTH, startY+rectHeight);
+        rectangle = new Rect(0, startY, startX, startY + rectHeight);
+        rectangle2 = new Rect(startX + playerGap, startY, Constants.SCREEN_WIDTH, startY + rectHeight);
 
         Bitmap obstacleGreenImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.snakeslime);
         Bitmap obstacleOrangeImg = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.snakelava);

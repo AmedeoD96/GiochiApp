@@ -12,30 +12,30 @@ public class Animation {
     //riceve in input un array di Bitmap
     //Predispone l'utilizzo dell'animation
     void setFrames(Bitmap[] frames){
-        this.frames=frames;
-        currentFrames=0;
-        startTimes= System.nanoTime();
+        this.frames = frames;
+        currentFrames = 0;
+        startTimes = System.nanoTime();
     }
-    void setDelay(long d){delay=d;}
+    void setDelay(long d){ delay = d;}
 
     public void update(){
         //aggiorna il tempo trascorso dall'inizio del gioco
-        long elapsed=(System.nanoTime()-startTimes)/1000000;
+        long elapsed = (System.nanoTime() - startTimes) / 1000000;
         //si passa al frame succesivo quando il tempo trascorso supera il delay
-        if(elapsed>delay){
+        if(elapsed > delay){
             currentFrames++;
-            startTimes= System.nanoTime();
+            startTimes = System.nanoTime();
         }
         //se ci trovassimo alla fine del vettore si ripartirebbe dal primo frame
-        if (currentFrames==frames.length){
-            currentFrames=0;
-            playedOnce=true;
+        if (currentFrames == frames.length){
+            currentFrames = 0;
+            playedOnce = true;
         }
     }
     //fa ripartire l'animazione
     void deleteAnimation(){
-        currentFrames=0;
-        playedOnce=true;
+        currentFrames = 0;
+        playedOnce = true;
     }
 
 
@@ -43,5 +43,5 @@ public class Animation {
         return frames[currentFrames];
     }
 
-    boolean playedOnce(){return playedOnce;}
+    boolean playedOnce() { return playedOnce; }
 }

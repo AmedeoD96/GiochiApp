@@ -1,7 +1,5 @@
 package it.uniba.di.sms1920.giochiapp;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

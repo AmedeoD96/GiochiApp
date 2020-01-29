@@ -4,6 +4,10 @@ import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
 public class MainThread extends Thread {
+
+    private final long SECONDS_IN_MILLISECONDS = 1000;
+    private final long MILLISECONDS_POW_2 = 1000000;
+
     private final SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
     private boolean running;
@@ -22,7 +26,7 @@ public class MainThread extends Thread {
         long totalTime=0;
         int frameCount=0;
         int FPS = 30;
-        long targetTime=1000/ FPS;
+        long targetTime = SECONDS_IN_MILLISECONDS / FPS;
         while (running){
             startTime= System.nanoTime();
             canvas=null;
@@ -46,8 +50,8 @@ public class MainThread extends Thread {
                     }
                 }
             }
-            timeMillis=(System.nanoTime()-startTime)/1000000;
-            waitTime=targetTime-timeMillis;
+            timeMillis = (System.nanoTime() - startTime) / MILLISECONDS_POW_2;
+            waitTime = targetTime - timeMillis;
             try {
                 //viene fermato il tempo di attesa nel thread
                 sleep(waitTime);
@@ -55,10 +59,10 @@ public class MainThread extends Thread {
 
             }
             //vengono aggiornati il counter dei frame e il tempo trascorso
-            totalTime+= System.nanoTime()-startTime;
+            totalTime+= System.nanoTime() - startTime;
             frameCount++;
-            if(frameCount== FPS){
-                double averageFPS = 1000 / ((totalTime / frameCount) / 1000000);
+            if(frameCount == FPS){
+                double averageFPS = SECONDS_IN_MILLISECONDS / ((totalTime / frameCount) / MILLISECONDS_POW_2);
                 frameCount=0;
                 totalTime=0;
                 System.out.println(averageFPS);

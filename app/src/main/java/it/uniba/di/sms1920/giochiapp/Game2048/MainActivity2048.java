@@ -21,6 +21,11 @@ public class MainActivity2048 extends AppCompatActivity {
     private static final String UNDO_GRID = "undo";
     private static final String GAME_STATE = "game state";
     private static final String UNDO_GAME_STATE = "undo game state";
+
+    private static final String INFO_PREFERENCE = "info";
+    private static final String SAVE_STATE_PREFERENCE = "save_state";
+    private static final String HAS_STATE_PREFERENCE = "hasState";
+
     private MainView view;
 
     MediaPlayer mMediaPlayer;
@@ -30,8 +35,8 @@ public class MainActivity2048 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         view = new MainView(this);
 
-        SharedPreferences settings = this.getSharedPreferences("info", MODE_PRIVATE);
-        view.hasSaveState = settings.getBoolean("save_state", false);
+        SharedPreferences settings = this.getSharedPreferences(INFO_PREFERENCE, MODE_PRIVATE);
+        view.hasSaveState = settings.getBoolean(SAVE_STATE_PREFERENCE, false);
 
         //avvio musica
         mMediaPlayer= MediaPlayer.create(MainActivity2048.this, R.raw.d2048sunrise);
@@ -40,7 +45,7 @@ public class MainActivity2048 extends AppCompatActivity {
 
         //si carica lo stato precedente di una partita in corso
         if (savedInstanceState != null) {
-            if (savedInstanceState.getBoolean("hasState")) {
+            if (savedInstanceState.getBoolean(HAS_STATE_PREFERENCE)) {
                 load();
             }
         }
@@ -73,7 +78,7 @@ public class MainActivity2048 extends AppCompatActivity {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         //salva lo stato della partita in corso
-        savedInstanceState.putBoolean("hasState", true);
+        savedInstanceState.putBoolean(HAS_STATE_PREFERENCE, true);
         save();
     }
 
@@ -82,7 +87,7 @@ public class MainActivity2048 extends AppCompatActivity {
     private void save() {
 
         // si salva lo stato della partita in corso
-        SharedPreferences settings = this.getSharedPreferences("info", MODE_PRIVATE);
+        SharedPreferences settings = this.getSharedPreferences(INFO_PREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
         //si creano le due Tile attuale e precedente
@@ -128,7 +133,7 @@ public class MainActivity2048 extends AppCompatActivity {
         view.game.aGrid.cancelAnimations();
 
         //caricamento dei valori nella schermata
-        SharedPreferences settings = getSharedPreferences("info", MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences(INFO_PREFERENCE, MODE_PRIVATE);
         for (int xx = 0; xx < view.game.grid.field.length; xx++) {
             for (int yy = 0; yy < view.game.grid.field[0].length; yy++) {
                 int value = settings.getInt(xx + " " + yy, -1);

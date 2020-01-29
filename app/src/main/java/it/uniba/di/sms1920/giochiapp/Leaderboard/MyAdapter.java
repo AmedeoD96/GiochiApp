@@ -24,6 +24,9 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
     private Context context = GlobalApplicationContext.getAppContext();
     private int lastPosition = 10;
 
+    private final float STRAIGHT_ROT = 0;
+    private final float FLIP_ROT = 180;
+
     // Contenitore delle singole righe della global leaderboard
     private Map<Integer, TitleParentViewHolder> usersTitles = new HashMap<>();
 
@@ -120,10 +123,8 @@ public class MyAdapter extends ExpandableRecyclerAdapter<TitleParentViewHolder,T
         if(title != null) {
 
             // ruota l'immagine se non ruotata, altrimenti la ruota
-            float STRAIGHT_ROT = 0;
             if(title._image.getRotation() == STRAIGHT_ROT) {
 
-                float FLIP_ROT = 180;
                 title._image.setRotation(FLIP_ROT);
             } else {
 

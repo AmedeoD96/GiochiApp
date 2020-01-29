@@ -102,19 +102,19 @@ public class GameList extends AppCompatActivity {
 
     /*Creazione della lista giochi*/
     private void createGameList(){
-        tetris = new Game("Tetris", getTetrisHighScore(), R.drawable.tetris_launch_app);
+        tetris = new Game(GameHelper.getGameName(GameHelper.Games.TETRIS), getTetrisHighScore(), R.drawable.tetris_launch_app);
         gameList.add(tetris);
 
-        game2048 = new Game("2048", get2048HighScore(), R.drawable.game2048);
+        game2048 = new Game(GameHelper.getGameName(GameHelper.Games.GAME_2048), get2048HighScore(), R.drawable.game2048);
         gameList.add(game2048);
 
-        alienRun = new Game("Alien Run", getScoreAlienRun(), R.drawable.endless);
+        alienRun = new Game(GameHelper.getGameName(GameHelper.Games.ENDLESS), getScoreAlienRun(), R.drawable.endless);
         gameList.add(alienRun);
 
-        rocket = new Game("Rocket", getRocketScore(), R.drawable.helicopterrun);
+        rocket = new Game(GameHelper.getGameName(GameHelper.Games.HELICOPTER), getRocketScore(), R.drawable.helicopterrun);
         gameList.add(rocket);
 
-        frogger = new Game("Frogger", getScoreFrogger(), R.drawable.frogger);
+        frogger = new Game(GameHelper.getGameName(GameHelper.Games.FROGGER), getScoreFrogger(), R.drawable.frogger);
         gameList.add(frogger);
     }
 

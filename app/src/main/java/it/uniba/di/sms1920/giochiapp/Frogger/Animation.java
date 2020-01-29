@@ -71,7 +71,7 @@ public class Animation {
         if(rect.width() > rect.height())
             rect.left = rect.right - (int)(rect.height() * whRatio);
         else
-            rect.top = rect.bottom - (int)(rect.width() * (1/whRatio));
+            rect.top = rect.bottom - (int)(rect.width() * (1 / whRatio));
     }
 
     //la funzione incrementa il frame index e aggiorna il lastFrane
@@ -80,7 +80,7 @@ public class Animation {
         if(!isPlaying)
             return;
 
-        if(System.currentTimeMillis() - lastFrame > frameTime*1000) {
+        if(System.currentTimeMillis() - lastFrame > frameTime * 1000) {
             frameIndex++;
             frameIndex = frameIndex >= frames.length ? 0 : frameIndex;
             lastFrame = System.currentTimeMillis();

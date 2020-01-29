@@ -4,7 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
 public class Player extends GameObject {
-    private static int XINITIALPOSITION = 100;
+    private static int XINITIAL_POSITION = 100;
+
     private int score;
     private boolean up;
     private boolean playing;
@@ -13,7 +14,7 @@ public class Player extends GameObject {
 
 
     Player(Bitmap res, int w, int h, int numFrames){
-        x=XINITIALPOSITION;
+        x= XINITIAL_POSITION;
         //il giocatore è creato a metà schermo
         y=GamePanel.HEIGHT/2;
         dy=0;

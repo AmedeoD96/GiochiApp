@@ -18,8 +18,6 @@ public class ObstacleManager {
 
     private int score = 0;
 
-    private Animation greenObstacle;
-    private Animation orangeObstacle ;
 
     ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int color) {
         this.playerGap = playerGap;
@@ -28,11 +26,7 @@ public class ObstacleManager {
         this.color = color;
 
         startTime = initTime = System.currentTimeMillis();
-
         obstacles = new ArrayList<>();
-
-
-        AnimationManager animManager = new AnimationManager(new Animation[]{greenObstacle, orangeObstacle});
 
         populateObstacles();
     }
@@ -64,15 +58,15 @@ public class ObstacleManager {
         }
         int elapsedTime = (int)(System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
-        float speed =(float)(Math.sqrt(1 + (startTime - initTime)/(2000.0)))*Constants.SCREEN_HEIGHT/(10000.0f);
+        float speed =(float)(Math.sqrt(1 + (startTime - initTime) / (2000.0f))) * Constants.SCREEN_HEIGHT / (10000.0f);
         for(Obstacle ob : obstacles) {
-            ob.incrementY((speed * elapsedTime)/2);
+            ob.incrementY((speed * elapsedTime) / 2);
             ob.update();
         }
         if(obstacles.get(obstacles.size()-1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
             int xstart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(0, new Obstacle(obstacleHeight, color, xstart, obstacles.get(0).getRectangle().top-obstacleHeight-obstacleGap,playerGap));
-            obstacles.remove(obstacles.size()-1);
+            obstacles.add(0, new Obstacle(obstacleHeight, color, xstart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
+            obstacles.remove(obstacles.size() - 1);
             score++;
 
         }

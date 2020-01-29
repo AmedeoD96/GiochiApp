@@ -43,7 +43,5 @@ public class Parent implements ParentObject {
     }
 
     @Override
-    public void setChildObjectList(List<Object> list) {
-
-    }
+    public void setChildObjectList(List<Object> list) { }
 }

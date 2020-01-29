@@ -1,7 +1,5 @@
 package it.uniba.di.sms1920.giochiapp.Leaderboard;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +7,14 @@ public class TitleCreator {
     private static TitleCreator _titleCreator;
     private List<TitleParent> _titleParents;
 
-    private TitleCreator(Context context) {
+    private TitleCreator() {
         _titleParents = new ArrayList<>();
     }
 
     //se non fosse stato creato verrebbe istanziato
-    public static TitleCreator get(Context context) {
+    public static TitleCreator get() {
         if(_titleCreator == null) {
-            _titleCreator = new TitleCreator(context);
+            _titleCreator = new TitleCreator();
         }
         return _titleCreator;
     }
