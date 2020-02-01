@@ -7,12 +7,20 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowAnimationStyle">@null</item>
-
+        <item name="android:fontFamily">@font/montserrat</item>
     </style>
-    <style name="ThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar"/>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="ThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="SplashScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
 
     <style name="toggleButton">
         <item name="android:buttonStyleToggle">@style/Widget.AppCompat.Button</item>
@@ -20,5 +28,7 @@
         <item name="android:textOff"/>
         <item name="android:background">@drawable/ic_toggle_bg</item>
         <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
+        <item name="android:fontFamily">@font/montserrat</item>
     </style>
+
 </resources>

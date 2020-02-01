@@ -71,13 +71,15 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="204dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view">
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,8 +114,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="-30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/tetris"
-                    android:contentDescription="@string/tetris" />
+                    android:contentDescription="@string/tetris"
+                    app:srcCompat="@drawable/tetris" />
 
                 <TextView
                     android:id="@+id/tvTetris"
@@ -149,8 +151,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="-30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/duemilaquarantottoicon"
-                    android:contentDescription="@string/header" />
+                    android:contentDescription="@string/header"
+                    app:srcCompat="@drawable/duemilaquarantottoicon" />
 
                 <TextView
                     android:id="@+id/tv2048"
@@ -186,8 +188,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="-30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/alienicon"
-                    android:contentDescription="@string/alienRun" />
+                    android:contentDescription="@string/alienRun"
+                    app:srcCompat="@drawable/alienicon" />
 
                 <TextView
                     android:id="@+id/tvAlienRun"
@@ -223,8 +225,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="-30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/rocketicon"
-                    android:contentDescription="@string/rocket" />
+                    android:contentDescription="@string/rocket"
+                    app:srcCompat="@drawable/rocketicon" />
 
                 <TextView
                     android:id="@+id/tvRocket"
@@ -260,8 +262,8 @@
                     android:layout_height="30dp"
                     android:layout_marginStart="-30dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/froggericon"
-                    android:contentDescription="@string/frogger" />
+                    android:contentDescription="@string/frogger"
+                    app:srcCompat="@drawable/froggericon" />
 
                 <TextView
                     android:id="@+id/tvFrogger"
