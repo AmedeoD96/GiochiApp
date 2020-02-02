@@ -27,6 +27,7 @@ public class Tetris extends AppCompatActivity {
     boolean CanGoDown = false;
     MediaPlayer mMediaPlayer;
     Button rotate, left, right, down;
+    boolean canRotate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +117,7 @@ public class Tetris extends AppCompatActivity {
                 //si è settato il non movimento
                 mIsTouchMove = false;
                 CanGoDown = false;
+                canRotate = false;
 
                 //se il tap avvenisse nella parte inferiore dello schermo si ottengono le coordinate
                 if( event.getY() < (int)(mScreenSize.y * 0.75)) {
@@ -137,6 +139,7 @@ public class Tetris extends AppCompatActivity {
                     mMousePos.y = (int) event.getY();
                     mIsTouchMove = true;
                     CanGoDown = true;
+                    canRotate = true;
                 } else if( (mMousePos.x - event.getX()) > mCellSize ) {
                     //in caso di swipe verso sinistra
                     //il blocco si muoverebbe verso sinistra
@@ -146,6 +149,7 @@ public class Tetris extends AppCompatActivity {
                     mMousePos.y = (int) event.getY();
                     mIsTouchMove = true;
                     CanGoDown = true;
+                    canRotate = true;
                 }
                 /*if(mMousePos.y < event.getY() && !CanGoDown ) {
                     mTetrisCtrl.block2Bottom();
@@ -158,11 +162,15 @@ public class Tetris extends AppCompatActivity {
                 if(!mIsTouchMove && mMousePos.x > 0)
                     //se il blocco non si è mosso e la posizione sull'asse delle x fosse valida
                     //il blocco ruoterebbe
-                    mTetrisCtrl.block2Rotate();
+                   // mTetrisCtrl.block2Rotate();
                 if(mMousePos.y < event.getY() && !CanGoDown ) {
                     mTetrisCtrl.block2Bottom();
                     mIsTouchMove = true;
                     CanGoDown = true;
+                    canRotate = true;
+                }
+                if (!canRotate){
+                    mTetrisCtrl.block2Rotate();
                 }
                 mMousePos.set(-1, -1);
                 break;
