@@ -24,6 +24,7 @@ public class Tetris extends AppCompatActivity {
     Point mMousePos = new Point(-1, -1);
     int mCellSize = 0;
     boolean mIsTouchMove = false;
+    boolean CanGoDown = false;
     MediaPlayer mMediaPlayer;
     Button rotate, left, right, down;
 
@@ -114,6 +115,7 @@ public class Tetris extends AppCompatActivity {
                 //alla fine della pressione sullo schermo
                 //si è settato il non movimento
                 mIsTouchMove = false;
+                CanGoDown = false;
                 //se il tap avvenisse nella parte inferiore dello schermo si ottengono le coordinate
                 if( event.getY() < (int)(mScreenSize.y * 0.75)) {
                     mMousePos.x = (int) event.getX();
@@ -133,6 +135,7 @@ public class Tetris extends AppCompatActivity {
                     mMousePos.x = (int) event.getX();
                     mMousePos.y = (int) event.getY();
                     mIsTouchMove = true;
+                    CanGoDown = true;
                 } else if( (mMousePos.x - event.getX()) > mCellSize ) {
                     //in caso di swipe verso sinistra
                     //il blocco si muoverebbe verso sinistra
@@ -141,11 +144,16 @@ public class Tetris extends AppCompatActivity {
                     mMousePos.x = (int) event.getX();
                     mMousePos.y = (int) event.getY();
                     mIsTouchMove = true;
+                    CanGoDown = true;
+                } else if(mMousePos.y < event.getY() && !CanGoDown) {
+                    mTetrisCtrl.block2Bottom();
+                    mIsTouchMove = true;
+                    CanGoDown = true;
                 }
                 break;
             case MotionEvent.ACTION_UP :
                 //in caso di sollevamento dopo la pressione
-                if(!mIsTouchMove && mMousePos.x > 0 )
+                if(!mIsTouchMove && mMousePos.x > 0)
                     //se il blocco non si è mosso e la posizione sull'asse delle x fosse valida
                     //il blocco ruoterebbe
                     mTetrisCtrl.block2Rotate();
