@@ -116,6 +116,7 @@ public class Tetris extends AppCompatActivity {
                 //si è settato il non movimento
                 mIsTouchMove = false;
                 CanGoDown = false;
+
                 //se il tap avvenisse nella parte inferiore dello schermo si ottengono le coordinate
                 if( event.getY() < (int)(mScreenSize.y * 0.75)) {
                     mMousePos.x = (int) event.getX();
@@ -145,11 +146,12 @@ public class Tetris extends AppCompatActivity {
                     mMousePos.y = (int) event.getY();
                     mIsTouchMove = true;
                     CanGoDown = true;
-                } else if(mMousePos.y < event.getY() && !CanGoDown) {
+                }
+                /*if(mMousePos.y < event.getY() && !CanGoDown ) {
                     mTetrisCtrl.block2Bottom();
                     mIsTouchMove = true;
                     CanGoDown = true;
-                }
+                }*/
                 break;
             case MotionEvent.ACTION_UP :
                 //in caso di sollevamento dopo la pressione
@@ -157,6 +159,11 @@ public class Tetris extends AppCompatActivity {
                     //se il blocco non si è mosso e la posizione sull'asse delle x fosse valida
                     //il blocco ruoterebbe
                     mTetrisCtrl.block2Rotate();
+                if(mMousePos.y < event.getY() && !CanGoDown ) {
+                    mTetrisCtrl.block2Bottom();
+                    mIsTouchMove = true;
+                    CanGoDown = true;
+                }
                 mMousePos.set(-1, -1);
                 break;
         }
