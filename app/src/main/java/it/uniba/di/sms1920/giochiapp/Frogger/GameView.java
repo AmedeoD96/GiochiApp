@@ -445,7 +445,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
             //imposta i parametri per il posizionamento della scritta Game Over
 
             Paint paintDeath = new Paint();
-            paintDeath.setTextSize(200);
+            paintDeath.setTextSize(150);
             paintDeath.setARGB(255,0, 1, 80);
             paintDeath.setTextAlign(Paint.Align.CENTER);
             paintDeath.setTypeface(customTypeface);

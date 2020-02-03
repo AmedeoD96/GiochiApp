@@ -115,7 +115,7 @@ public class GameplayScene implements Scene {
             //viene importato il font
             Typeface customTypeface = ResourcesCompat.getFont(context, R.font.mariokartds);
             Paint paint = new Paint();
-            paint.setTextSize(200);
+            paint.setTextSize(150);
             paint.setARGB(255,255, 143, 10);
             paint.setTypeface(customTypeface);
             paint.setTextAlign(Paint.Align.CENTER);
